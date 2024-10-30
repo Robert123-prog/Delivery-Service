@@ -19,3 +19,6 @@ The application supports freelance work by allowing anyone to register as a driv
 Drivers can make deliveries during their free time, providing them with an additional income stream while improving the company’s delivery capacity.
 
 By implementing these features, the application aims to enhance delivery service efficiency, improve customer satisfaction, and create an inclusive system that benefits both customers and the workforce.
+
+
+![Delivery-Service drawio](https://github.com/user-attachments/assets/d92e5db1-c5f9-40a4-a1e1-3afc73d4678e)
