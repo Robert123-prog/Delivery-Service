@@ -7,8 +7,6 @@ Key Features
 Customer-Driven Scheduling:
 Customers can manually input the preferred day and time for their delivery, ensuring packages arrive at the most convenient time for them.
 
-Feedback System for Quality Assurance:
-A built-in feedback feature allows customers to rate their experience, providing valuable insights into customer satisfaction and helping the company improve services over time.
 
 Choice of Transportation Methods:
 Customers can select their preferred transportation method based on factors like cost, estimated arrival time, package dimensions, and quantity. 
@@ -20,4 +18,5 @@ Drivers can make deliveries during their free time, providing them with an addit
 
 By implementing these features, the application aims to enhance delivery service efficiency, improve customer satisfaction, and create an inclusive system that benefits both customers and the workforce.
 
+![Delivery-Service drawio (1)](https://github.com/user-attachments/assets/f5f3c025-8f99-427f-8392-a4dcc3f70f09)
 
