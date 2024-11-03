@@ -76,4 +76,17 @@ public class Deposit {
     public void setPackages(List<Package> packages) {
         this.packages = packages;
     }
+
+    @Override
+    public String toString() {
+        return "Deposit{" +
+                "depositID=" + depositID +
+                ", storeID=" + storeID +
+                ", packageID=" + packageID +
+                ", address='" + address + '\'' +
+                ", depositDate=" + depositDate +
+                ", status='" + status + '\'' +
+                ", packages=" + packages +
+                '}';
+    }
 }

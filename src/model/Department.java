@@ -42,4 +42,14 @@ public class Department {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "departmentID=" + departmentID +
+                ", name='" + name + '\'' +
+                ", task='" + task + '\'' +
+                ", employees=" + employees +
+                '}';
+    }
 }

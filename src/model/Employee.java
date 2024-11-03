@@ -70,4 +70,16 @@ public class Employee {
     public void setDeliveries(List<Delivery> deliveries) {
         this.deliveries = deliveries;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeID=" + employeeID +
+                ", departmentID=" + departmentID +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", license='" + license + '\'' +
+                ", deliveries=" + deliveries +
+                '}';
+    }
 }

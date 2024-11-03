@@ -1,21 +1,20 @@
 package model;
 
-public class Personal_Vehicle {
+public class Personal_Vehicle extends Transportation{
     private final int personalVehicleID;
     private int extraFee;
     private int deliveryPersonID;
+    private int capacity;
+    private Transportation_Type transportation_type;
 
     /*
-    Delivery_Person - Personal_Vehicle: Association => Delivery_Person not initialized in contructor
+    Delivery_Person - Personal_Vehicle: Association => Delivery_Person not initialized in constructor
      */
 
-    public Personal_Vehicle(int personalVehicleID, Integer extraFee){
+    public Personal_Vehicle(int personalVehicleID, Integer extraFee, int capacity, Transportation_Type transportationType){
+        super(capacity, transportationType);
         this.personalVehicleID = personalVehicleID;
         this.extraFee = extraFee;
-    }
-
-    public Personal_Vehicle(int personalVehicleID){
-        this.personalVehicleID = personalVehicleID;
     }
 
     public int getPersonalVehicleID() {
@@ -38,4 +37,12 @@ public class Personal_Vehicle {
         this.deliveryPersonID = deliveryPersonID;
     }
 
+    @Override
+    public String toString() {
+        return "Personal_Vehicle{" +
+                "personalVehicleID=" + personalVehicleID +
+                ", extraFee=" + extraFee +
+                ", deliveryPersonID=" + deliveryPersonID +
+                '}';
+    }
 }

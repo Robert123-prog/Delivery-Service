@@ -22,5 +22,13 @@ public class Delivery_Person extends Employee{
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
+
+    @Override
+    public String toString() {
+        return "Delivery_Person{" +
+                "deliveryPersonID=" + deliveryPersonID +
+                ", verified=" + verified +
+                '}';
+    }
 }
 
