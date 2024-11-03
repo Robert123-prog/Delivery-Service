@@ -76,4 +76,17 @@ public class Order {
     public void setPackages(List<Package> packages) {
         this.packages = packages;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderID=" + orderID +
+                ", customerID=" + customerID +
+                ", orderDate=" + orderDate +
+                ", deliveryDate=" + deliveryDate +
+                ", cost=" + cost +
+                ", status='" + status + '\'' +
+                ", packages=" + packages +
+                '}';
+    }
 }

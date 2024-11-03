@@ -43,4 +43,14 @@ public class Package {
     public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
     }
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "packageID=" + packageID +
+                ", orderID=" + orderID +
+                ", weight=" + weight +
+                ", dimensions='" + dimensions + '\'' +
+                '}';
+    }
 }

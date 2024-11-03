@@ -1,33 +1,14 @@
 package model;
 
-public class Transportation extends Personal_Vehicle{
-    private final int transportationID;
+import java.lang.annotation.Target;
+
+public abstract class Transportation{
     private int capacity;
     private Transportation_Type transportationType;
 
-    public Transportation(int transportationID, int capacity){
-        super(transportationID);
-        this.transportationID = transportationID;
+    public Transportation(int capacity, Transportation_Type transportation_type){
         this.capacity = capacity;
+        this.transportationType = transportation_type;
     }
 
-    public int getTransportationID() {
-        return transportationID;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public Transportation_Type getTransportationType() {
-        return transportationType;
-    }
-
-    public void setTransportationType(Transportation_Type transportationType) {
-        this.transportationType = transportationType;
-    }
 }

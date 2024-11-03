@@ -56,4 +56,15 @@ public class Store {
     public void setDeposits(List<Deposit> deposits) {
         this.deposits = deposits;
     }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "storeID=" + storeID +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", contact='" + contact + '\'' +
+                ", deposits=" + deposits +
+                '}';
+    }
 }

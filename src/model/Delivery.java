@@ -65,4 +65,16 @@ public class Delivery {
     public void setTransportation_type(Transportation transportation_type) {
         this.transportation_type = transportation_type;
     }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "deliveryID=" + deliveryID +
+                ", employeeID=" + employeeID +
+                ", orderID=" + orderID +
+                ", transportationID=" + transportationID +
+                ", time=" + time +
+                ", transportation_type=" + transportation_type +
+                '}';
+    }
 }
