@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Employee {
+public class Employee implements HasID{
     private final int employeeID;
     private int departmentID;
     private String name;
@@ -81,5 +81,8 @@ public class Employee {
                 ", license='" + license + '\'' +
                 ", deliveries=" + deliveries +
                 '}';
+    }
+    public Integer getId() {
+        return employeeID;
     }
 }

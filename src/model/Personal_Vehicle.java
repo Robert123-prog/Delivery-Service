@@ -45,4 +45,7 @@ public class Personal_Vehicle extends Transportation{
                 ", deliveryPersonID=" + deliveryPersonID +
                 '}';
     }
+    public Integer getId() {
+        return personalVehicleID;
+    }
 }

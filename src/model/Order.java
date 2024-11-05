@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public class Order {
+public class Order implements HasID{
     private final int orderID;
     private int customerID;
     private Date orderDate;
@@ -88,5 +88,8 @@ public class Order {
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
                 '}';
+    }
+    public Integer getId() {
+        return orderID;
     }
 }

@@ -2,8 +2,8 @@ package model;
 
 import java.sql.Timestamp;
 
-public class Delivery {
-    private final int deliveryID;
+public class Delivery implements HasID{
+    private final Integer deliveryID;
     private int employeeID;
     private int orderID;
     private int transportationID;
@@ -76,5 +76,8 @@ public class Delivery {
                 ", time=" + time +
                 ", transportation_type=" + transportation_type +
                 '}';
+    }
+    public Integer getId() {
+        return deliveryID;
     }
 }
