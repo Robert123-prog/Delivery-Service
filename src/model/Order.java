@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class Order implements HasID{
     private final int orderID;
     private int customerID;
     private Date orderDate;
-    private Date deliveryDate;
+    private LocalDateTime deliveryDateTime;
     private double cost;
     private String status;
     private List<Package> packages;
@@ -17,10 +18,10 @@ public class Order implements HasID{
     Order - Customer: Association => customer will be added by the setter
      */
 
-    public Order(int orderID, Date orderDate, Date deliveryDate, double cost, String status){
+    public Order(int orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
         this.orderID = orderID;
         this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
+        this.deliveryDateTime = deliveryDateTime;
         this.cost = cost;
         this.status = status;
     }
@@ -45,12 +46,12 @@ public class Order implements HasID{
         this.orderDate = orderDate;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public LocalDateTime getDeliveryDateTime() {
+        return deliveryDateTime;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setDeliveryDateTime(LocalDateTime deliveryDateTime) {
+        this.deliveryDateTime = deliveryDateTime;
     }
 
     public double getCost() {
@@ -83,7 +84,7 @@ public class Order implements HasID{
                 "orderID=" + orderID +
                 ", customerID=" + customerID +
                 ", orderDate=" + orderDate +
-                ", deliveryDate=" + deliveryDate +
+                ", deliveryDate=" + deliveryDateTime +
                 ", cost=" + cost +
                 ", status='" + status + '\'' +
                 ", packages=" + packages +

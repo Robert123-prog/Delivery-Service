@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public class Deposit {
+public class Deposit implements HasID{
     private final int depositID;
     private int storeID;
     private int packageID;
@@ -88,5 +88,8 @@ public class Deposit {
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
                 '}';
+    }
+    public Integer getId() {
+        return depositID;
     }
 }

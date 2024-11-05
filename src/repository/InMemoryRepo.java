@@ -1,35 +1,36 @@
 package repository;
 
-import model.Customer;
-import model.Delivery;
+import model.HasID;
 
-public class InMemoryRepo<T> implements IRepository{
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class InMemoryRepo<T extends HasID> implements IRepository<T> {
+    private final Map<Integer,T> data = new HashMap<>();
+
+
     @Override
-    public void create() {
-        //user input needed in order to create any type of object
-        /*
-        prompt user with what type of object to create
-         */
+    public void create(T obj) {
+        data.putIfAbsent(obj.getId(), obj);
+    }
+    @Override
+    public List<T> read() {
+        return data.values().stream().toList();
     }
 
     @Override
-    public void read(Object obj) {
-        System.out.println(obj.toString());
+    public void update(T obj) {
+        data.replace(obj.getId(), obj);
     }
 
     @Override
-    public void update(Object obj) {
-        //user input needed in order to update any type of object
-        /*
-        prompt user with what type of object to update
-         */
+    public void delete(Integer id) {
+        data.remove(id);
     }
 
     @Override
-    public void delete(Object obj) {
-        //user input needed in order to delete any type of object
-        /*
-        prompt user with what type of object to delete
-         */
+    public T get(Integer id) {
+        return data.get(id);
     }
 }
