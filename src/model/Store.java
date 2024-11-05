@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Store {
+public class Store implements HasID{
     private final int storeID;
     private String name;
     private String address;
@@ -66,5 +66,8 @@ public class Store {
                 ", contact='" + contact + '\'' +
                 ", deposits=" + deposits +
                 '}';
+    }
+    public Integer getId() {
+        return storeID;
     }
 }

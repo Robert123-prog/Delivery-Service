@@ -2,7 +2,7 @@ package model;
 
 import java.lang.annotation.Target;
 
-public abstract class Transportation{
+public abstract class Transportation implements HasID{
     private int capacity;
     private Transportation_Type transportationType;
 

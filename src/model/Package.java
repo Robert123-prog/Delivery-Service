@@ -1,6 +1,6 @@
 package model;
 
-public class Package {
+public class Package implements HasID{
     private final int packageID;
     private int orderID;
     private double weight;
@@ -52,5 +52,8 @@ public class Package {
                 ", weight=" + weight +
                 ", dimensions='" + dimensions + '\'' +
                 '}';
+    }
+    public Integer getId() {
+        return packageID;
     }
 }

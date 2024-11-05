@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
-    private final int customerID;
+public class Customer implements HasID{
+    private final Integer customerID;
     private String name;
     private String address;
     private String phone;
@@ -78,5 +78,8 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", orders=" + orders +
                 '}';
+    }
+    public Integer getId() {
+        return customerID;
     }
 }
