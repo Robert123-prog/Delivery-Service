@@ -1,10 +1,10 @@
 package model;
 
 public class Delivery_Person extends Employee{
-    private final int deliveryPersonID;
+    private final Integer deliveryPersonID;
     private boolean verified;
 
-    public Delivery_Person(int deliveryPersonID, boolean verified){
+    public Delivery_Person(Integer deliveryPersonID, boolean verified){
         //good use of super ??
         super(deliveryPersonID);
         this.deliveryPersonID = deliveryPersonID;

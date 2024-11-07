@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Deposit implements HasID{
-    private final int depositID;
+    private final Integer depositID;
     private int storeID;
     private int packageID;
     private String address;
@@ -18,7 +18,7 @@ public class Deposit implements HasID{
 
      */
 
-    public Deposit(int depositID, String address, Date depositDate, String status){
+    public Deposit(Integer depositID, String address, Date depositDate, String status){
         this.depositID = depositID;
         this.address = address;
         this.depositDate = depositDate;

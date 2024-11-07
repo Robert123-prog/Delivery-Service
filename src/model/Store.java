@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Store implements HasID{
-    private final int storeID;
+    private final Integer storeID;
     private String name;
     private String address;
     private String contact;
@@ -13,7 +13,7 @@ public class Store implements HasID{
     /*
     Store - Deposit: Association => deposits created in the constructor
      */
-    public Store(int storeID, String name, String address, String contact){
+    public Store(Integer storeID, String name, String address, String contact){
         this.storeID = storeID;
         this.name = name;
         this.address = address;
