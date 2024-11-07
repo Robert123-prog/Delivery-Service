@@ -74,8 +74,8 @@ public class Order implements HasID{
         return packages;
     }
 
-    public void setPackages(List<Packages> packages) {
-        this.packages = packages;
+    public void addPackage(Packages packag) {
+        packages.add(packag);
     }
 
     @Override

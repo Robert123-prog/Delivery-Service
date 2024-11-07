@@ -64,8 +64,8 @@ public class Customer implements HasID{
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void addDOrder(Order order) {
+        orders.add(order);
     }
 
     @Override
