@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Employee implements HasID{
-    private final Integer employeeID;
+    private Integer employeeID;
     private int departmentID;
     private String name;
     private String phone;

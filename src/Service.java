@@ -43,58 +43,61 @@ public class Service {
         return order.getPackages();
     }
 
-    public List<Order> getOrders()
-    {
+    public List<Order> getOrders() {
         return orderIRepository.readAll();
     }
+
     public List<Customer> getCustomers() {
         return customerIRepository.readAll();
     }
+
     public List<Department> getDepartments() {
         return departmentIRepository.readAll();
     }
+
     public List<Delivery> getDelivery() {
         return deliveryIRepository.readAll();
     }
+
     public List<Delivery_Person> getDeliveryPerson() {
         return deliveryPersonIRepository.readAll();
     }
+
     public List<Store> getStores() {
         return storeIRepository.readAll();
     }
+
     public List<Personal_Vehicle> getPersonalVehicle() {
         return personalVehicleIRepository.readAll();
     }
+
     public List<Packages> getPackages() {
         return packageIRepository.readAll();
     }
 
-    public void placeOrder(Integer CustomerId, Order order)
-    {
+    public void placeOrder(Integer CustomerId, Order order) {
         Customer customer = customerIRepository.get(CustomerId);
-        if(customer != null)
-        {
+        if (customer != null) {
             customer.getOrders().add(order);
         }
         orderIRepository.update(order);
         customerIRepository.update(customer);
 
     }
-    public void removeOrder(Integer CustomerId, Integer orderID)
-    {
+
+    public void removeOrder(Integer CustomerId, Integer orderID) {
         Customer customer = customerIRepository.get(CustomerId);
-        if(customer != null)
-        {
+        if (customer != null) {
             Order order = orderIRepository.get(orderID);
-            if(order != null && customer.getOrders().contains(order)) {
+            if (order != null && customer.getOrders().contains(order)) {
                 customer.getOrders().remove(order);
                 orderIRepository.delete(orderID);
                 customerIRepository.update(customer);
             }
         }
     }
-    public void scheduleDelivery(Order order,LocalDateTime deliveryDateTime)
-    {
+
+    public void scheduleDelivery(Order order, LocalDateTime deliveryDateTime) {
         order.setDeliveryDateTime(deliveryDateTime);
         orderIRepository.update(order);
     }
@@ -103,26 +106,24 @@ public class Service {
         if (license == null || license.isEmpty()) {
             throw new IllegalArgumentException("Provided license is not valid.");
         }
-        Employee newEmployee = new Employee(name,phone,license);
+        Employee newEmployee = new Employee(name, phone, license);
         employeeIRepository.create(newEmployee);
-        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId,true,phone,name,license);
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId, true, phone, name, license);
         deliveryPersonIRepository.update(deliveryPerson);
     }
-    public void registerShop(Integer storeId, String name, String address, String contact)
-    {
+
+    public void registerShop(Integer storeId, String name, String address, String contact) {
         if (storeId == null || name == null || name.isEmpty() || address == null || address.isEmpty() || contact == null || contact.isEmpty()) {
             throw new IllegalArgumentException("All fields are required for shop registration.");
         }
         Store newStore = new Store(storeId, name, address, contact);
         storeIRepository.create(newStore);
     }
+
     public void registerDeposit(Integer depositId, Integer storeId, Integer packageId, String address, String status) {
         if (depositId == null || storeId == null || packageId == null ||
                 address == null || address.isEmpty() ||
                 status == null || status.isEmpty()) {
-
-
-    return maxId + 1;
             throw new IllegalArgumentException("All fields are required for deposit registration.");
         }
         Deposit newDeposit = new Deposit(depositId, address, status);
@@ -134,12 +135,14 @@ public class Service {
             throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
         }
     }
+
     public void removeStore(Integer storeId) {
         Store store = storeIRepository.get(storeId);
         if (store != null) {
             storeIRepository.delete(storeId);
         }
     }
+
     public void removeDeposit(Integer depositId) {
         Deposit deposit = depositIRepository.get(depositId);
         Store store = storeIRepository.get(depositId);
@@ -150,15 +153,13 @@ public class Service {
         }
     }
 
-          
-          
-          
-   public void createCustomer(Integer Id, String name, String address, String phone, String email){
+
+    public void createCustomer(Integer Id, String name, String address, String phone, String email) {
         Customer customer = new Customer(Id, name, address, phone, email);
         customerIRepository.create(customer);
     }
 
-    public void createEmployee(Integer Id, Integer departmentId, String name, String phone, String license){
+    public void createEmployee(Integer Id, Integer departmentId, String name, String phone, String license) {
         Employee employee = new Employee(Id, departmentId, name, phone, license);
         employeeIRepository.create(employee);
     }
@@ -168,46 +169,48 @@ public class Service {
      */
     //public void createNewDeliveryPerson(Integer Id, boolean verified, )
 
-    public void createStore(Integer Id, String name, String address, String contact){
+    public void createStore(Integer Id, String name, String address, String contact) {
         Store store = new Store(Id, name, address, contact);
         storeIRepository.create(store);
     }
 
-    public Integer getNewCustomerId(){
+    public Integer getNewCustomerId() {
         int maxId = 0;
-        for (Integer Id: customerIRepository.getKeys()){
-            if (Id.compareTo(maxId) > 0){
+        for (Integer Id : customerIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
         }
         return maxId + 1;
     }
 
-    public Integer getNewEmployeeId(){
+    public Integer getNewEmployeeId() {
         int maxId = 0;
-        for (Integer Id: employeeIRepository.getKeys()){
-            if (Id.compareTo(maxId) > 0){
+        for (Integer Id : employeeIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
         }
         return maxId + 1;
     }
 
-    public Integer getNewDeliveryPersonId(){
+    public Integer getNewDeliveryPersonId() {
         int maxId = 0;
-        for (Integer Id: deliveryIRepository.getKeys()){
-            if (Id.compareTo(maxId) > 0){
+        for (Integer Id : deliveryIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
         }
         return maxId + 1;
     }
 
-    public Integer getNewStoreId(){
+    public Integer getNewStoreId() {
         int maxId = 0;
-        for (Integer Id: storeIRepository.getKeys()){
-            if (Id.compareTo(maxId) > 0){
+        for (Integer Id : storeIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
         }
-        }
+        return maxId + 1;
+    }
+}
