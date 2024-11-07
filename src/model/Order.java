@@ -8,10 +8,10 @@ public class Order implements HasID{
     private final int orderID;
     private int customerID;
     private Date orderDate;
-    private LocalDateTime deliveryDateTime;
+    protected LocalDateTime deliveryDateTime;
     private double cost;
     private String status;
-    private List<Package> packages;
+    private List<Packages> packages;
 
     /*
     Order - Package: Aggregation => packages not initialized in the constructor
@@ -70,11 +70,11 @@ public class Order implements HasID{
         this.status = status;
     }
 
-    public List<Package> getPackages() {
+    public List<Packages> getPackages() {
         return packages;
     }
 
-    public void setPackages(List<Package> packages) {
+    public void setPackages(List<Packages> packages) {
         this.packages = packages;
     }
 
