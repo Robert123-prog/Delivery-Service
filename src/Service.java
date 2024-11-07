@@ -15,8 +15,7 @@ public class Service {
     private final IRepository<Delivery> deliveryIRepository;
     private final IRepository<Deposit> depositIRepository;
     private final IRepository<Delivery_Person> deliveryPersonIRepository;
-    private final IRepository<Personal_Vehicle> personalVehicleIRepository
-            ;
+    private final IRepository<Personal_Vehicle> personalVehicleIRepository;
 
 
     public Service(IRepository<Store> storeIRepository, IRepository<Package> pachageIRepository, IRepository<Order> orderIRepository, IRepository<Customer> customerIRepository, IRepository<Department> departmentIRepository, IRepository<Employee> employeeIRepository, IRepository<Delivery> deliveryIRepository, IRepository<Deposit> depositIRepository, IRepository<Delivery_Person> deliveryPersonIRepository, IRepository<Personal_Vehicle> personalVehicleIRepository) {
