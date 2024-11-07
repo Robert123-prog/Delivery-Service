@@ -5,6 +5,7 @@ import model.HasID;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class InMemoryRepo<T extends HasID> implements IRepository<T> {
     private final Map<Integer,T> data = new HashMap<>();
@@ -34,5 +35,11 @@ public class InMemoryRepo<T extends HasID> implements IRepository<T> {
     public T get(Integer id) {
         return data.get(id);
     }
+
+    @Override
+    public Set<Integer> getKeys() {
+        return data.keySet();
+    }
+
 
 }

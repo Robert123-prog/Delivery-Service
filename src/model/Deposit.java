@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Deposit implements HasID{
-    private final int depositID;
+    private final Integer depositID;
     private int storeID;
     private int packageID;
     private String address;
@@ -15,6 +15,7 @@ public class Deposit implements HasID{
     Store - Deposit: Association => store created in the constructor
 
      */
+
 
     public Deposit(int depositID, String address, String status){
         this.depositID = depositID;

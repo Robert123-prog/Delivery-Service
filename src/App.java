@@ -1,13 +1,22 @@
 import java.util.Scanner;
 
 public class App {
-    static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    private final Controller controller;
+    public App(Controller controller){
+        this.controller = controller;
+    }
+
+
+    static Scanner choiceScanner = new Scanner(System.in);
+    static Scanner fieldScanner = new Scanner(System.in);
+
+    public void main(String[] args) {
+
         mainMenu();
     }
 
-    public static void mainMenu(){
+    public void mainMenu(){
         System.out.println("======Welcome to the Delivery-Service Application======");
         System.out.println("=======================================================");
         System.out.println("Please choose one of the following actions:");
@@ -18,10 +27,30 @@ public class App {
         System.out.println("4. Log-in as delivery person");
         System.out.println("=======================================================");
 
-        int userChoice = scanner.nextInt();
+        int userChoice = choiceScanner.nextInt();
 
         switch (userChoice){
             case 1:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
+
+                System.out.println("Name: ");
+                String name = fieldScanner.nextLine();
+
+                System.out.println("Address: ");
+                String address = fieldScanner.nextLine();
+
+                System.out.println("Phone: ");
+                String phone = fieldScanner.nextLine();
+
+                System.out.println("Email: ");
+                String email = fieldScanner.nextLine();
+
+                this.controller.createLoggedInCustomer(name, address, phone, email);
+
+                customerMenu();
+
 
                 break;
             case 2:
@@ -48,10 +77,12 @@ public class App {
         System.out.println("3. Remove an order");
         System.out.println("4. See all your orders");
 
-        int userChoice = scanner.nextInt();
+        int userChoice = choiceScanner.nextInt();
 
         switch (userChoice){
             case 1:
+                System.out.println("Please complete the following fields:");
+                System.out.println("Please complete the following fields:");
 
                 break;
             case 2:
@@ -77,7 +108,7 @@ public class App {
         System.out.println("4. Enroll as an employee");
         System.out.println("5. Process a delivery");
 
-        int userChoice = scanner.nextInt();
+        int userChoice = choiceScanner.nextInt();
 
         switch (userChoice){
             case 1:
@@ -109,7 +140,7 @@ public class App {
         System.out.println("8. See all your customers");
 
 
-        int userChoice = scanner.nextInt();
+        int userChoice = choiceScanner.nextInt();
 
         switch (userChoice){
             case 1:
@@ -127,6 +158,9 @@ public class App {
         }
     }
 
+    /*
+    a delivery person cannot do anything, until it gets validated
+     */
     public static void deliveryPersonMenu(){
         System.out.println("==================== Delivery Person Menu =====================");
         System.out.println("Choose one of the following actions:");
@@ -135,8 +169,9 @@ public class App {
         System.out.println("2. Process a delivery");
         System.out.println("3. Assign vehicle");
         System.out.println("4. Select preferred transportation type");
+        System.out.println("5. Get verified");
 
-        int userChoice = scanner.nextInt();
+        int userChoice = choiceScanner.nextInt();
 
         switch (userChoice){
             case 1:

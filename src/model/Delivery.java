@@ -16,7 +16,7 @@ public class Delivery implements HasID{
     Delivery - Transportation: Association => transportation assigned by setter
      */
 
-    public Delivery(int deliveryID, int orderID, Timestamp time){
+    public Delivery(Integer deliveryID, int orderID, Timestamp time){
         this.deliveryID = deliveryID;
         this.orderID = orderID;
         this.time = time;

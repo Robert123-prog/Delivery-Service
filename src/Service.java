@@ -3,6 +3,7 @@ import model.*;
 import repository.IRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class Service {
 
@@ -32,6 +33,7 @@ public class Service {
         this.deliveryPersonIRepository = deliveryPersonIRepository;
         this.personalVehicleIRepository = personalVehicleIRepository;
     }
+
 
     public List<Employee> getEmployees() {
         return employeeIRepository.readAll();
@@ -119,6 +121,8 @@ public class Service {
                 address == null || address.isEmpty() ||
                 status == null || status.isEmpty()) {
 
+
+    return maxId + 1;
             throw new IllegalArgumentException("All fields are required for deposit registration.");
         }
         Deposit newDeposit = new Deposit(depositId, address, status);
@@ -145,5 +149,65 @@ public class Service {
             storeIRepository.update(store);
         }
     }
-}
 
+          
+          
+          
+   public void createCustomer(Integer Id, String name, String address, String phone, String email){
+        Customer customer = new Customer(Id, name, address, phone, email);
+        customerIRepository.create(customer);
+    }
+
+    public void createEmployee(Integer Id, Integer departmentId, String name, String phone, String license){
+        Employee employee = new Employee(Id, departmentId, name, phone, license);
+        employeeIRepository.create(employee);
+    }
+
+    /*
+    alex
+     */
+    //public void createNewDeliveryPerson(Integer Id, boolean verified, )
+
+    public void createStore(Integer Id, String name, String address, String contact){
+        Store store = new Store(Id, name, address, contact);
+        storeIRepository.create(store);
+    }
+
+    public Integer getNewCustomerId(){
+        int maxId = 0;
+        for (Integer Id: customerIRepository.getKeys()){
+            if (Id.compareTo(maxId) > 0){
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public Integer getNewEmployeeId(){
+        int maxId = 0;
+        for (Integer Id: employeeIRepository.getKeys()){
+            if (Id.compareTo(maxId) > 0){
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public Integer getNewDeliveryPersonId(){
+        int maxId = 0;
+        for (Integer Id: deliveryIRepository.getKeys()){
+            if (Id.compareTo(maxId) > 0){
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public Integer getNewStoreId(){
+        int maxId = 0;
+        for (Integer Id: storeIRepository.getKeys()){
+            if (Id.compareTo(maxId) > 0){
+                maxId = Id;
+            }
+        }
+        }

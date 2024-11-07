@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Employee implements HasID{
-    private int employeeID;
+    private final Integer employeeID;
     private int departmentID;
     private String name;
     private String phone;
@@ -15,7 +15,7 @@ public class Employee implements HasID{
     Employee - Delivery: aggregation => deliveries not initialized in constructor
      */
 
-    public Employee(int employeeID, int departmentID, String name, String phone, String license){
+    public Employee(Integer employeeID, int departmentID, String name, String phone, String license){
         this.employeeID = employeeID;
         this.departmentID = departmentID;
         this.name = name;

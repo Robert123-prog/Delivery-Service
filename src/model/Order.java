@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Order implements HasID{
-    private final int orderID;
+    private final Integer orderID;
     private int customerID;
     private Date orderDate;
     protected LocalDateTime deliveryDateTime;
@@ -18,7 +18,7 @@ public class Order implements HasID{
     Order - Customer: Association => customer will be added by the setter
      */
 
-    public Order(int orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
+    public Order(Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.deliveryDateTime = deliveryDateTime;

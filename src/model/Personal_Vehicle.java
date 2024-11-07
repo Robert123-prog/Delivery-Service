@@ -1,7 +1,7 @@
 package model;
 
 public class Personal_Vehicle extends Transportation{
-    private final int personalVehicleID;
+    private final Integer personalVehicleID;
     private int extraFee;
     private int deliveryPersonID;
     private int capacity;
@@ -11,7 +11,7 @@ public class Personal_Vehicle extends Transportation{
     Delivery_Person - Personal_Vehicle: Association => Delivery_Person not initialized in constructor
      */
 
-    public Personal_Vehicle(int personalVehicleID, Integer extraFee, int capacity, Transportation_Type transportationType){
+    public Personal_Vehicle(Integer personalVehicleID, Integer extraFee, int capacity, Transportation_Type transportationType){
         super(capacity, transportationType);
         this.personalVehicleID = personalVehicleID;
         this.extraFee = extraFee;

@@ -15,7 +15,7 @@ public class Customer implements HasID{
     Customer - Orders: Association => orders created in the constructor
      */
 
-    public Customer(int customerID, String name, String address, String phone, String email){
+    public Customer(Integer customerID, String name, String address, String phone, String email){
         this.customerID = customerID;
         this.name = name;
         this.address = address;
