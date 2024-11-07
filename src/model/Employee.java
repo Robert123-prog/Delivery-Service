@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Employee implements HasID{
-    private final int employeeID;
+    private int employeeID;
     private int departmentID;
     private String name;
     private String phone;
@@ -18,6 +18,11 @@ public class Employee implements HasID{
     public Employee(int employeeID, int departmentID, String name, String phone, String license){
         this.employeeID = employeeID;
         this.departmentID = departmentID;
+        this.name = name;
+        this.phone = phone;
+        this.license = license;
+    }
+    public Employee( String name, String phone, String license){
         this.name = name;
         this.phone = phone;
         this.license = license;
@@ -67,8 +72,8 @@ public class Employee implements HasID{
         return deliveries;
     }
 
-    public void setDeliveries(List<Delivery> deliveries) {
-        this.deliveries = deliveries;
+    public void addDelivery(Delivery delivery) {
+        deliveries.add(delivery);
     }
 
     @Override

@@ -1,12 +1,19 @@
 package model;
 
+import java.util.List;
+
 public class Delivery_Person extends Employee{
     private final int deliveryPersonID;
     private boolean verified;
+    private String phone;
+    private String name;
+    private String license;
+    private List<Delivery> deliveries;
 
-    public Delivery_Person(int deliveryPersonID, boolean verified){
+    public Delivery_Person(int deliveryPersonID, boolean verified, String phone, String name, String license) {
         //good use of super ??
-        super(deliveryPersonID);
+        //super(deliveryPersonID);
+        super(name, phone, license);
         this.deliveryPersonID = deliveryPersonID;
         this.verified = verified;
     }

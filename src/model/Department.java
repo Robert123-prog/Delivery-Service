@@ -39,8 +39,8 @@ public class Department implements HasID{
         return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
     }
 
     @Override
