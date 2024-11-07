@@ -10,7 +10,7 @@ public class Deposit implements HasID{
     private String address;
     private Date depositDate;
     private String status;
-    private List<Package> packages;
+    private List<Packages> packages;
 
     /*
     Deposit - Package: Aggregation => packages not initialized in the constructor
@@ -69,11 +69,11 @@ public class Deposit implements HasID{
         this.status = status;
     }
 
-    public List<Package> getPackages() {
+    public List<Packages> getPackages() {
         return packages;
     }
 
-    public void setPackages(List<Package> packages) {
+    public void setPackages(List<Packages> packages) {
         this.packages = packages;
     }
 

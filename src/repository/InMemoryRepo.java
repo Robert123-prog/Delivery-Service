@@ -8,14 +8,15 @@ import java.util.Map;
 
 public class InMemoryRepo<T extends HasID> implements IRepository<T> {
     private final Map<Integer,T> data = new HashMap<>();
-
+    private List<T> entities;
 
     @Override
     public void create(T obj) {
         data.putIfAbsent(obj.getId(), obj);
     }
+
     @Override
-    public List<T> read() {
+    public List<T> readAll() {
         return data.values().stream().toList();
     }
 
@@ -33,4 +34,5 @@ public class InMemoryRepo<T extends HasID> implements IRepository<T> {
     public T get(Integer id) {
         return data.get(id);
     }
+
 }

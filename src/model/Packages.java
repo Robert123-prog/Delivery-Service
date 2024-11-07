@@ -1,6 +1,6 @@
 package model;
 
-public class Package implements HasID{
+public class Packages implements HasID{
     private final int packageID;
     private int orderID;
     private double weight;
@@ -10,7 +10,7 @@ public class Package implements HasID{
     Order - Package: Aggregation => order not initialized in the constructor
      */
 
-    public Package(int packageID, double weight, String dimensions){
+    public Packages(int packageID, double weight, String dimensions){
         this.packageID = packageID;
         this.weight = weight;
         this.dimensions = dimensions;

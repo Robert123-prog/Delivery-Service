@@ -50,13 +50,6 @@ public class Delivery implements HasID{
         this.transportationID = transportationID;
     }
 
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
-    }
 
     public Transportation getTransportation_type() {
         return transportation_type;
@@ -73,7 +66,6 @@ public class Delivery implements HasID{
                 ", employeeID=" + employeeID +
                 ", orderID=" + orderID +
                 ", transportationID=" + transportationID +
-                ", time=" + time +
                 ", transportation_type=" + transportation_type +
                 '}';
     }
