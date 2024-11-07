@@ -53,8 +53,8 @@ public class Store implements HasID{
         return deposits;
     }
 
-    public void setDeposits(List<Deposit> deposits) {
-        this.deposits = deposits;
+    public void addDeposit(Deposit deposit) {
+        deposits.add(deposit);
     }
 
     @Override

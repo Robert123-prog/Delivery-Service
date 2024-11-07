@@ -22,6 +22,11 @@ public class Employee implements HasID{
         this.phone = phone;
         this.license = license;
     }
+    public Employee( String name, String phone, String license){
+        this.name = name;
+        this.phone = phone;
+        this.license = license;
+    }
 
     public Employee(int employeeID) {
         this.employeeID = employeeID;
@@ -67,8 +72,8 @@ public class Employee implements HasID{
         return deliveries;
     }
 
-    public void setDeliveries(List<Delivery> deliveries) {
-        this.deliveries = deliveries;
+    public void addDelivery(Delivery delivery) {
+        deliveries.add(delivery);
     }
 
     @Override

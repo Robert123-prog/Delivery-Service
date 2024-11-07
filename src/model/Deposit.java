@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Date;
 import java.util.List;
 
 public class Deposit implements HasID{
@@ -8,7 +7,6 @@ public class Deposit implements HasID{
     private int storeID;
     private int packageID;
     private String address;
-    private Date depositDate;
     private String status;
     private List<Packages> packages;
 
@@ -18,10 +16,10 @@ public class Deposit implements HasID{
 
      */
 
-    public Deposit(Integer depositID, String address, Date depositDate, String status){
+
+    public Deposit(int depositID, String address, String status){
         this.depositID = depositID;
         this.address = address;
-        this.depositDate = depositDate;
         this.status = status;
     }
 
@@ -53,14 +51,6 @@ public class Deposit implements HasID{
         this.address = address;
     }
 
-    public Date getDepositDate() {
-        return depositDate;
-    }
-
-    public void setDepositDate(Date depositDate) {
-        this.depositDate = depositDate;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -73,8 +63,8 @@ public class Deposit implements HasID{
         return packages;
     }
 
-    public void setPackages(List<Packages> packages) {
-        this.packages = packages;
+    public void addPackage(Packages packag) {
+        packages.add(packag);
     }
 
     @Override
@@ -84,7 +74,6 @@ public class Deposit implements HasID{
                 ", storeID=" + storeID +
                 ", packageID=" + packageID +
                 ", address='" + address + '\'' +
-                ", depositDate=" + depositDate +
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
                 '}';

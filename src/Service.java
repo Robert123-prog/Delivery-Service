@@ -99,90 +99,61 @@ public class Service {
         orderIRepository.update(order);
     }
 
-    public void enrollAsDriver(Integer employeeId) {
-        Employee employee = employeeIRepository.get(employeeId);
-        if (employee == null) {
-            throw new IllegalArgumentException("Employee with ID " + employeeId + " not found.");
+    public void enrollAsDriver(Integer deliveryPersonId, String name, String phone, String license) {
+        if (license == null || license.isEmpty()) {
+            throw new IllegalArgumentException("Provided license is not valid.");
         }
-        if (employee.getLicense() == null || employee.getLicense().isEmpty()) {
-            throw new IllegalArgumentException("Employee with ID " + employeeId + " does not have a valid driver's license.");
-        }
-
-        Delivery_Person deliveryPerson = new Delivery_Person(employee.getEmployeeID(), true);
+        Employee newEmployee = new Employee(name,phone,license);
+        employeeIRepository.create(newEmployee);
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId,true,phone,name,license);
         deliveryPersonIRepository.update(deliveryPerson);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void createCustomer(Integer Id, String name, String address, String phone, String email){
+    public void registerShop(Integer storeId, String name, String address, String contact)
+    {
+        if (storeId == null || name == null || name.isEmpty() || address == null || address.isEmpty() || contact == null || contact.isEmpty()) {
+            throw new IllegalArgumentException("All fields are required for shop registration.");
+        }
+        Store newStore = new Store(storeId, name, address, contact);
+        storeIRepository.create(newStore);
+    }
+    public void registerDeposit(Integer depositId, Integer storeId, Integer packageId, String address, String status) {
+        if (depositId == null || storeId == null || packageId == null ||
+                address == null || address.isEmpty() ||
+                status == null || status.isEmpty()) {
+
+
+    return maxId + 1;
+            throw new IllegalArgumentException("All fields are required for deposit registration.");
+        }
+        Deposit newDeposit = new Deposit(depositId, address, status);
+        depositIRepository.create(newDeposit);
+        Store store = storeIRepository.get(storeId);
+        if (store != null) {
+            store.addDeposit(newDeposit);
+        } else {
+            throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
+        }
+    }
+    public void removeStore(Integer storeId) {
+        Store store = storeIRepository.get(storeId);
+        if (store != null) {
+            storeIRepository.delete(storeId);
+        }
+    }
+    public void removeDeposit(Integer depositId) {
+        Deposit deposit = depositIRepository.get(depositId);
+        Store store = storeIRepository.get(depositId);
+        if (store != null && store.getDeposits().contains(deposit)) {
+            store.getDeposits().remove(deposit);
+            depositIRepository.delete(depositId);
+            storeIRepository.update(store);
+        }
+    }
+
+          
+          
+          
+   public void createCustomer(Integer Id, String name, String address, String phone, String email){
         Customer customer = new Customer(Id, name, address, phone, email);
         customerIRepository.create(customer);
     }
@@ -239,6 +210,4 @@ public class Service {
                 maxId = Id;
             }
         }
-        return maxId + 1;
-    }
-}
+        }
