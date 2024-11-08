@@ -107,13 +107,13 @@ public class Service {
         orderIRepository.update(order);
     }
 */
-    public void enrollAsDriver(Integer deliveryPersonId, String name, String phone, String license) {
+    public void enrollAsDriver(Integer deliveryPersonId, boolean verified, String name, String phone, String license) {
         if (license == null || license.isEmpty()) {
             throw new IllegalArgumentException("Provided license is not valid.");
         }
         Employee newEmployee = new Employee(name, phone, license);
         employeeIRepository.create(newEmployee);
-        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId, true, phone, name, license);
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId, verified, phone, name, license);
         deliveryPersonIRepository.update(deliveryPerson);
     }
 
@@ -220,6 +220,7 @@ public class Service {
         }
         return maxId + 1;
     }
+
 
     public Integer getNewDepositId() {
         int maxId = 0;
