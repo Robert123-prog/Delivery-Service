@@ -76,6 +76,20 @@ public class Employee implements HasID{
         deliveries.add(delivery);
     }
 
+
+    public void removeDeliv(Integer deliveryId) {
+        Delivery deliveryToRemove = null;
+        for (Delivery delivery : deliveries) {
+            if (delivery.getDeliveryID().equals(deliveryId)) {
+                deliveryToRemove = delivery;
+                break;
+            }
+        }
+        if (deliveryToRemove != null) {
+            deliveries.remove(deliveryToRemove);
+        }
+    }
+
     @Override
     public String toString() {
         return "Employee{" +

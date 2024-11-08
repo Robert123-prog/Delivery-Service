@@ -43,6 +43,11 @@ public class Department implements HasID{
         employees.add(employee);
     }
 
+    public boolean removeEmployee(Employee employee) {
+        boolean removed = employees.remove(employee);
+        return removed;
+    }
+
     @Override
     public String toString() {
         return "Department{" +

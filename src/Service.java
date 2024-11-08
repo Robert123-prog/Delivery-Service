@@ -170,14 +170,41 @@ public class Service {
             throw new IllegalArgumentException("Store with ID " + departmentId + " not found.");
         }
     }
-    /*
-    alex
-     */
-    //public void createNewDeliveryPerson(Integer Id, boolean verified, )
+    public void pickDelivery(Integer employeeId ,Integer deliveryId) {
+        Delivery delivery = deliveryIRepository.get(deliveryId);
+        Employee employee = employeeIRepository.get(employeeId);
+        if (delivery != null && employee != null) {
+            employee.addDelivery(delivery);
+        }
+        else
+            throw new IllegalArgumentException("Store with ID " + deliveryId + " not found.");
+    }
 
-    public void createStore(Integer Id, String name, String address, String contact) {
-        Store store = new Store(Id, name, address, contact);
-        storeIRepository.create(store);
+    public void removeDelivery(Integer deliveryId) {
+        Delivery delivery = deliveryIRepository.get(deliveryId);
+        Employee employee = employeeIRepository.get(delivery.getEmployeeID());
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(delivery.getDeliveryPeronID());
+        if (employee != null) {
+            employee.removeDeliv(deliveryId);
+        }
+        if (deliveryPerson != null) {
+            deliveryPerson.removeDeliv(deliveryId);
+        }
+        deliveryIRepository.delete(deliveryId);
+    }
+
+    public void unenrollEmployee(Integer employeeId) {
+        Employee employee = employeeIRepository.get(employeeId);
+        Department department = departmentIRepository.get(employee.getDepartmentID());
+        if (department != null) {
+            department.removeEmployee(employee);
+        }
+        employeeIRepository.delete(employeeId);
+
+    }
+    void unenrollDeliveryPerson(Integer deliveryPersonId) {
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
+        deliveryIRepository.delete(deliveryPersonId);
     }
 
     public Integer getNewCustomerId() {

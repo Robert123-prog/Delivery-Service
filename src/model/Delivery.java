@@ -1,14 +1,18 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Delivery implements HasID{
     private final Integer deliveryID;
+    private Integer deliveryPeronID;
     private int employeeID;
     private int orderID;
     private int transportationID;
     private Timestamp time;
     private Transportation transportation_type;
+    private List<Order> orders;
+
 
     /*
     Employee - Delivery: Aggregation => employee not initialized in the constructor
@@ -22,19 +26,23 @@ public class Delivery implements HasID{
         this.time = time;
     }
 
-    public int getDeliveryID() {
+    public Integer getDeliveryID() {
         return deliveryID;
     }
 
-    public int getEmployeeID() {
+    public Integer getEmployeeID() {
         return employeeID;
+    }
+
+    public Integer getDeliveryPeronID() {
+        return deliveryPeronID;
     }
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
 
-    public int getOrderID() {
+    public Integer getOrderID() {
         return orderID;
     }
 
@@ -58,6 +66,10 @@ public class Delivery implements HasID{
     public void setTransportation_type(Transportation transportation_type) {
         this.transportation_type = transportation_type;
     }
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
 
     @Override
     public String toString() {
