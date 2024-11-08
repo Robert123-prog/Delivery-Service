@@ -54,10 +54,15 @@ public class App {
 
                 break;
             case 2:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
+
+
 
                 break;
             case 3:
-
+                sellerMenu();
                 break;
             case 4:
 
@@ -82,7 +87,7 @@ public class App {
         switch (userChoice){
             case 1:
                 System.out.println("Please complete the following fields:");
-                System.out.println("Please complete the following fields:");
+
 
                 break;
             case 2:
@@ -144,12 +149,47 @@ public class App {
 
         switch (userChoice){
             case 1:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
+
+                System.out.println("Name: ");
+                String name = fieldScanner.nextLine();
+
+                System.out.println("Address: ");
+                String address = fieldScanner.nextLine();
+
+                System.out.println("Contact: ");
+                String contact = fieldScanner.nextLine();
+
+
 
                 break;
             case 2:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
 
                 break;
             case 3:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            case 8:
 
                 break;
             default:

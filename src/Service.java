@@ -169,10 +169,13 @@ public class Service {
      */
     //public void createNewDeliveryPerson(Integer Id, boolean verified, )
 
+    /*
     public void createStore(Integer Id, String name, String address, String contact) {
         Store store = new Store(Id, name, address, contact);
         storeIRepository.create(store);
     }
+    */
+
 
     public Integer getNewCustomerId() {
         int maxId = 0;

@@ -26,7 +26,7 @@ public class Controller {
 
     public void createStore(String name, String address, String contact){
         Integer Id = service.getNewStoreId();
-        service.createStore(Id, name, address, contact);
+        service.registerShop(Id, name, address, contact);
     }
 
 
