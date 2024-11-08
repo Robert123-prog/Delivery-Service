@@ -29,6 +29,11 @@ public class Delivery_Person extends Employee{
         this.verified = verified;
     }
 
+    public boolean removeDelivery(Delivery delivery) {
+        boolean removed = deliveries.remove(delivery);
+        return removed;
+    }
+
     @Override
     public String toString() {
         return "Delivery_Person{" +
