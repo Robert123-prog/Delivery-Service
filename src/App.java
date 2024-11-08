@@ -1,3 +1,8 @@
+import model.Customer;
+import model.Employee;
+import repository.IRepository;
+import repository.InMemoryRepo;
+
 import java.util.Scanner;
 
 public class App {
@@ -16,6 +21,21 @@ public class App {
          */
 
         mainMenu();
+    }
+    private static IRepository<Customer> createInMemoryCustomerRepository() {
+        IRepository<Customer> customerIRepository = new InMemoryRepo<>();
+        customerIRepository.create(new Customer(1, "Dorel" ,"Cluj-Napoca","0774596204","dorel@gmail.com"));
+        customerIRepository.create(new Customer(2,"Balintescu","Mioveni","0734682134","balintescu@gmail.com"));
+        customerIRepository.create(new Customer(3,"Andrei","Zalau","0797794239","andrei@gmail.com"));
+        return customerIRepository;
+    }
+    private static IRepository<Employee> createInMemoryEmployeeRepository() {
+        IRepository<Employee> employeeIRepository = new InMemoryRepo<>();
+        employeeIRepository.create(new Employee(3,1,"Eminovici","0742092989","part time"));
+        employeeIRepository.create(new Employee(3,1,"Stefan","071998491","full time"));
+        employeeIRepository.create(new Employee(3,2,"David","077636274","full time"));
+        return employeeIRepository;
+
     }
 
     public void mainMenu(){
