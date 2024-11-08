@@ -2,6 +2,7 @@ import model.*;
 
 import repository.IRepository;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -75,14 +76,14 @@ public class Service {
         return packageIRepository.readAll();
     }
 
-    public void placeOrder(Integer CustomerId, Order order) {
+    public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
         Customer customer = customerIRepository.get(CustomerId);
+        Order order = new Order(orderID,orderDate,deliveryDateTime,cost,status);
         if (customer != null) {
             customer.getOrders().add(order);
         }
         orderIRepository.update(order);
         customerIRepository.update(customer);
-
     }
 
     public void removeOrder(Integer CustomerId, Integer orderID) {
@@ -96,12 +97,12 @@ public class Service {
             }
         }
     }
-
+/*
     public void scheduleDelivery(Order order, LocalDateTime deliveryDateTime) {
         order.setDeliveryDateTime(deliveryDateTime);
         orderIRepository.update(order);
     }
-
+*/
     public void enrollAsDriver(Integer deliveryPersonId, String name, String phone, String license) {
         if (license == null || license.isEmpty()) {
             throw new IllegalArgumentException("Provided license is not valid.");
@@ -112,7 +113,7 @@ public class Service {
         deliveryPersonIRepository.update(deliveryPerson);
     }
 
-    public void registerShop(Integer storeId, String name, String address, String contact) {
+    public void registerStore(Integer storeId, String name, String address, String contact) {
         if (storeId == null || name == null || name.isEmpty() || address == null || address.isEmpty() || contact == null || contact.isEmpty()) {
             throw new IllegalArgumentException("All fields are required for shop registration.");
         }
@@ -162,8 +163,13 @@ public class Service {
     public void createEmployee(Integer Id, Integer departmentId, String name, String phone, String license) {
         Employee employee = new Employee(Id, departmentId, name, phone, license);
         employeeIRepository.create(employee);
+        Department department = departmentIRepository.get(departmentId);
+        if (department != null) {
+            department.addEmployee(employee);
+        } else {
+            throw new IllegalArgumentException("Store with ID " + departmentId + " not found.");
+        }
     }
-
     /*
     alex
      */
