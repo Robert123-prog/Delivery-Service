@@ -7,13 +7,13 @@ public class App {
         this.controller = controller;
     }
 
-    private
-
-
     static Scanner integerScanner = new Scanner(System.in);
     static Scanner fieldScanner = new Scanner(System.in);
 
     public void main(String[] args) {
+        /*
+        sample data
+         */
 
         mainMenu();
     }
@@ -274,11 +274,10 @@ public class App {
         System.out.println("==================== Delivery Person Menu =====================");
         System.out.println("Choose one of the following actions:");
         System.out.println("=======================================================");
-        System.out.println("1. Enroll as driver");//se face automat in mainMenu()
-        System.out.println("2. Process a delivery");
-        System.out.println("3. Assign vehicle");
-        System.out.println("4. Select preferred transportation type");
-        System.out.println("5. Get verified");
+        System.out.println("1. Process a delivery");
+        System.out.println("2. Assign vehicle");
+        System.out.println("3. Select preferred transportation type");
+        System.out.println("4. Get verified");
 
         int userChoice = integerScanner.nextInt();
 

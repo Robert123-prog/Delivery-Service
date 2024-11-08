@@ -3,9 +3,6 @@ import model.Department;
 import model.Deposit;
 import model.Store;
 
-import java.io.StringReader;
-import java.net.Inet4Address;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,11 +15,6 @@ public class Controller {
     public void createLoggedInCustomer(String name, String address, String phone, String email){
         Integer Id = service.getNewCustomerId();
         service.createCustomer(Id, name, address, phone, email);
-    }
-
-    public void createLoggedInEmployee(Integer departmentId, String name, String phone, String license){
-        Integer Id = service.getNewEmployeeId();
-        service.createEmployee(Id, departmentId, name, phone, license);
     }
 
     /*
@@ -119,7 +111,8 @@ public class Controller {
 
     public void createDeliveryPerson(String name, String phone, String license){
         Integer deliveryPersonId = service.getNewDeliveryPersonId();
-        service.enrollAsDriver(deliveryPersonId, name, phone, license);
+        boolean verified = verifyDeliveryPerson();
+        service.enrollAsDriver(deliveryPersonId, verified, name, phone, license);
     }
 
 }
