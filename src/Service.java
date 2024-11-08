@@ -76,6 +76,10 @@ public class Service {
         return packageIRepository.readAll();
     }
 
+    public List<Deposit> getDeposits(){
+        return depositIRepository.readAll();
+    }
+
     public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
         Customer customer = customerIRepository.get(CustomerId);
         Order order = new Order(orderID,orderDate,deliveryDateTime,cost,status);
@@ -121,13 +125,13 @@ public class Service {
         storeIRepository.create(newStore);
     }
 
-    public void registerDeposit(Integer depositId, Integer storeId, Integer packageId, String address, String status) {
-        if (depositId == null || storeId == null || packageId == null ||
+    public void registerDeposit(Integer depositId, Integer storeId, String address, String status) {
+        if (depositId == null || storeId == null ||
                 address == null || address.isEmpty() ||
                 status == null || status.isEmpty()) {
             throw new IllegalArgumentException("All fields are required for deposit registration.");
         }
-        Deposit newDeposit = new Deposit(depositId, address, status);
+        Deposit newDeposit = new Deposit(depositId, address, status, storeId);
         depositIRepository.create(newDeposit);
         Store store = storeIRepository.get(storeId);
         if (store != null) {
@@ -186,6 +190,16 @@ public class Service {
     public Integer getNewCustomerId() {
         int maxId = 0;
         for (Integer Id : customerIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public Integer getNewDepositId() {
+        int maxId = 0;
+        for (Integer Id : depositIRepository.getKeys()) {
             if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }

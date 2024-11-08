@@ -4,8 +4,7 @@ import java.util.List;
 
 public class Deposit implements HasID{
     private final Integer depositID;
-    private int storeID;
-    private int packageID;
+    private Integer storeID;
     private String address;
     private String status;
     private List<Packages> packages;
@@ -17,10 +16,11 @@ public class Deposit implements HasID{
      */
 
 
-    public Deposit(int depositID, String address, String status){
+    public Deposit(int depositID, String address, String status, Integer storeID){
         this.depositID = depositID;
         this.address = address;
         this.status = status;
+        this.storeID = storeID;
     }
 
     public int getDepositID() {
@@ -33,14 +33,6 @@ public class Deposit implements HasID{
 
     public void setStoreID(int storeID) {
         this.storeID = storeID;
-    }
-
-    public int getPackageID() {
-        return packageID;
-    }
-
-    public void setPackageID(int packageID) {
-        this.packageID = packageID;
     }
 
     public String getAddress() {
@@ -72,7 +64,6 @@ public class Deposit implements HasID{
         return "Deposit{" +
                 "depositID=" + depositID +
                 ", storeID=" + storeID +
-                ", packageID=" + packageID +
                 ", address='" + address + '\'' +
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
