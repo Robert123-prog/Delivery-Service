@@ -355,4 +355,15 @@ public class Service {
         }
         return maxId;
     }
+
+    public Integer getLastLoggedInDeliveryPersonId() {
+        int maxId = 0;
+        for (Integer Id : deliveryPersonIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId;
+    }
+
 }

@@ -536,19 +536,42 @@ public class App {
 
         int userChoice = integerScanner.nextInt();
 
-        switch (userChoice){
-            case 1:
+        if (userChoice != 4){
+            System.out.println("!!!You must get verified before being able to do anything!!!");
+        }else {
+            Integer deliveryPersonId = controller.getLastLoggedInDeliveryPersonId();
+            boolean verified = controller.verifyDeliveryPerson(deliveryPersonId);
 
-                break;
-            case 2:
+            if (verified){
+                System.out.println("==================== Delivery Person Menu =====================");
+                System.out.println("Choose one of the following actions:");
+                System.out.println("=======================================================");
+                System.out.println("1. Process a delivery");
+                System.out.println("2. Assign vehicle");
+                System.out.println("3. Select preferred transportation type");
 
-                break;
-            case 3:
+                switch (userChoice){
+                    case 1:
 
-                break;
-            default:
-                System.out.println("Invalid Choice!");
-                deliveryPersonMenu();
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    default:
+                        System.out.println("Invalid Choice!");
+                        deliveryPersonMenu();
+                }
+
+
+            }else {
+                System.out.println("We're very sorry, but right now you do not qualify to be a delivery person!");
+                mainMenu();
+            }
         }
+
+
     }
 }

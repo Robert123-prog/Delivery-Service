@@ -301,4 +301,9 @@ public class Controller {
         return service.getLastLoggedInEmployeeId();
     }
 
+    public Integer getLastLoggedInDeliveryPersonId(){
+        return service.getLastLoggedInDeliveryPersonId();
+    }
+
+
 }
