@@ -119,7 +119,7 @@ public class Controller {
         System.out.println("Registered delivery person " + deliveryPersonId + " to deposit " + verified);
     }
 
-    public void  deleteEmployee(Integer employeeId){
+    public void deleteEmployee(Integer employeeId){
         service.unenrollEmployee(employeeId);
         System.out.println("Employee with id " + employeeId + " unenrolled successfully");
     }
@@ -245,6 +245,18 @@ public class Controller {
 
     public void removeSelectedOrder(Integer customerId, Integer orderId){
         service.removeOrder(customerId, orderId);
+    }
+
+    public void viewAllEmployees(){
+        StringBuilder output = new StringBuilder("Available Departments:\n");
+        service.getEmployees().forEach(employee -> output.append(employee.toString()).append("\n"));
+        System.out.println(output);
+    }
+
+    public void viewAllDeliveries(){
+        StringBuilder output = new StringBuilder("Available Departments:\n");
+        service.getDelivery().forEach(delivery -> output.append(delivery.toString()).append("\n"));
+        System.out.println(output);
     }
 
 }

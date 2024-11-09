@@ -355,10 +355,10 @@ public class App {
 
         switch (userChoice){
             case 1:
-
+                controller.viewAllEmployees();
                 break;
             case 2:
-
+                controller.viewAllDepartments();
                 break;
             case 3:
 
