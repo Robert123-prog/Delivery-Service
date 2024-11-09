@@ -209,6 +209,14 @@ public class Service {
         }
         deliveryIRepository.delete(deliveryId);
     }
+    public void calculateAndUpdateOrderCost(Integer orderId) {
+        Order order = orderIRepository.get(orderId);
+        double totalCost = order.getPackages().stream()
+                .mapToDouble(Packages::getCost)
+                .sum();
+        order.setCost(totalCost);
+        orderIRepository.update(order);
+    }
 
     public void unenrollEmployee(Integer employeeId) {
         Employee employee = employeeIRepository.get(employeeId);
