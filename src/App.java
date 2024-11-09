@@ -24,7 +24,7 @@ public class App {
         /*
         sample data
          */
-
+        runSample();
         mainMenu();
     }
 
@@ -44,34 +44,34 @@ public class App {
 
     }
 
-    /*
+
     private static IRepository<Delivery> createInMemoryDeliveryRepository() {
         IRepository<Delivery> deliveryIRepository = new InMemoryRepo<>();
-        deliveryIRepository.create(new Delivery(1, ));
-        deliveryIRepository.create(new Delivery());
-        deliveryIRepository.create(new Delivery());
+        //deliveryIRepository.create(new Delivery(1, ));
+        //deliveryIRepository.create(new Delivery());
+        //deliveryIRepository.create(new Delivery());
         return deliveryIRepository;
     }
-    */
 
-    /*
+
+
     private static IRepository<Delivery_Person> createInMemoryDeliveryPersonRepository() {
         IRepository<Delivery_Person> deliveryPersonIRepository = new InMemoryRepo<>();
-        deliveryPersonIRepository.create(new Delivery_Person(3,1,"Eminovici","0742092989","part time"));
-        deliveryPersonIRepository.create(new Delivery_Person(3,1,"Stefan","071998491","full time"));
-        deliveryPersonIRepository.create(new Delivery_Person(3,2,"David","077636274","full time"));
+        //deliveryPersonIRepository.create(new Delivery_Person(3,1,"Eminovici","0742092989","part time"));
+        //deliveryPersonIRepository.create(new Delivery_Person(3,1,"Stefan","071998491","full time"));
+        //deliveryPersonIRepository.create(new Delivery_Person(3,2,"David","077636274","full time"));
         return deliveryPersonIRepository;
     }
-    */
 
-    /*
+
+
     private static IRepository<Department> createInMemoryDepartmentRepository() {
         IRepository<Department> departmentIRepository = new InMemoryRepo<>();
-        departmentIRepository.create(new Department(1, "Business Intelligence", "Develop Business", em));
+        departmentIRepository.create(new Department(1, "Business Intelligence", "Develop Business"));
         return departmentIRepository;
     }
 
-     */
+
     private static IRepository<Deposit> createInMemoryDepositRepository() {
         IRepository<Deposit> depositIRepository = new InMemoryRepo<>();
         depositIRepository.create(new Deposit(1, "Str. Ploiesti", "Full", 1));
@@ -81,40 +81,39 @@ public class App {
 
     }
 
-    /*
+
     //LocalDateTime ???
     private static IRepository<Order> createInMemoryOrderRepository() {
         IRepository<Order> orderIRepository = new InMemoryRepo<>();
-        orderIRepository.create(new Order(1, new Date(2020, 11, 10), ));
-        orderIRepository.create(new Order());
-        orderIRepository.create(new Order());
+        //orderIRepository.create(new Order(1, new Date(2020, 11, 10,)));
+        //orderIRepository.create(new Order());
+        //orderIRepository.create(new Order());
         return orderIRepository;
     }
-     */
 
-    /*
+
+
     private static IRepository<Packages> createInMemoryPackageRepository() {
         IRepository<Packages> packagesIRepository = new InMemoryRepo<>();
-        packagesIRepository.create(new Packages(1, 100.5, "4x4x4"));
-        packagesIRepository.create(new Packages(2, 20.8, "2x4x3"));
-        packagesIRepository.create(new Packages(3, 10.2, "5x2x3"));
+        //packagesIRepository.create(new Packages(1, 100.5, "4x4x4"));
+        //packagesIRepository.create(new Packages(2, 20.8, "2x4x3"));
+        //packagesIRepository.create(new Packages(3, 10.2, "5x2x3"));
         return packagesIRepository;
     }
 
-     */
 
-    /*
+
+
     private static IRepository<Personal_Vehicle> createInMemoryPersonalVehicleRepository() {
         IRepository<Personal_Vehicle> personalVehicleIRepository = new InMemoryRepo<>();
-        personalVehicleIRepository.create(new Personal_Vehicle(1, 10, 20, Transportation_Type.Ground);
-        personalVehicleIRepository.create(new Personal_Vehicle(2, 50, 1100, Transportation_Type.Aerial);
-        personalVehicleIRepository.create(new Personal_Vehicle(3, 30, 9345, Transportation_Type.Naval);
+        personalVehicleIRepository.create(new Personal_Vehicle(1, 10, 20, Transportation_Type.Ground));
+        personalVehicleIRepository.create(new Personal_Vehicle(2, 50, 1100, Transportation_Type.Aerial));
+        personalVehicleIRepository.create(new Personal_Vehicle(3, 30, 9345, Transportation_Type.Naval));
         return personalVehicleIRepository;
     }
 
-     */
 
-    /*
+
     private static IRepository<Store> createInMemoryStoreRepository() {
         IRepository<Store> storeIRepository = new InMemoryRepo<>();
         storeIRepository.create(new Store(1, "Auchan", "Str. Posada", "Alexandru"));
@@ -123,9 +122,18 @@ public class App {
         return storeIRepository;
     }
 
-     */
-
-
+    private static void runSample() {
+        IRepository<Customer> customerIRepository = createInMemoryCustomerRepository();
+        IRepository<Employee> employeeIRepository = createInMemoryEmployeeRepository();
+        IRepository<Delivery> deliveryIRepository = createInMemoryDeliveryRepository();
+        IRepository<Delivery_Person> deliveryPersonIRepository = createInMemoryDeliveryPersonRepository();
+        IRepository<Deposit> depositIRepository = createInMemoryDepositRepository();
+        IRepository<Personal_Vehicle> personalVehicleIRepository = createInMemoryPersonalVehicleRepository();
+        IRepository<Department> departmentIRepository = createInMemoryDepartmentRepository();
+        IRepository<Order> orderIRepository = createInMemoryOrderRepository();
+        IRepository<Store> storeIRepository = createInMemoryStoreRepository();
+        IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
+    }
 
     public void mainMenu(){
         System.out.println("======Welcome to the Delivery-Service Application======");

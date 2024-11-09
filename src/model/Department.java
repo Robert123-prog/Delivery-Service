@@ -8,11 +8,10 @@ public class Department implements HasID{
     private String task;
     private List<Employee> employees;
 
-    public Department(Integer departmentID, String name, String task, List<Employee> employees){
+    public Department(Integer departmentID, String name, String task){
         this.departmentID = departmentID;
         this.name = name;
         this.task = task;
-        this.employees = employees;
     }
 
     public int getDepartmentID() {
