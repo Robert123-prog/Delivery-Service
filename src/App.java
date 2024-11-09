@@ -194,6 +194,7 @@ public class App {
                 String employeeLicense = fieldScanner.nextLine();
 
                 controller.createEmployee(departmentId, employeeName, employeePhone, employeeLicense);
+                employeeMenu();
                 break;
             case 3:
                 sellerMenu();
@@ -213,6 +214,7 @@ public class App {
                 String deliveryPersonLicense = fieldScanner.nextLine();
 
                 controller.createDeliveryPerson(deliveryPersonName, deliveryPersonPhone, deliveryPersonLicense);
+                deliveryPersonMenu();
                 break;
             default:
                 System.out.println("Invalid Choice!!");
@@ -330,9 +332,9 @@ public class App {
                 Integer orderToRemoveId = integerScanner.nextInt();
                 boolean orderExists2 = controller.validateSelectedOrder(orderToRemoveId);
 
-                if (!orderExists2) throw new IllegalArgumentException("One or more packages don't exist!");
+                if (!orderExists2) throw new IllegalArgumentException("The order doesn't exist!");
 
-                Order orderToRemove = controller.getSelectedOrder(orderToRemoveId);
+//                Order orderToRemove = controller.getSelectedOrder(orderToRemoveId);
 
                 controller.removeSelectedOrder(customerID2, orderToRemoveId);
                 break;
@@ -356,11 +358,11 @@ public class App {
         System.out.println("1. View all employees");
         System.out.println("2. View all departments");
         System.out.println("3. View all deliveries");
-        System.out.println("4. Enroll as an employee");
-        System.out.println("5. Process a delivery");
+        System.out.println("4. Process a delivery");
 
         int userChoice = integerScanner.nextInt();
 
+        //before a user
         switch (userChoice){
             case 1:
                 controller.viewAllEmployees();
@@ -369,7 +371,30 @@ public class App {
                 controller.viewAllDepartments();
                 break;
             case 3:
+                controller.viewAllDeliveries();
+                break;
+            case 4:
+                System.out.println("=======================================================");
+                System.out.println("Please closely follow the instructions below");
+                System.out.println("=======================================================");
+                System.out.println("The following are unassigned deliveries");
+                System.out.println("=======================================================");
 
+                List<Delivery> unassignedDeliveries = controller.getUnassignedDeliveries();
+                controller.viewUnassignedDeliveries(unassignedDeliveries);
+
+                System.out.println("=======================================================");
+                System.out.println("Please enter the Id of the delivery you want to be assigned to: ");
+                System.out.println("=======================================================");
+
+                Integer deliveryId = integerScanner.nextInt();
+                boolean existsDelivery = controller.validateSelectedDelivery(deliveryId);
+
+                if (!existsDelivery) throw new IllegalArgumentException("The delivery doesn't exist!");
+
+                Integer employeeId = controller.getLastLoggedInEmployeeId();
+
+                controller.assignEmployeeToUnassignedDelivery(employeeId, deliveryId);
                 break;
             default:
                 System.out.println("Invalid Choice!");
@@ -389,6 +414,7 @@ public class App {
         System.out.println("6. View all your Deposits");
         System.out.println("7. View all your Stores");
         System.out.println("8. See all your customers");
+        System.out.println("9. Add package");
 
 
         int userChoice = integerScanner.nextInt();
@@ -473,6 +499,22 @@ public class App {
                 break;
             case 8:
                 controller.viewAllCustomers();
+                break;
+            case 9:
+                System.out.println("=======================================================");
+                System.out.println("Please complete the following field:");
+                System.out.println("=======================================================");
+
+                System.out.println("Package cost: ");
+                int cost = integerScanner.nextInt();
+
+                System.out.println("Weight");
+                double weight = integerScanner.nextInt();
+
+                System.out.println("Dimensions: ");
+                String dimensions = fieldScanner.nextLine();
+
+                controller.createPackage(cost, weight, dimensions);
                 break;
             default:
                 System.out.println("Invalid Choice!");

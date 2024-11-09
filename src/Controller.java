@@ -248,15 +248,57 @@ public class Controller {
     }
 
     public void viewAllEmployees(){
-        StringBuilder output = new StringBuilder("Available Departments:\n");
+        StringBuilder output = new StringBuilder("All Employees:\n");
         service.getEmployees().forEach(employee -> output.append(employee.toString()).append("\n"));
         System.out.println(output);
     }
 
     public void viewAllDeliveries(){
-        StringBuilder output = new StringBuilder("Available Departments:\n");
+        StringBuilder output = new StringBuilder("All Deliveries:\n");
         service.getDelivery().forEach(delivery -> output.append(delivery.toString()).append("\n"));
         System.out.println(output);
+    }
+
+    public void createPackage(int cost, double weight, String dimensions){
+        Integer packageId = service.getNewPackageId();
+        service.createPackage(packageId, cost, weight, dimensions);
+    }
+
+    public List<Delivery> getUnassignedDeliveries(){
+        List<Delivery> deliveries = service.getDelivery();
+        List<Delivery> unassignedDeliveries = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if (delivery.getEmployeeID() == null){
+                unassignedDeliveries.add(delivery);
+            }
+        }
+        return unassignedDeliveries;
+    }
+
+    public void viewUnassignedDeliveries(List<Delivery> deliveries){
+        StringBuilder output = new StringBuilder("Unassigned Deliveries:\n");
+        deliveries.forEach(delivery -> output.append(delivery.toString()).append("\n"));
+        System.out.println(output);
+    }
+
+    public boolean validateSelectedDelivery(Integer deliveryId){
+        List<Delivery> deliveries = service.getDelivery();
+
+        for (Delivery delivery: deliveries){
+            if (Objects.equals(delivery.getDeliveryID(), deliveryId)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void assignEmployeeToUnassignedDelivery(Integer employeeId, Integer deliveryId){
+        service.pickDelivery(employeeId, deliveryId);
+    }
+
+    public Integer getLastLoggedInEmployeeId(){
+        return service.getLastLoggedInEmployeeId();
     }
 
 }
