@@ -2,6 +2,9 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -154,17 +157,14 @@ public class App {
                 String email = fieldScanner.nextLine();
 
                 this.controller.createLoggedInCustomer(name, address, phone, email);
-
                 customerMenu();
-
-
                 break;
             case 2:
                 System.out.println("=======================================================");
                 System.out.println("Please complete the following fields:");
                 System.out.println("=======================================================");
                 System.out.println("=======================================================");
-                System.out.println("Please enter the Id of the desired store: ");
+                System.out.println("Please enter the Id of the desired department: ");
                 System.out.println("=======================================================");
 
                 controller.viewAllDepartments();
@@ -223,7 +223,35 @@ public class App {
 
         switch (userChoice){
             case 1:
+                System.out.println("=======================================================");
                 System.out.println("Please complete the following fields:");
+                System.out.println("=======================================================");
+                System.out.println("!Order date will be set automatically!");
+                System.out.println("=======================================================");
+
+                Integer customerId = controller.getLastLoggedInCustomerId();
+
+                LocalDate currentDate = LocalDate.now();
+                Date orderDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+
+                System.out.println("Delivery Date and Time: ");
+                System.out.println("=======================================================");
+                System.out.println("Please enter the date and time in the following format: yyyy-MM-ddThh:mm,");
+                System.out.println("Where:");
+                System.out.println("y = year");
+                System.out.println("M = month");
+                System.out.println("d = day");
+                System.out.println("h = hour");
+                System.out.println("m = minutes");
+                System.out.println("=======================================================");
+                System.out.println("!!!IF YOU DONT WANT THE SPECIFIC MINUTES, ENTER: hh:00");
+                System.out.println("=======================================================");
+                System.out.println("DISCLAIMER: The order might not arrive in the exact specified minute");
+                System.out.println("=======================================================");
+
+                LocalDateTime dateTime = LocalDateTime.parse(fieldScanner.nextLine());
+
 
 
                 break;
@@ -299,8 +327,7 @@ public class App {
                 System.out.println("Contact: ");
                 String contact = fieldScanner.nextLine();
 
-
-
+                controller.createStore(name, address, contact);
                 break;
             case 2:
                 System.out.println("=======================================================");
@@ -309,6 +336,7 @@ public class App {
 
                 System.out.println("Store ID: ");
                 Integer Id = integerScanner.nextInt();
+                controller.removeStore(Id);
 
                 break;
             case 3:
@@ -329,7 +357,7 @@ public class App {
                 System.out.println("Status: ");
                 String status = fieldScanner.nextLine();
 
-                controller.createStore(String.valueOf(ID), depositAddress, status);
+                controller.registerDeposit(ID, depositAddress, status);
                 break;
             case 4:
                 System.out.println("=======================================================");

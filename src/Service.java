@@ -234,6 +234,16 @@ public class Service {
         return maxId + 1;
     }
 
+    public Integer getLastLoggedInCustomerId() {
+        int maxId = 0;
+        for (Integer Id : customerIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId;
+    }
+
 
     public Integer getNewDepositId() {
         int maxId = 0;
