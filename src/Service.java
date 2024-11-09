@@ -330,4 +330,29 @@ public class Service {
         }
         return maxId + 1;
     }
+
+    public Integer getNewPackageId(){
+        int maxId = 0;
+        for (Integer Id : packageIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public void createPackage(Integer packageId, int cost, double weight, String dimensions){
+        Packages packages = new Packages(packageId, weight, dimensions, cost);
+        packageIRepository.create(packages);
+    }
+
+    public Integer getLastLoggedInEmployeeId() {
+        int maxId = 0;
+        for (Integer Id : employeeIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId;
+    }
 }
