@@ -1,6 +1,7 @@
 import model.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -148,7 +149,8 @@ public class Controller {
         System.out.println("Delivery with id " + deliveryId + " cancelled by Delivery Person with id" + deliveryPersonId + " successfully");
     }
 
-    public void makeAnOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
+    public void makeAnOrder(Integer CustomerId, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
+        Integer orderID = service.getNewOrderId();
         service.placeOrder(CustomerId, orderID, orderDate, deliveryDateTime, cost, status);
         System.out.println("Order with id " + orderID + "by customer with id " + CustomerId + " successfully");
     }
@@ -160,6 +162,89 @@ public class Controller {
 
     public Integer getLastLoggedInCustomerId(){
         return service.getLastLoggedInCustomerId();
+    }
+
+    public void getAllPackages(){
+        System.out.println(service.getPackages());
+    }
+
+    public boolean validatePackages(List<Integer> Ids){
+        List<Packages> packages = service.getPackages();
+
+        for (Integer id : Ids) {
+            boolean found = false;
+            for (Packages packageItem : packages) {
+                if (packageItem.getId().equals(id)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+
+    public List<Packages> getValidatedPackages(List<Integer> packageIds){
+        List<Packages> allPackages = service.getPackages();
+        List<Packages> selectedPackages = new ArrayList<>();
+
+        for (Integer id : packageIds) {
+            for (Packages packages : allPackages) {
+                if (packages.getId().equals(id)) {
+                    selectedPackages.add(packages);
+                    break;
+                }
+            }
+        }
+        return selectedPackages;
+    }
+
+    public double calculateOrderCost(List<Packages> packages){
+        return service.calculateOrderCostOnPackages(packages);
+    }
+
+    public List<Order> getPersonalOrders(Integer customerId){
+        List<Order> orders = service.getOrders();
+        List<Order> personalOrders = new ArrayList<>();
+
+        for (Order order: orders){
+            if (order.getCustomerID() == customerId){
+                personalOrders.add(order);
+            }
+        }
+        return personalOrders;
+    }
+
+    public void viewPersonalOrders(List<Order> orders){
+        StringBuilder output = new StringBuilder("Available Departments:\n");
+        orders.forEach(order -> output.append(order.toString()).append("\n"));
+        System.out.println(output);
+    }
+
+    public boolean validateSelectedOrder(Integer Id){
+        List<Order> orders = service.getOrders();
+
+        for (Order order: orders){
+            if (Objects.equals(order.getId(), Id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Order getSelectedOrder(Integer orderId){
+        List<Order> orders = service.getOrders();
+
+        for(Order order: orders){
+            if (Objects.equals(order.getId(), orderId)){
+                return order;
+            }
+        }
+        return null;
+    }
+
+    public void removeSelectedOrder(Integer customerId, Integer orderId){
+        service.removeOrder(customerId, orderId);
     }
 
 }

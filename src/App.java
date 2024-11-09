@@ -5,7 +5,9 @@ import repository.InMemoryRepo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -215,7 +217,7 @@ public class App {
         System.out.println("Choose one of the following actions:");
         System.out.println("=======================================================");
         System.out.println("1. Place order");
-        System.out.println("2. Reschedule a delivery");
+        System.out.println("2. Reschedule an order delivery");
         System.out.println("3. Remove an order");
         System.out.println("4. See all your orders");
 
@@ -252,14 +254,85 @@ public class App {
 
                 LocalDateTime dateTime = LocalDateTime.parse(fieldScanner.nextLine());
 
+                System.out.println("In the following, please enter the Id's of desired packages");
+                controller.getAllPackages();
 
+                List<Integer> packageIds = new ArrayList<>();
+                boolean allPackagesExist = controller.validatePackages(packageIds);
 
+                if (!allPackagesExist) throw new IllegalArgumentException("One or more packages don't exist!");
+
+                List<Packages> packages = controller.getValidatedPackages(packageIds);
+
+                double orderCost = controller.calculateOrderCost(packages);
+
+                System.out.println("Status: ");
+                String orderStatus = fieldScanner.nextLine();
+
+                controller.makeAnOrder(customerId, orderDate, dateTime, orderCost, orderStatus);
                 break;
             case 2:
+                System.out.println("=======================================================");
+                System.out.println("Please enter the Id of the desired order to reschedule");
+                System.out.println("=======================================================");
 
+
+                Integer customerID = controller.getLastLoggedInCustomerId();
+
+                List<Order> personalOrders = controller.getPersonalOrders(customerID);
+                controller.viewPersonalOrders(personalOrders);
+
+                Integer orderId = integerScanner.nextInt();
+                boolean orderExists = controller.validateSelectedOrder(orderId);
+
+                if (!orderExists) throw new IllegalArgumentException("One or more packages don't exist!");
+
+                Order order = controller.getSelectedOrder(orderId);
+
+                System.out.println("=======================================================");
+                System.out.println("New delivery date and time: ");
+                System.out.println("=======================================================");
+                System.out.println("Please enter the date and time in the following format: yyyy-MM-ddThh:mm,");
+                System.out.println("Where:");
+                System.out.println("y = year");
+                System.out.println("M = month");
+                System.out.println("d = day");
+                System.out.println("h = hour");
+                System.out.println("m = minutes");
+                System.out.println("=======================================================");
+                System.out.println("!!!IF YOU DONT WANT THE SPECIFIC MINUTES, ENTER: hh:00");
+                System.out.println("=======================================================");
+                System.out.println("DISCLAIMER: The order might not arrive in the exact specified minute");
+                System.out.println("=======================================================");
+
+                LocalDateTime newOrderDateTime = LocalDateTime.parse(fieldScanner.nextLine());
+
+                order.setDeliveryDateTime(newOrderDateTime);
                 break;
             case 3:
+                System.out.println("=======================================================");
+                System.out.println("Please enter the Id of the desired order to remove");
+                System.out.println("=======================================================");
 
+                Integer customerID2 = controller.getLastLoggedInCustomerId();
+
+                List<Order> personalOrders2 = controller.getPersonalOrders(customerID2);
+                controller.viewPersonalOrders(personalOrders2);
+
+                Integer orderToRemoveId = integerScanner.nextInt();
+                boolean orderExists2 = controller.validateSelectedOrder(orderToRemoveId);
+
+                if (!orderExists2) throw new IllegalArgumentException("One or more packages don't exist!");
+
+                Order orderToRemove = controller.getSelectedOrder(orderToRemoveId);
+
+                controller.removeSelectedOrder(customerID2, orderToRemoveId);
+                break;
+            case 4:
+                Integer customerID3 = controller.getLastLoggedInCustomerId();
+
+                List<Order> personalOrdersToView = controller.getPersonalOrders(customerID3);
+                controller.viewPersonalOrders(personalOrdersToView);
                 break;
             default:
                 System.out.println("Invalid Choice!");

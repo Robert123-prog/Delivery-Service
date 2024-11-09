@@ -218,6 +218,16 @@ public class Service {
         orderIRepository.update(order);
     }
 
+
+    public double calculateOrderCostOnPackages(List<Packages> packages){
+        double total = 0.0;
+
+        for (Packages packages1: packages){
+            total += packages1.getCost();
+        }
+        return total;
+    }
+  
     public boolean verifyDeliveryPersonLicense(Integer deliveryPersonId) {
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
         String license = deliveryPerson.getLicense();
@@ -304,6 +314,16 @@ public class Service {
     public Integer getNewStoreId() {
         int maxId = 0;
         for (Integer Id : storeIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
+    public Integer getNewOrderId() {
+        int maxId = 0;
+        for (Integer Id : orderIRepository.getKeys()) {
             if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
