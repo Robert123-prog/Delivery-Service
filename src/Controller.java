@@ -1,5 +1,6 @@
 import model.*;
 
+import java.net.Inet4Address;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -276,6 +277,7 @@ public class Controller {
         return unassignedDeliveries;
     }
 
+
     public void viewUnassignedDeliveries(List<Delivery> deliveries){
         StringBuilder output = new StringBuilder("Unassigned Deliveries:\n");
         deliveries.forEach(delivery -> output.append(delivery.toString()).append("\n"));
@@ -297,12 +299,49 @@ public class Controller {
         service.pickDelivery(employeeId, deliveryId);
     }
 
+    public void assignDeliveryPersonToUnassignedDelivery(Integer employeeId, Integer deliveryId){
+        service.pickDelivery(employeeId, deliveryId);
+    }
+
     public Integer getLastLoggedInEmployeeId(){
         return service.getLastLoggedInEmployeeId();
     }
 
     public Integer getLastLoggedInDeliveryPersonId(){
         return service.getLastLoggedInDeliveryPersonId();
+    }
+
+    public List<Personal_Vehicle> getAllAvailablePersonalVehicles(){
+        List<Personal_Vehicle> allVehicles = service.getPersonalVehicle();
+        List<Personal_Vehicle> availableVehicles = new ArrayList<>();
+
+        for (Personal_Vehicle personalVehicle: allVehicles){
+            if (personalVehicle.getDeliveryPersonID() == null){
+                availableVehicles.add(personalVehicle);
+            }
+        }
+        return availableVehicles;
+    }
+
+    public void viewAvailablePersonalVehicless(List<Personal_Vehicle> personalVehicles){
+        StringBuilder output = new StringBuilder("Unassigned Deliveries:\n");
+        personalVehicles.forEach(personalVehicle -> output.append(personalVehicle.toString()).append("\n"));
+        System.out.println(output);
+    }
+
+    public boolean validateSelectedPersonalVehicle(Integer Id){
+        List<Personal_Vehicle> personalVehicles = service.getPersonalVehicle();
+
+        for (Personal_Vehicle personalVehicle: personalVehicles){
+            if (personalVehicle.getId() == Id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void assignPersonalVehicle(Integer deliveryPersonId, Integer personalVehicleId){
+        service.assignPersonalVehicle(deliveryPersonId, personalVehicleId);
     }
 
 

@@ -179,16 +179,22 @@ public class Service {
         Employee employee = employeeIRepository.get(employeeId);
         if (delivery != null && employee != null) {
             employee.addDelivery(delivery);
+            delivery.setEmployeeID(employeeId);
+            employeeIRepository.update(employee);
+            deliveryIRepository.update(delivery);
         }
         else
             throw new IllegalArgumentException("Store with ID " + deliveryId + " not found.");
     }
+
     public void pickDeliveryToPerson(Integer deliverPersonId, Integer deliveryId) {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliverPersonId);
         if (delivery != null && deliveryPerson != null) {
             deliveryPerson.addDelivery(delivery);
             deliveryPersonIRepository.update(deliveryPerson);
+            delivery.setDeliveryPeronID(deliverPersonId);
+            deliveryIRepository.update(delivery);
         }
     }
 
@@ -366,4 +372,14 @@ public class Service {
         return maxId;
     }
 
+    public void assignPersonalVehicle(Integer deliveryPersonId, Integer personalVehicleId){
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
+        Personal_Vehicle personalVehicle = personalVehicleIRepository.get(personalVehicleId);
+
+        deliveryPerson.setPersonalVehicleId(personalVehicleId);
+        personalVehicle.setDeliveryPersonID(deliveryPersonId);
+
+        deliveryPersonIRepository.update(deliveryPerson);
+        personalVehicleIRepository.update(personalVehicle);
+    }
 }

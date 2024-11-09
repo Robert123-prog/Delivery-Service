@@ -9,6 +9,7 @@ public class Delivery_Person extends Employee{
     private String name;
     private String license;
     private List<Delivery> deliveries;
+    private Integer personalVehicleId;
 
 
     public Delivery_Person(int deliveryPersonID, boolean verified, String phone, String name, String license) {
@@ -32,6 +33,10 @@ public class Delivery_Person extends Employee{
     public boolean removeDelivery(Delivery delivery) {
         boolean removed = deliveries.remove(delivery);
         return removed;
+    }
+
+    public void setPersonalVehicleId(Integer personalVehicleId) {
+        this.personalVehicleId = personalVehicleId;
     }
 
     @Override

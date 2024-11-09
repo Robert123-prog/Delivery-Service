@@ -58,6 +58,9 @@ public class Delivery implements HasID{
         this.transportationID = transportationID;
     }
 
+    public void setDeliveryPeronID(Integer deliveryPeronID) {
+        this.deliveryPeronID = deliveryPeronID;
+    }
 
     public Transportation getTransportation_type() {
         return transportation_type;

@@ -3,7 +3,7 @@ package model;
 public class Personal_Vehicle extends Transportation{
     private final Integer personalVehicleID;
     private int extraFee;
-    private int deliveryPersonID;
+    private Integer deliveryPersonID;
     private int capacity;
     private Transportation_Type transportation_type;
 
@@ -29,7 +29,7 @@ public class Personal_Vehicle extends Transportation{
         this.extraFee = extraFee;
     }
 
-    public int getDeliveryPersonID() {
+    public Integer getDeliveryPersonID() {
         return deliveryPersonID;
     }
 
