@@ -17,14 +17,6 @@ public class Controller {
         service.createCustomer(Id, name, address, phone, email);
     }
 
-    /*
-    alex
-     */
-//    public void createLoggedInDeliveryPerson(Integer departmentId, String name, String phone, String license){
-//        Integer Id = service.getNewEmployeeId();
-//        service.createEmployee(Id, departmentId, name, phone, license);
-//    }
-
     public void createStore(String name, String address, String contact){
         Integer Id = service.getNewStoreId();
         service.registerStore(Id, name, address, contact);
@@ -113,6 +105,10 @@ public class Controller {
         Integer deliveryPersonId = service.getNewDeliveryPersonId();
         boolean verified = verifyDeliveryPerson();
         service.enrollAsDriver(deliveryPersonId, verified, name, phone, license);
+    }
+
+    public Integer getLastLoggedInCustomerId(){
+        return service.getLastLoggedInCustomerId();
     }
 
 }
