@@ -183,16 +183,29 @@ public class Service {
         else
             throw new IllegalArgumentException("Store with ID " + deliveryId + " not found.");
     }
+    public void pickDeliveryToPerson(Integer deliverPersonId, Integer deliveryId) {
+        Delivery delivery = deliveryIRepository.get(deliveryId);
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliverPersonId);
+        if (delivery != null && deliveryPerson != null) {
+            deliveryPerson.addDelivery(delivery);
+            deliveryPersonIRepository.update(deliveryPerson);
+        }
+    }
 
     public void removeDelivery(Integer deliveryId) {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Employee employee = employeeIRepository.get(delivery.getEmployeeID());
-        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(delivery.getDeliveryPeronID());
         if (employee != null) {
             employee.removeDeliv(deliveryId);
         }
+        deliveryIRepository.delete(deliveryId);
+    }
+    public void removeDeliveryToPerson(Integer deliveryId) {
+        Delivery delivery = deliveryIRepository.get(deliveryId);
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(delivery.getDeliveryPeronID());
         if (deliveryPerson != null) {
             deliveryPerson.removeDeliv(deliveryId);
+            deliveryPersonIRepository.update(deliveryPerson);
         }
         deliveryIRepository.delete(deliveryId);
     }

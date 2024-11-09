@@ -344,7 +344,7 @@ public class App {
                 if (!depositExists){
                     throw new IllegalArgumentException("No deposit found");
                 }else {
-                    controller.removeDeposit(depositId);
+                    controller.deleteDeposit(depositId);
                 }
                 break;
             case 5:
