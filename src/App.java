@@ -2,6 +2,7 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -550,12 +551,48 @@ public class App {
                 System.out.println("2. Assign vehicle");
                 System.out.println("3. Select preferred transportation type");
 
-                switch (userChoice){
-                    case 1:
+                int userChoice2 = integerScanner.nextInt();
 
+                switch (userChoice2){
+                    case 1:
+                        System.out.println("=======================================================");
+                        System.out.println("Please closely follow the instructions below");
+                        System.out.println("=======================================================");
+                        System.out.println("The following are unassigned deliveries");
+                        System.out.println("=======================================================");
+
+                        List<Delivery> unassignedDeliveries = controller.getUnassignedDeliveries();
+                        controller.viewUnassignedDeliveries(unassignedDeliveries);
+
+                        System.out.println("=======================================================");
+                        System.out.println("Please enter the Id of the delivery you want to be assigned to: ");
+                        System.out.println("=======================================================");
+
+                        Integer deliveryId = integerScanner.nextInt();
+                        boolean existsDelivery = controller.validateSelectedDelivery(deliveryId);
+
+                        if (!existsDelivery) throw new IllegalArgumentException("The delivery doesn't exist!");
+
+                        Integer deliveryPersonId2 = controller.getLastLoggedInDeliveryPersonId();
+
+                        controller.assignDeliveryPersonToUnassignedDelivery(deliveryPersonId2, deliveryId);
                         break;
                     case 2:
+                        System.out.println("=======================================================");
+                        System.out.println("The following are all Vehicles");
+                        System.out.println("=======================================================");
+                        System.out.println("Please enter the Id of the desired");
 
+                        List<Personal_Vehicle> personalVehicles = controller.getAllAvailablePersonalVehicles();
+                        controller.viewAvailablePersonalVehicless(personalVehicles);
+
+                        Integer personalVehicleId = integerScanner.nextInt();
+                        boolean existsPersonalVehicle = controller.validateSelectedPersonalVehicle(personalVehicleId);
+
+                        if (!existsPersonalVehicle) throw new IllegalArgumentException("The personal vehicle doesn't exist!");
+
+                        Integer deliveryPersonId3 = controller.getLastLoggedInDeliveryPersonId();
+                        controller.assignPersonalVehicle(deliveryPersonId3, personalVehicleId);
                         break;
                     case 3:
 
