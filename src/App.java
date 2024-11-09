@@ -336,7 +336,7 @@ public class App {
 
                 System.out.println("Store ID: ");
                 Integer Id = integerScanner.nextInt();
-                controller.removeStore(Id);
+                controller.deleteStore(Id);
 
                 break;
             case 3:
