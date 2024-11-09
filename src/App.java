@@ -215,7 +215,7 @@ public class App {
         System.out.println("Choose one of the following actions:");
         System.out.println("=======================================================");
         System.out.println("1. Place order");
-        System.out.println("2. Schedule a delivery");
+        System.out.println("2. Reschedule a delivery");
         System.out.println("3. Remove an order");
         System.out.println("4. See all your orders");
 
@@ -336,7 +336,7 @@ public class App {
 
                 System.out.println("Store ID: ");
                 Integer Id = integerScanner.nextInt();
-                controller.removeStore(Id);
+                controller.deleteStore(Id);
 
                 break;
             case 3:
