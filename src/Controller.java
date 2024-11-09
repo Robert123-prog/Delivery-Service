@@ -103,13 +103,18 @@ public class Controller {
         System.out.println("Registered employee " + employeeId + " to deposit " + departmentId);
     }
 
-    public boolean verifyDeliveryPerson(){
-        return true;
+    public boolean verifyDeliveryPerson(Integer deliveryPersonId) {
+        boolean isValid = service.verifyDeliveryPersonLicense(deliveryPersonId);
+        if (isValid) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void createDeliveryPerson(String name, String phone, String license){
         Integer deliveryPersonId = service.getNewDeliveryPersonId();
-        boolean verified = verifyDeliveryPerson();
+        boolean verified = verifyDeliveryPerson(deliveryPersonId);
         service.enrollAsDriver(deliveryPersonId, verified, name, phone, license);
         System.out.println("Registered delivery person " + deliveryPersonId + " to deposit " + verified);
     }

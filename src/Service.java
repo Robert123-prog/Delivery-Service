@@ -218,6 +218,7 @@ public class Service {
         orderIRepository.update(order);
     }
 
+
     public double calculateOrderCostOnPackages(List<Packages> packages){
         double total = 0.0;
 
@@ -225,6 +226,24 @@ public class Service {
             total += packages1.getCost();
         }
         return total;
+    }
+  
+    public boolean verifyDeliveryPersonLicense(Integer deliveryPersonId) {
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
+        String license = deliveryPerson.getLicense();
+        if (isLicenseCategoryValid(license)) {
+            System.out.println("License for delivery person " + deliveryPersonId + " is valid.");
+            return true;
+        } else {
+            System.out.println("License for delivery person " + deliveryPersonId + " is not valid.");
+            return false;
+        }
+    }
+
+    private boolean isLicenseCategoryValid(String licenseCategory) {
+        // Define a set of valid categories
+        Set<String> validCategories = Set.of("B", "BE", "C", "CE");
+        return validCategories.contains(licenseCategory);
     }
 
     public void unenrollEmployee(Integer employeeId) {
