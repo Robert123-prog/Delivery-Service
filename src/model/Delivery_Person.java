@@ -30,6 +30,10 @@ public class Delivery_Person extends Employee{
         this.verified = verified;
     }
 
+    public Integer getPersonalVehicleId() {
+        return personalVehicleId;
+    }
+
     public boolean removeDelivery(Delivery delivery) {
         boolean removed = deliveries.remove(delivery);
         return removed;
