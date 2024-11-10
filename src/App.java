@@ -2,7 +2,6 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -584,7 +583,7 @@ public class App {
                         System.out.println("Please enter the Id of the desired");
 
                         List<Personal_Vehicle> personalVehicles = controller.getAllAvailablePersonalVehicles();
-                        controller.viewAvailablePersonalVehicless(personalVehicles);
+                        controller.viewAvailablePersonalVehicles(personalVehicles);
 
                         Integer personalVehicleId = integerScanner.nextInt();
                         boolean existsPersonalVehicle = controller.validateSelectedPersonalVehicle(personalVehicleId);
@@ -595,7 +594,24 @@ public class App {
                         controller.assignPersonalVehicle(deliveryPersonId3, personalVehicleId);
                         break;
                     case 3:
+                        System.out.println("=======================================================");
+                        System.out.println("The following are the transportation types");
+                        System.out.println("=======================================================");
 
+                        List<String> transportationTypes = controller.getAllTransportationTypes();
+                        controller.viewAllTransportationTypes(transportationTypes);
+
+                        System.out.println("Transportation Type: ");
+                        String transportationType = fieldScanner.nextLine();
+                        boolean existstransportationType = controller.verifySelectedTransportationType(transportationType);
+
+                        if (!existstransportationType) throw new IllegalArgumentException("The transportation type doesn't exist!");
+
+                        Delivery_Person currentDeliveryPerson = controller.getLastLoggedInDeliveryPerson();
+                        Integer currentDeliveryPersonPersonalVehicleId = currentDeliveryPerson.getPersonalVehicleId();
+                        Personal_Vehicle personalVehicle = controller.getPersonalVehicle(currentDeliveryPersonPersonalVehicleId);
+
+                        personalVehicle.setTransportation_type(Transportation_Type.valueOf((String) transportationType));
                         break;
                     default:
                         System.out.println("Invalid Choice!");

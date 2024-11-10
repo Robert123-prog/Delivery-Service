@@ -1,6 +1,5 @@
 import model.*;
 
-import java.net.Inet4Address;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -323,8 +322,8 @@ public class Controller {
         return availableVehicles;
     }
 
-    public void viewAvailablePersonalVehicless(List<Personal_Vehicle> personalVehicles){
-        StringBuilder output = new StringBuilder("Unassigned Deliveries:\n");
+    public void viewAvailablePersonalVehicles(List<Personal_Vehicle> personalVehicles){
+        StringBuilder output = new StringBuilder("Available Personal Vehicles:\n");
         personalVehicles.forEach(personalVehicle -> output.append(personalVehicle.toString()).append("\n"));
         System.out.println(output);
     }
@@ -333,7 +332,7 @@ public class Controller {
         List<Personal_Vehicle> personalVehicles = service.getPersonalVehicle();
 
         for (Personal_Vehicle personalVehicle: personalVehicles){
-            if (personalVehicle.getId() == Id){
+            if (Objects.equals(personalVehicle.getId(), Id)){
                 return true;
             }
         }
@@ -344,5 +343,33 @@ public class Controller {
         service.assignPersonalVehicle(deliveryPersonId, personalVehicleId);
     }
 
+    public List<String> getAllTransportationTypes(){
+        return service.getTransportationTypes();
+    }
+
+    public void viewAllTransportationTypes(List<String> transportationTypes){
+        StringBuilder output = new StringBuilder("TransportationTypes:\n");
+        transportationTypes.forEach(transportationType -> output.append(transportationType).append("\n"));
+        System.out.println(output);
+    }
+
+    public boolean verifySelectedTransportationType(String transportationType){
+        List<String> transportationTypes = service.getTransportationTypes();
+
+        for (String transportationType1: transportationTypes){
+            if (transportationType1.equals(transportationType)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Delivery_Person getLastLoggedInDeliveryPerson() {
+        return service.getLastLoggedInDeliveryPerson();
+    }
+
+    public Personal_Vehicle getPersonalVehicle(Integer Id){
+        return service.getPersonalVehicle(Id);
+    }
 
 }

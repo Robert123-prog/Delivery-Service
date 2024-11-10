@@ -29,6 +29,10 @@ public class Personal_Vehicle extends Transportation{
         this.extraFee = extraFee;
     }
 
+    public void setTransportation_type(Transportation_Type transportation_type) {
+        this.transportation_type = transportation_type;
+    }
+
     public Integer getDeliveryPersonID() {
         return deliveryPersonID;
     }

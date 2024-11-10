@@ -2,9 +2,9 @@ import model.*;
 
 import repository.IRepository;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Service {
 
@@ -78,6 +78,14 @@ public class Service {
 
     public List<Deposit> getDeposits(){
         return depositIRepository.readAll();
+    }
+
+    public List<String> getTransportationTypes(){
+        List<String> enumNames = Stream.of(Transportation_Type.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
+        return enumNames;
     }
 
     public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
@@ -381,5 +389,16 @@ public class Service {
 
         deliveryPersonIRepository.update(deliveryPerson);
         personalVehicleIRepository.update(personalVehicle);
+    }
+
+    public Delivery_Person getLastLoggedInDeliveryPerson() {
+        Integer Id = getLastLoggedInDeliveryPersonId();
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(Id);
+
+        return deliveryPerson;
+    }
+
+    public Personal_Vehicle getPersonalVehicle(Integer Id){
+        return personalVehicleIRepository.get(Id);
     }
 }
