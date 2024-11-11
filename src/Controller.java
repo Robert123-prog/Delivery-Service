@@ -115,7 +115,7 @@ public class Controller {
     public void createDeliveryPerson(String name, String phone, String license){
         Integer deliveryPersonId = service.getNewDeliveryPersonId();
         boolean verified = verifyDeliveryPerson(deliveryPersonId);
-        service.enrollAsDriver(deliveryPersonId, verified, name, phone, license);
+        service.enrollAsDriver(deliveryPersonId, name, phone, license);
         System.out.println("Registered delivery person " + deliveryPersonId + " to deposit " + verified);
     }
 

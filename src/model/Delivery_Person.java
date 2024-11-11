@@ -12,10 +12,9 @@ public class Delivery_Person extends Employee{
     private Integer personalVehicleId;
 
 
-    public Delivery_Person(int deliveryPersonID, boolean verified, String phone, String name, String license) {
+    public Delivery_Person(int deliveryPersonID, String phone, String name, String license) {
         super(name, phone, license);
         this.deliveryPersonID = deliveryPersonID;
-        this.verified = verified;
     }
 
     public int getDeliveryPersonID() {

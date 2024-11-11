@@ -22,9 +22,9 @@ public class Service {
     private final IRepository<Personal_Vehicle> personalVehicleIRepository;
 
 
-    public Service(IRepository<Store> storeIRepository, IRepository<Packages> packageIRepository, IRepository<Packages> packageIRepository1, IRepository<Order> orderIRepository, IRepository<Customer> customerIRepository, IRepository<Department> departmentIRepository, IRepository<Employee> employeeIRepository, IRepository<Delivery> deliveryIRepository, IRepository<Deposit> depositIRepository, IRepository<Delivery_Person> deliveryPersonIRepository, IRepository<Personal_Vehicle> personalVehicleIRepository) {
+    public Service(IRepository<Store> storeIRepository, IRepository<Packages> packageIRepository, IRepository<Order> orderIRepository, IRepository<Customer> customerIRepository, IRepository<Department> departmentIRepository, IRepository<Employee> employeeIRepository, IRepository<Delivery> deliveryIRepository, IRepository<Deposit> depositIRepository, IRepository<Delivery_Person> deliveryPersonIRepository, IRepository<Personal_Vehicle> personalVehicleIRepository) {
         this.storeIRepository = storeIRepository;
-        this.packageIRepository = packageIRepository1;
+        this.packageIRepository = packageIRepository;
         this.orderIRepository = orderIRepository;
         this.customerIRepository = customerIRepository;
         this.departmentIRepository = departmentIRepository;
@@ -115,13 +115,13 @@ public class Service {
         orderIRepository.update(order);
     }
 */
-    public void enrollAsDriver(Integer deliveryPersonId, boolean verified, String name, String phone, String license) {
+    public void enrollAsDriver(Integer deliveryPersonId, String name, String phone, String license) {
         if (license == null || license.isEmpty()) {
             throw new IllegalArgumentException("Provided license is not valid.");
         }
         Employee newEmployee = new Employee(name, phone, license);
         employeeIRepository.create(newEmployee);
-        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId, verified, phone, name, license);
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId, phone, name, license);
         deliveryPersonIRepository.update(deliveryPerson);
     }
 
@@ -255,7 +255,6 @@ public class Service {
     }
 
     private boolean isLicenseCategoryValid(String licenseCategory) {
-        // Define a set of valid categories
         Set<String> validCategories = Set.of("B", "BE", "C", "CE");
         return validCategories.contains(licenseCategory);
     }
