@@ -2,11 +2,12 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,14 +21,6 @@ public class App {
     static Scanner integerScanner = new Scanner(System.in);
     static Scanner fieldScanner = new Scanner(System.in);
 
-    public void main(String[] args) {
-        /*
-        sample data
-         */
-        runSample();
-        mainMenu();
-    }
-
     private static IRepository<Customer> createInMemoryCustomerRepository() {
         IRepository<Customer> customerIRepository = new InMemoryRepo<>();
         customerIRepository.create(new Customer(1, "Dorel" ,"Cluj-Napoca","0774596204","dorel@gmail.com"));
@@ -35,6 +28,7 @@ public class App {
         customerIRepository.create(new Customer(3,"Andrei","Zalau","0797794239","andrei@gmail.com"));
         return customerIRepository;
     }
+
     private static IRepository<Employee> createInMemoryEmployeeRepository() {
         IRepository<Employee> employeeIRepository = new InMemoryRepo<>();
         employeeIRepository.create(new Employee(3,1,"Eminovici","0742092989","part time"));
@@ -44,33 +38,27 @@ public class App {
 
     }
 
-
     private static IRepository<Delivery> createInMemoryDeliveryRepository() {
         IRepository<Delivery> deliveryIRepository = new InMemoryRepo<>();
-        //deliveryIRepository.create(new Delivery(1, ));
-        //deliveryIRepository.create(new Delivery());
-        //deliveryIRepository.create(new Delivery());
+        deliveryIRepository.create(new Delivery(1,1, Timestamp.valueOf(LocalDateTime.of(2024, 6, 6, 10, 0))));
+        deliveryIRepository.create(new Delivery(2,2,Timestamp.valueOf(LocalDateTime.of(2024, 7, 8, 15, 30))));
+        deliveryIRepository.create(new Delivery(3,2,Timestamp.valueOf(LocalDateTime.of(2024, 7, 9, 15, 30))));
         return deliveryIRepository;
     }
 
-
-
     private static IRepository<Delivery_Person> createInMemoryDeliveryPersonRepository() {
         IRepository<Delivery_Person> deliveryPersonIRepository = new InMemoryRepo<>();
-        //deliveryPersonIRepository.create(new Delivery_Person(3,1,"Eminovici","0742092989","part time"));
-        //deliveryPersonIRepository.create(new Delivery_Person(3,1,"Stefan","071998491","full time"));
-        //deliveryPersonIRepository.create(new Delivery_Person(3,2,"David","077636274","full time"));
+        deliveryPersonIRepository.create(new Delivery_Person(3,"0742092989","Eminovici","part time"));
+        deliveryPersonIRepository.create(new Delivery_Person(3,"071998491","Stefan","full time"));
+        deliveryPersonIRepository.create(new Delivery_Person(3,"077636274","David","full time"));
         return deliveryPersonIRepository;
     }
-
-
 
     private static IRepository<Department> createInMemoryDepartmentRepository() {
         IRepository<Department> departmentIRepository = new InMemoryRepo<>();
         departmentIRepository.create(new Department(1, "Business Intelligence", "Develop Business"));
         return departmentIRepository;
     }
-
 
     private static IRepository<Deposit> createInMemoryDepositRepository() {
         IRepository<Deposit> depositIRepository = new InMemoryRepo<>();
@@ -80,29 +68,22 @@ public class App {
         return depositIRepository;
 
     }
-
-
     //LocalDateTime ???
     private static IRepository<Order> createInMemoryOrderRepository() {
         IRepository<Order> orderIRepository = new InMemoryRepo<>();
-        //orderIRepository.create(new Order(1, new Date(2020, 11, 10,)));
-        //orderIRepository.create(new Order());
-        //orderIRepository.create(new Order());
+        orderIRepository.create(new Order(1, Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0), 150.75, "Processing"));
+        orderIRepository.create(new Order(2, Date.valueOf("2024-06-07"), LocalDateTime.of(2024, 6, 12, 14, 30), 200.50, "Shipped"));
+        orderIRepository.create(new Order(3, Date.valueOf("2024-06-08"), LocalDateTime.of(2024, 6, 15, 9, 0), 100.25, "Delivered"));
         return orderIRepository;
     }
 
-
-
     private static IRepository<Packages> createInMemoryPackageRepository() {
         IRepository<Packages> packagesIRepository = new InMemoryRepo<>();
-        //packagesIRepository.create(new Packages(1, 100.5, "4x4x4"));
-        //packagesIRepository.create(new Packages(2, 20.8, "2x4x3"));
-        //packagesIRepository.create(new Packages(3, 10.2, "5x2x3"));
+        packagesIRepository.create(new Packages(1, 100.5, "4x4x4",100));
+        packagesIRepository.create(new Packages(2, 20.8, "2x4x3",50));
+        packagesIRepository.create(new Packages(3, 10.2, "5x2x3",120));
         return packagesIRepository;
     }
-
-
-
 
     private static IRepository<Personal_Vehicle> createInMemoryPersonalVehicleRepository() {
         IRepository<Personal_Vehicle> personalVehicleIRepository = new InMemoryRepo<>();
@@ -112,27 +93,12 @@ public class App {
         return personalVehicleIRepository;
     }
 
-
-
     private static IRepository<Store> createInMemoryStoreRepository() {
         IRepository<Store> storeIRepository = new InMemoryRepo<>();
         storeIRepository.create(new Store(1, "Auchan", "Str. Posada", "Alexandru"));
         storeIRepository.create(new Store(2, "Dedeman", "Str. Livezii", "Stefan"));
         storeIRepository.create(new Store(3, "Kaufland", "Calea Manastur", "Mihai"));
         return storeIRepository;
-    }
-
-    private static void runSample() {
-        IRepository<Customer> customerIRepository = createInMemoryCustomerRepository();
-        IRepository<Employee> employeeIRepository = createInMemoryEmployeeRepository();
-        IRepository<Delivery> deliveryIRepository = createInMemoryDeliveryRepository();
-        IRepository<Delivery_Person> deliveryPersonIRepository = createInMemoryDeliveryPersonRepository();
-        IRepository<Deposit> depositIRepository = createInMemoryDepositRepository();
-        IRepository<Personal_Vehicle> personalVehicleIRepository = createInMemoryPersonalVehicleRepository();
-        IRepository<Department> departmentIRepository = createInMemoryDepartmentRepository();
-        IRepository<Order> orderIRepository = createInMemoryOrderRepository();
-        IRepository<Store> storeIRepository = createInMemoryStoreRepository();
-        IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
     }
 
     public void mainMenu(){
@@ -244,8 +210,7 @@ public class App {
                 Integer customerId = controller.getLastLoggedInCustomerId();
 
                 LocalDate currentDate = LocalDate.now();
-                Date orderDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
+                Date orderDate = Date.valueOf(currentDate);
 
                 System.out.println("Delivery Date and Time: ");
                 System.out.println("=======================================================");
@@ -625,6 +590,22 @@ public class App {
             }
         }
 
-
+        }
+        public static void main(String[] args) {
+            //runSample();
+            IRepository<Customer> customerIRepository = createInMemoryCustomerRepository();
+            IRepository<Employee> employeeIRepository = createInMemoryEmployeeRepository();
+            IRepository<Delivery> deliveryIRepository = createInMemoryDeliveryRepository();
+            IRepository<Delivery_Person> deliveryPersonIRepository = createInMemoryDeliveryPersonRepository();
+            IRepository<Deposit> depositIRepository = createInMemoryDepositRepository();
+            IRepository<Personal_Vehicle> personalVehicleIRepository = createInMemoryPersonalVehicleRepository();
+            IRepository<Department> departmentIRepository = createInMemoryDepartmentRepository();
+            IRepository<Order> orderIRepository = createInMemoryOrderRepository();
+            IRepository<Store> storeIRepository = createInMemoryStoreRepository();
+            IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
+            Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+            Controller controller = new Controller(service);
+            App app = new App(controller);
+            app.mainMenu();
     }
 }
