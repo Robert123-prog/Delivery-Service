@@ -1,6 +1,11 @@
 package model;
 
-public class Packages implements HasID{
+/**
+ * The Packages class represents a package associated with an order.
+ * It contains details such as package ID, cost, weight, dimensions,
+ * and the order ID it is linked to.
+ */
+public class Packages implements HasID {
     private final Integer packageID;
     private final int cost;
     private Integer orderID;
@@ -11,6 +16,14 @@ public class Packages implements HasID{
     Order - Package: Aggregation => order not initialized in the constructor
      */
 
+    /**
+     * Constructs a Packages object with the specified details.
+     *
+     * @param packageID   the unique identifier for this package
+     * @param weight      the weight of this package
+     * @param dimensions  the dimensions of this package
+     * @param cost        the cost associated with this package
+     */
     public Packages(Integer packageID, double weight, String dimensions, Integer cost) {
         this.cost = cost;
         this.packageID = packageID;
@@ -18,38 +31,84 @@ public class Packages implements HasID{
         this.dimensions = dimensions;
     }
 
+    /**
+     * Gets the cost of this package.
+     *
+     * @return the cost of the package
+     */
     public int getCost() {
         return cost;
     }
 
+    /**
+     * Gets the unique identifier for this package.
+     *
+     * @return the package ID
+     */
     public int getPackageID() {
         return packageID;
     }
 
+    /**
+     * Gets the order ID associated with this package.
+     *
+     * @return the order ID, or null if not set
+     */
     public int getOrderID() {
         return orderID;
     }
 
+    /**
+     * Sets the order ID for this package.
+     *
+     * @param orderID the unique identifier for the order associated with this package
+     */
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
 
+    /**
+     * Gets the weight of this package.
+     *
+     * @return the weight of the package
+     */
     public double getWeight() {
         return weight;
     }
 
+    /**
+     * Sets a new weight for this package.
+     *
+     * @param weight the new weight of the package
+     */
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
+    /**
+     * Gets the dimensions of this package.
+     *
+     * @return a string representing the dimensions of the package
+     */
     public String getDimensions() {
         return dimensions;
     }
 
+    /**
+     * Sets new dimensions for this package.
+     *
+     * @param dimensions a string representing the new dimensions of the package
+     */
     public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
     }
 
+    /**
+     * Returns a string representation of this Packages object,
+     * including all its attributes.
+     *
+     * @return a string representation of this Package
+     */
     @Override
     public String toString() {
         return "Package{" +
@@ -59,6 +118,13 @@ public class Packages implements HasID{
                 ", dimensions='" + dimensions + '\'' +
                 '}';
     }
+
+    /**
+     * Gets the unique identifier for this object, as required by HasID interface.
+     *
+     * @return unique identifier (package ID)
+     */
+    @Override
     public Integer getId() {
         return packageID;
     }
