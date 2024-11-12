@@ -1,3 +1,4 @@
+/*
 import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
@@ -68,7 +69,7 @@ public class App {
         return depositIRepository;
 
     }
-    //LocalDateTime ???
+    //LocalDateTime
     private static IRepository<Order> createInMemoryOrderRepository() {
         IRepository<Order> orderIRepository = new InMemoryRepo<>();
         orderIRepository.create(new Order(1, Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0), 150.75, "Processing"));
@@ -301,7 +302,7 @@ public class App {
 
 //                Order orderToRemove = controller.getSelectedOrder(orderToRemoveId);
 
-                controller.removeSelectedOrder(customerID2, orderToRemoveId);
+                controller.removeAnOrder(customerID2, orderToRemoveId);
                 break;
             case 4:
                 Integer customerID3 = controller.getLastLoggedInCustomerId();
@@ -439,28 +440,20 @@ public class App {
                 controller.viewAllDeposits();
 
                 Integer depositId = integerScanner.nextInt();
+                Integer storeId = integerScanner.nextInt();
                 boolean depositExists = controller.depositSelection(depositId);
 
                 if (!depositExists){
                     throw new IllegalArgumentException("No deposit found");
                 }else {
-                    controller.deleteDeposit(depositId);
+                    controller.deleteDeposit(depositId, storeId);
                 }
                 break;
             case 5:
-                /*
-                to be continued
-                 */
                 break;
             case 6:
-                /*
-                to be continued
-                 */
                 break;
             case 7:
-                /*
-                to be continued
-                 */
                 break;
             case 8:
                 controller.viewAllCustomers();
@@ -487,34 +480,14 @@ public class App {
         }
     }
 
-    /*
-    a delivery person cannot do anything, until it gets validated
-     */
     public void deliveryPersonMenu(){
-        System.out.println("==================== Delivery Person Menu =====================");
-        System.out.println("Choose one of the following actions:");
-        System.out.println("=======================================================");
-        System.out.println("1. Process a delivery");
-        System.out.println("2. Assign vehicle");
-        System.out.println("3. Select preferred transportation type");
-        System.out.println("4. Get verified");
-
-        int userChoice = integerScanner.nextInt();
-
-        if (userChoice != 4){
-            System.out.println("!!!You must get verified before being able to do anything!!!");
-        }else {
-            Integer deliveryPersonId = controller.getLastLoggedInDeliveryPersonId();
-            boolean verified = controller.verifyDeliveryPerson(deliveryPersonId);
-
-            if (verified){
                 System.out.println("==================== Delivery Person Menu =====================");
                 System.out.println("Choose one of the following actions:");
                 System.out.println("=======================================================");
                 System.out.println("1. Process a delivery");
                 System.out.println("2. Assign vehicle");
                 System.out.println("3. Select preferred transportation type");
-
+                System.out.println("4.Back");
                 int userChoice2 = integerScanner.nextInt();
 
                 switch (userChoice2){
@@ -578,19 +551,18 @@ public class App {
 
                         personalVehicle.setTransportation_type(Transportation_Type.valueOf((String) transportationType));
                         break;
+                    case 4:
+                        return;
                     default:
                         System.out.println("Invalid Choice!");
                         deliveryPersonMenu();
                 }
 
-
-            }else {
                 System.out.println("We're very sorry, but right now you do not qualify to be a delivery person!");
                 mainMenu();
             }
-        }
 
-        }
+
         public static void main(String[] args) {
             //runSample();
             IRepository<Customer> customerIRepository = createInMemoryCustomerRepository();
@@ -609,3 +581,5 @@ public class App {
             app.mainMenu();
     }
 }
+
+*/

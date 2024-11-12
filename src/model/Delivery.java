@@ -1,79 +1,170 @@
+/**
+ * Represents a delivery in the delivery management system.
+ * This class implements the HasID interface and manages delivery information,
+ * including relationships with employees, delivery persons, orders, and transportation.
+ *
+ * Relationships:
+ * - Employee - Delivery: Aggregation (employee not initialized in constructor)
+ * - Delivery - Order: Composition (order initialized in constructor)
+ * - Delivery - Transportation: Association (transportation assigned by setter)
+ */
 package model;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Delivery implements HasID{
+public class Delivery implements HasID {
+    /** Unique identifier for the delivery */
     private final Integer deliveryID;
+
+    /** ID of the delivery person assigned to this delivery */
     private Integer deliveryPeronID;
+
+    /** ID of the employee handling this delivery */
     private int employeeID;
+
+    /** ID of the order being delivered */
     private int orderID;
+
+    /** ID of the transportation method used */
     private int transportationID;
+
+    /** Timestamp of when the delivery is scheduled */
     private Timestamp time;
+
+    /** Type of transportation used for this delivery */
     private Transportation transportation_type;
+
+    /** List of orders associated with this delivery */
     private List<Order> orders;
 
-
-    /*
-    Employee - Delivery: Aggregation => employee not initialized in the constructor
-    Delivery - Order: Composition => order initialized in the constructor
-    Delivery - Transportation: Association => transportation assigned by setter
+    /**
+     * Constructs a new Delivery with the specified details.
+     *
+     * @param deliveryID Unique identifier for the delivery
+     * @param orderID ID of the order being delivered
+     * @param time Timestamp when the delivery is scheduled
      */
-
-    public Delivery(Integer deliveryID, int orderID, Timestamp time){
+    public Delivery(Integer deliveryID, int orderID, Timestamp time) {
         this.deliveryID = deliveryID;
         this.orderID = orderID;
         this.time = time;
     }
 
+    /**
+     * Returns the delivery's unique identifier.
+     *
+     * @return The delivery's ID
+     */
     public Integer getDeliveryID() {
         return deliveryID;
     }
 
+    /**
+     * Returns the ID of the employee assigned to this delivery.
+     *
+     * @return The employee's ID
+     */
     public Integer getEmployeeID() {
         return employeeID;
     }
 
+    /**
+     * Returns the ID of the delivery person assigned to this delivery.
+     *
+     * @return The delivery person's ID
+     */
     public Integer getDeliveryPeronID() {
         return deliveryPeronID;
     }
 
-    public void setEmployeeID(int employeeID) {
+    /**
+     * Sets the ID of the employee assigned to this delivery.
+     *
+     * @param employeeID ID of the employee to be assigned
+     */
+    public void setEmployeeID(Integer employeeID) {
         this.employeeID = employeeID;
     }
 
+    /**
+     * Returns the ID of the order being delivered.
+     *
+     * @return The order's ID
+     */
     public Integer getOrderID() {
         return orderID;
     }
 
+    /**
+     * Sets the ID of the order for this delivery.
+     *
+     * @param orderID ID of the order to be delivered
+     */
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
 
+    /**
+     * Returns the ID of the transportation method used.
+     *
+     * @return The transportation's ID
+     */
     public int getTransportationID() {
         return transportationID;
     }
 
+    /**
+     * Sets the ID of the transportation method for this delivery.
+     *
+     * @param transportationID ID of the transportation method to be used
+     */
     public void setTransportationID(int transportationID) {
         this.transportationID = transportationID;
     }
 
+    /**
+     * Sets the ID of the delivery person assigned to this delivery.
+     *
+     * @param deliveryPeronID ID of the delivery person to be assigned
+     */
     public void setDeliveryPeronID(Integer deliveryPeronID) {
         this.deliveryPeronID = deliveryPeronID;
     }
 
+    /**
+     * Returns the type of transportation used for this delivery.
+     *
+     * @return The transportation type
+     */
     public Transportation getTransportation_type() {
         return transportation_type;
     }
 
+    /**
+     * Sets the type of transportation for this delivery.
+     *
+     * @param transportation_type Type of transportation to be used
+     */
     public void setTransportation_type(Transportation transportation_type) {
         this.transportation_type = transportation_type;
     }
+
+    /**
+     * Adds an order to the list of orders for this delivery.
+     *
+     * @param order Order to be added to the delivery
+     */
     public void addOrder(Order order) {
         orders.add(order);
     }
 
-
+    /**
+     * Returns a string representation of the Delivery object.
+     * Includes delivery ID, employee ID, order ID, transportation ID, and transportation type.
+     *
+     * @return String representation of the delivery
+     */
     @Override
     public String toString() {
         return "Delivery{" +
@@ -84,6 +175,14 @@ public class Delivery implements HasID{
                 ", transportation_type=" + transportation_type +
                 '}';
     }
+
+    /**
+     * Implementation of HasID interface.
+     * Returns the delivery's unique identifier.
+     *
+     * @return The delivery's ID
+     */
+    @Override
     public Integer getId() {
         return deliveryID;
     }

@@ -1,8 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Employee implements HasID{
+/**
+ * Represents an employee in the organization.
+ * This class implements the HasID interface and manages employee information
+ * including their department affiliation and assigned deliveries.
+ * It has a composition relationship with Department and an aggregation relationship with Delivery.
+ */
+public class Employee implements HasID {
     private Integer employeeID;
     private int departmentID;
     private String name;
@@ -10,73 +17,152 @@ public class Employee implements HasID{
     private String license;
     private List<Delivery> deliveries;
 
-    /*
-    Department - Employee: composition => department initialized in constructor
-    Employee - Delivery: aggregation => deliveries not initialized in constructor
+    /**
+     * Constructs a new Employee object with full details.
+     * Note:
+     * - Department-Employee: Composition relationship (department initialized in constructor)
+     * - Employee-Delivery: Aggregation relationship (deliveries list initialized but empty)
+     *
+     * @param employeeID    The unique identifier for the employee
+     * @param departmentID  The ID of the department the employee belongs to
+     * @param name         The name of the employee
+     * @param phone        The phone number of the employee
+     * @param license      The license information of the employee
      */
-
-    public Employee(Integer employeeID, int departmentID, String name, String phone, String license){
+    public Employee(Integer employeeID, int departmentID, String name, String phone, String license) {
         this.employeeID = employeeID;
         this.departmentID = departmentID;
         this.name = name;
         this.phone = phone;
         this.license = license;
-    }
-    public Employee( String name, String phone, String license){
-        this.name = name;
-        this.phone = phone;
-        this.license = license;
+        this.deliveries = new ArrayList<>();
     }
 
+    /**
+     * Constructs a new Employee object with basic information.
+     *
+     * @param name  The name of the employee
+     * @param phone The phone number of the employee
+     */
+    public Employee(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    /**
+     * Constructs a new Employee object with only ID.
+     *
+     * @param employeeID The unique identifier for the employee
+     */
     public Employee(int employeeID) {
         this.employeeID = employeeID;
     }
 
+    /**
+     * Returns the unique identifier of the employee.
+     *
+     * @return The employee ID
+     */
     public int getEmployeeID() {
         return employeeID;
     }
 
+    /**
+     * Returns the ID of the department this employee belongs to.
+     *
+     * @return The department ID
+     */
     public int getDepartmentID() {
         return departmentID;
     }
 
+    /**
+     * Sets the department ID for this employee.
+     *
+     * @param departmentID The new department ID
+     */
     public void setDepartmentID(int departmentID) {
         this.departmentID = departmentID;
     }
 
+    /**
+     * Returns the name of the employee.
+     *
+     * @return The employee's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets a new name for the employee.
+     *
+     * @param name The new employee name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the phone number of the employee.
+     *
+     * @return The employee's phone number
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Sets a new phone number for the employee.
+     *
+     * @param phone The new phone number
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Returns the license information of the employee.
+     *
+     * @return The employee's license information
+     */
     public String getLicense() {
         return license;
     }
 
+    /**
+     * Sets new license information for the employee.
+     *
+     * @param license The new license information
+     */
     public void setLicense(String license) {
         this.license = license;
     }
 
+    /**
+     * Returns the list of deliveries assigned to this employee.
+     *
+     * @return List of Delivery objects assigned to this employee
+     */
     public List<Delivery> getDeliveries() {
         return deliveries;
     }
 
+    /**
+     * Adds a new delivery assignment to the employee.
+     *
+     * @param delivery The Delivery object to be added to the employee's assignments
+     */
     public void addDelivery(Delivery delivery) {
         deliveries.add(delivery);
     }
 
-
+    /**
+     * Removes a delivery assignment from the employee by delivery ID.
+     * Searches through the deliveries list and removes the matching delivery if found.
+     *
+     * @param deliveryId The ID of the delivery to be removed
+     */
     public void removeDeliv(Integer deliveryId) {
         Delivery deliveryToRemove = null;
         for (Delivery delivery : deliveries) {
@@ -90,6 +176,11 @@ public class Employee implements HasID{
         }
     }
 
+    /**
+     * Returns a string representation of the Employee object.
+     *
+     * @return A string containing the employee's ID, department ID, name, phone, license, and deliveries
+     */
     @Override
     public String toString() {
         return "Employee{" +
@@ -101,6 +192,13 @@ public class Employee implements HasID{
                 ", deliveries=" + deliveries +
                 '}';
     }
+
+    /**
+     * Returns the ID of this employee.
+     * Implementation of the HasID interface.
+     *
+     * @return The employee ID
+     */
     public Integer getId() {
         return employeeID;
     }

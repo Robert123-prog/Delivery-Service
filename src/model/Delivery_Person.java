@@ -1,9 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Delivery_Person extends Employee{
-    private final Integer deliveryPersonID;
+    private Integer deliveryPersonID;
     private boolean verified;
     private String phone;
     private String name;
@@ -13,8 +14,17 @@ public class Delivery_Person extends Employee{
 
 
     public Delivery_Person(int deliveryPersonID, String phone, String name, String license) {
-        super(name, phone, license);
+        super(name,phone);
+        this.name = name;
+        this.phone = phone;
+        this.license = license;
         this.deliveryPersonID = deliveryPersonID;
+        this.deliveries = new ArrayList<>();
+    }
+
+    @Override
+    public String getLicense() {
+        return license;
     }
 
     public int getDeliveryPersonID() {
@@ -47,6 +57,10 @@ public class Delivery_Person extends Employee{
         return "Delivery_Person{" +
                 "deliveryPersonID=" + deliveryPersonID +
                 ", verified=" + verified +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", license='" + license + '\'' +
+                ", personalVehicleId=" + personalVehicleId +
                 '}';
     }
 }

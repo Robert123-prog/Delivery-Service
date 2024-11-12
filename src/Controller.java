@@ -1,190 +1,329 @@
 import model.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ * The Controller class handles various operations related to customers, stores, deposits,
+ * employees, deliveries, orders, and packages within the application.
+ */
 public class Controller {
     private final Service service;
-    public Controller(Service service){
+
+    /**
+     * Constructs a Controller with the specified service.
+     *
+     * @param service the service used to perform operations
+     */
+    public Controller(Service service) {
         this.service = service;
     }
 
-    public void createLoggedInCustomer(String name, String address, String phone, String email){
-        Integer Id = service.getNewCustomerId();
-        service.createCustomer(Id, name, address, phone, email);
-        System.out.println("Registered customer with id " + Id + " successfully");
+    /**
+     * Creates a new customer with the provided details.
+     *
+     * @param name    the name of the customer
+     * @param address the address of the customer
+     * @param phone   the phone number of the customer
+     * @param email   the email address of the customer
+     */
+    public void createLoggedInCustomer(String name, String address, String phone, String email) {
+        Integer id = service.getNewCustomerId();
+        service.createCustomer(id, name, address, phone, email);
+        System.out.println("Registered customer with id " + id + " successfully");
     }
 
-    public void createStore(String name, String address, String contact){
-        Integer Id = service.getNewStoreId();
-        service.registerStore(Id, name, address, contact);
+    /**
+     * Creates a new store with the provided details.
+     *
+     * @param name    the name of the store
+     * @param address the address of the store
+     * @param contact the contact information for the store
+     */
+    public void createStore(String name, String address, String contact) {
+        Integer id = service.getNewStoreId();
+        service.registerStore(id, name, address, contact);
         System.out.println("Registered store: " + name);
     }
 
+    /**
+     * Deletes a store by its ID.
+     *
+     * @param storeId the ID of the store to delete
+     */
     public void deleteStore(Integer storeId) {
         service.removeStore(storeId);
         System.out.println("Removed store " + storeId);
     }
 
-    public void viewAllStores(){
+    /**
+     * Displays all available stores.
+     */
+    public void viewAllStores() {
         StringBuilder output = new StringBuilder("Available Stores:\n");
         service.getStores().forEach(store -> output.append(store.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public boolean storeSelection(Integer Id){
-        List<Store> stores = service.getStores();
-
-        for (Store store: stores){
-            if (Objects.equals(store.getId(), Id)){
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Checks if a store exists based on its ID.
+     *
+     * @param id the ID of the store to check
+     * @return true if the store exists; false otherwise
+     */
+    public boolean storeSelection(Integer id) {
+        return service.getStores().stream().anyMatch(store -> Objects.equals(store.getId(), id));
     }
 
-    public void registerDeposit(Integer storeId, String depositAddress, String depositStatus){
+    /**
+     * Registers a deposit for a specific store.
+     *
+     * @param storeId       the ID of the store receiving the deposit
+     * @param depositAddress the address associated with the deposit
+     * @param depositStatus  the status of the deposit
+     */
+    public void registerDeposit(Integer storeId, String depositAddress, String depositStatus) {
         Integer depositId = service.getNewDepositId();
         service.registerDeposit(depositId, storeId, depositAddress, depositStatus);
         System.out.println("Registered deposit " + depositId + " to store " + storeId);
     }
 
-    public void deleteDeposit(Integer depositId) {
-        service.removeDeposit(depositId);
-        System.out.println("Removed deposit " + depositId);
+    /**
+     * Deletes a specific deposit from a store.
+     *
+     * @param storeId  the ID of the store from which to delete the deposit
+     * @param depositId the ID of the deposit to delete
+     */
+    public void deleteDeposit(Integer storeId, Integer depositId) {
+        service.removeDeposit(storeId, depositId);
+        System.out.println("Removed deposit " + depositId + " from store " + storeId);
     }
 
-    public void viewAllDeposits(){
+    /**
+     * Displays all available deposits.
+     */
+    public void viewAllDeposits() {
         StringBuilder output = new StringBuilder("Available Deposits:\n");
         service.getDeposits().forEach(deposit -> output.append(deposit.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public boolean depositSelection(Integer Id){
-        List<Deposit> deposits = service.getDeposits();
-
-        for (Deposit deposit: deposits){
-            if (Objects.equals(deposit.getId(), Id)){
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Deletes a customer by their ID.
+     *
+     * @param customerId the ID of the customer to delete
+     */
+    public void deleteCustomer(Integer customerId) {
+        service.deleteCustomer(customerId);
+        System.out.println("Deleted customer with id " + customerId + " successfully");
     }
 
-    public void viewAllCustomers(){
+    /**
+     * Checks if a deposit exists based on its ID.
+     *
+     * @param id the ID of the deposit to check
+     * @return true if the deposit exists; false otherwise
+     */
+    public boolean depositSelection(Integer id) {
+        return service.getDeposits().stream().anyMatch(deposit -> Objects.equals(deposit.getId(), id));
+    }
+
+    /**
+     * Displays all available customers.
+     */
+    public void viewAllCustomers() {
         StringBuilder output = new StringBuilder("Available Customers:\n");
         service.getCustomers().forEach(customer -> output.append(customer.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public void viewAllDepartments(){
+    /**
+     * Displays all available departments.
+     */
+    public void viewAllDepartments() {
         StringBuilder output = new StringBuilder("Available Departments:\n");
         service.getDepartments().forEach(department -> output.append(department.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public boolean departmentSelection(Integer Id){
-        List<Department> departments = service.getDepartments();
-
-        for (Department department: departments){
-            if (Objects.equals(department.getId(), Id)){
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Checks if a department exists based on its ID.
+     *
+     * @param id the ID of the department to check
+     * @return true if the department exists; false otherwise
+     */
+    public boolean departmentSelection(Integer id) {
+        return service.getDepartments().stream().anyMatch(department -> Objects.equals(department.getId(), id));
     }
-
-    public void createEmployee(Integer departmentId, String name, String phone, String license){
+    /**
+     * Creates a new employee and assigns them to a specified department.
+     *
+     * @param departmentId the ID of the department to which the employee will be assigned
+     * @param name         the name of the employee
+     * @param phone        the phone number of the employee
+     * @param license      the license number of the employee
+     */
+    public void createEmployee(Integer departmentId, String name, String phone, String license) {
         Integer employeeId = service.getNewEmployeeId();
         service.createEmployee(employeeId, departmentId, name, phone, license);
-        System.out.println("Registered employee " + employeeId + " to deposit " + departmentId);
+        System.out.println("Registered employee " + employeeId + " to department " + departmentId);
     }
 
-    public boolean verifyDeliveryPerson(Integer deliveryPersonId) {
-        boolean isValid = service.verifyDeliveryPersonLicense(deliveryPersonId);
-        if (isValid) {
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * Verifies if a delivery person's license is valid.
+     *
+     * @param deliveryPersonId the ID of the delivery person to verify
+     * @param license          the license number to check
+     * @return true if the license is valid; false otherwise
+     */
+    public boolean verifyDeliveryPerson(Integer deliveryPersonId, String license) {
+        return service.verifyDeliveryPersonLicense(deliveryPersonId, license);
     }
 
-    public void createDeliveryPerson(String name, String phone, String license){
+    /**
+     * Creates a new delivery person with specified details.
+     *
+     * @param name    the name of the delivery person
+     * @param phone   the phone number of the delivery person
+     * @param license the license number of the delivery person
+     */
+    public void createDeliveryPerson(String name, String phone, String license) {
         Integer deliveryPersonId = service.getNewDeliveryPersonId();
-        boolean verified = verifyDeliveryPerson(deliveryPersonId);
+        boolean verified = verifyDeliveryPerson(deliveryPersonId, license);
+        System.out.println(verified);
         service.enrollAsDriver(deliveryPersonId, name, phone, license);
-        System.out.println("Registered delivery person " + deliveryPersonId + " to deposit " + verified);
+        System.out.println("Registered delivery person " + deliveryPersonId);
     }
 
-    public void deleteEmployee(Integer employeeId){
+    /**
+     * Deletes an employee by their ID.
+     *
+     * @param employeeId the ID of the employee to delete
+     */
+    public void deleteEmployee(Integer employeeId) {
         service.unenrollEmployee(employeeId);
         System.out.println("Employee with id " + employeeId + " unenrolled successfully");
     }
 
-    public void deleteDeliveryPerson(Integer deliveryPersonId){
+    /**
+     * Deletes a delivery person by their ID.
+     *
+     * @param deliveryPersonId the ID of the delivery person to delete
+     */
+    public void deleteDeliveryPerson(Integer deliveryPersonId) {
         service.unenrollDeliveryPerson(deliveryPersonId);
         System.out.println("Delivery person with id " + deliveryPersonId + " unenrolled successfully");
     }
 
-    public void pickDeliveryByEmployee(Integer employeeId, Integer deliveryId){
-        service.pickDelivery(employeeId,deliveryId);
-        System.out.println("Picked delivery with id " + deliveryId + "by Employee with id " + employeeId + " successfully");
+    /**
+     * Assigns a delivery to a specific delivery person.
+     *
+     * @param deliveryPersonId the ID of the delivery person picking up the delivery
+     * @param deliveryId      the ID of the delivery being picked up
+     */
+    public void pickDeliveryByPerson(Integer deliveryPersonId, Integer deliveryId) {
+        service.pickDeliveryToPerson(deliveryPersonId, deliveryId);
+        System.out.println("Picked delivery with id " + deliveryId + " by Person with id " + deliveryPersonId + " successfully");
     }
 
-    public void pickDeliveryByPerson(Integer deliveryPersonId, Integer deliveryId){
-        service.pickDeliveryToPerson(deliveryPersonId,deliveryId);
-        System.out.println("Picked delivery with id " + deliveryId + "by Person with id " + deliveryPersonId + " successfully");
+    /**
+     * Assigns a delivery to a specific employee.
+     *
+     * @param employeeId the ID of the employee picking up the delivery
+     * @param deliveryId the ID of the delivery being picked up
+     */
+    public void pickDeliveryByEmployee(Integer employeeId, Integer deliveryId) {
+        service.pickDelivery(employeeId, deliveryId);
+        System.out.println("Picked delivery with id " + deliveryId + " by Employee with id " + employeeId + " successfully");
     }
 
-    public void cancelDeliveryByEmployee(Integer employeeId, Integer deliveryId){
+    /**
+     * Cancels a specific delivery by an employee.
+     *
+     * @param employeeId the ID of the employee cancelling the delivery
+     * @param deliveryId the ID of the delivery to cancel
+     */
+    public void cancelDeliveryByEmployee(Integer employeeId, Integer deliveryId) {
         service.removeDelivery(deliveryId);
-        System.out.println("Delivery with id " + deliveryId + " cancelled by Employee with id" + employeeId + " successfully");
+        System.out.println("Delivery with id " + deliveryId + " cancelled by Employee with id " + employeeId + " successfully");
     }
 
-    public void cancelDeliveryByPerson(Integer deliveryPersonId, Integer deliveryId){
+    /**
+     * Cancels a specific delivery by a delivery person.
+     *
+     * @param deliveryPersonId the ID of the delivery person cancelling the delivery
+     * @param deliveryId      the ID of the delivery to cancel
+     */
+    public void cancelDeliveryByPerson(Integer deliveryPersonId, Integer deliveryId) {
         service.removeDeliveryToPerson(deliveryId);
-        System.out.println("Delivery with id " + deliveryId + " cancelled by Delivery Person with id" + deliveryPersonId + " successfully");
+        System.out.println("Delivery with id " + deliveryId + " cancelled by Delivery Person with id " + deliveryPersonId + " successfully");
     }
 
-    public void makeAnOrder(Integer CustomerId, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status){
-        Integer orderID = service.getNewOrderId();
-        service.placeOrder(CustomerId, orderID, orderDate, deliveryDateTime, cost, status);
-        System.out.println("Order with id " + orderID + "by customer with id " + CustomerId + " successfully");
+    /**
+     * Places an order for a customer.
+     *
+     * @param customerId        the ID of the customer placing the order
+     * @param orderDate         the date when the order was placed
+     * @param deliveryDateTime  when the order should be delivered
+     * @param cost              total cost of the order
+     * @param status            current status of the order
+     */
+    public void makeAnOrder(Integer customerId, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
+        Integer orderId = service.getNewOrderId();
+        service.placeOrder(customerId, orderId, orderDate, deliveryDateTime, cost, status);
+        System.out.println("Order with id " + orderId + " by customer with id " + customerId + " successfully");
     }
 
-    public void removeAnOrder(Integer CustomerId, Integer orderID){
-        service.removeOrder(CustomerId, orderID);
-        System.out.println("Order with id " + orderID + "by customer with id" + CustomerId + " removed successfully");
+    /**
+     * Removes an existing order for a customer.
+     *
+     * @param customerId the ID of the customer whose order will be removed
+     * @param orderId    the ID of the order to remove
+     */
+    public void removeAnOrder(Integer customerId, Integer orderId) {
+        service.removeOrder(customerId, orderId);
+        System.out.println("Order with id " + orderId + " by customer with id " + customerId + " removed successfully");
     }
 
-    public Integer getLastLoggedInCustomerId(){
+    /**
+     * Retrieves and returns last logged-in customer's ID.
+     *
+     * @return last logged-in customer's ID
+     */
+    public Integer getLastLoggedInCustomerId() {
         return service.getLastLoggedInCustomerId();
     }
 
-    public void getAllPackages(){
+    /**
+     * Displays all available packages.
+     */
+    public void getAllPackages() {
         System.out.println(service.getPackages());
     }
 
-    public boolean validatePackages(List<Integer> Ids){
+    /**
+     * Validates if all package IDs provided are valid.
+     *
+     * @param ids list of package IDs to validate
+     * @return true if all IDs are valid; false otherwise
+     */
+    public boolean validatePackages(List<Integer> ids) {
         List<Packages> packages = service.getPackages();
+        Set<Integer> packageIds = packages.stream()
+                .map(Packages::getId)
+                .collect(Collectors.toSet());
 
-        for (Integer id : Ids) {
-            boolean found = false;
-            for (Packages packageItem : packages) {
-                if (packageItem.getId().equals(id)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) return false;
-        }
-        return true;
+        return ids.stream().allMatch(packageIds::contains);
     }
 
-    public List<Packages> getValidatedPackages(List<Integer> packageIds){
+    /**
+     * Retrieves validated packages based on provided IDs.
+     *
+     * @param packageIds list of package IDs to retrieve
+     * @return list of validated packages matching provided IDs
+     */
+    public List<Packages> getValidatedPackages(List<Integer> packageIds) {
         List<Packages> allPackages = service.getPackages();
         List<Packages> selectedPackages = new ArrayList<>();
 
@@ -196,180 +335,379 @@ public class Controller {
                 }
             }
         }
+
         return selectedPackages;
     }
 
-    public double calculateOrderCost(List<Packages> packages){
+    /**
+     * Calculates total cost based on provided packages.
+     *
+     * @param packages list of packages to calculate cost for
+     * @return total cost calculated from packages
+     */
+    public double calculateOrderCost(List<Packages> packages) {
         return service.calculateOrderCostOnPackages(packages);
     }
 
-    public List<Order> getPersonalOrders(Integer customerId){
+    /**
+     * Retrieves personal orders for a specific customer.
+     *
+     * @param customerId ID of customer whose orders are retrieved
+     * @return list of personal orders for that customer
+     */
+    public List<Order> getPersonalOrders(Integer customerId) {
         List<Order> orders = service.getOrders();
         List<Order> personalOrders = new ArrayList<>();
 
-        for (Order order: orders){
-            if (order.getCustomerID() == customerId){
+        for (Order order : orders) {
+            if (order.getCustomerID() == customerId) {
                 personalOrders.add(order);
             }
         }
+
         return personalOrders;
     }
 
-    public void viewPersonalOrders(List<Order> orders){
-        StringBuilder output = new StringBuilder("Available Departments:\n");
+    /**
+     * Displays personal orders in a formatted manner.
+     *
+     * @param orders list of orders to display
+     */
+    public void viewPersonalOrders(List<Order> orders) {
+        StringBuilder output = new StringBuilder("Available Orders:\n");
+
         orders.forEach(order -> output.append(order.toString()).append("\n"));
+
         System.out.println(output);
     }
 
-    public boolean validateSelectedOrder(Integer Id){
-        List<Order> orders = service.getOrders();
-
-        for (Order order: orders){
-            if (Objects.equals(order.getId(), Id)){
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Validates if a specified order exists based on its ID.
+     *
+     * @param id ID of order to validate
+     * @return true if order exists; false otherwise
+     */
+    public boolean validateSelectedOrder(Integer id) {
+        return service.getOrders().stream().anyMatch(order -> Objects.equals(order.getId(), id));
     }
 
-    public Order getSelectedOrder(Integer orderId){
-        List<Order> orders = service.getOrders();
-
-        for(Order order: orders){
-            if (Objects.equals(order.getId(), orderId)){
-                return order;
-            }
-        }
-        return null;
+    /**
+     * Retrieves a selected order based on its ID.
+     *
+     * @param orderId ID of order to retrieve
+     * @return Order object if found; null otherwise
+     */
+    public Order getSelectedOrder(Integer orderId) {
+        return service.getOrders().stream()
+                .filter(order -> Objects.equals(order.getId(), orderId))
+                .findFirst()
+                .orElse(null);
     }
 
-    public void removeSelectedOrder(Integer customerId, Integer orderId){
-        service.removeOrder(customerId, orderId);
+    /**
+     * Removes a selected order based on customer and order IDs.
+     *
+     * @param customerID ID of customer who owns this order
+     * @param orderID ID of order to remove
+     */
+    public void removeSelectedOrder(Integer customerID, Integer orderID) {
+        service.removeOrder(customerID, orderID);
     }
 
-    public void viewAllEmployees(){
+    /**
+     * Displays all employees and their details in a formatted manner.
+     */
+    public void viewAllEmployees() {
         StringBuilder output = new StringBuilder("All Employees:\n");
         service.getEmployees().forEach(employee -> output.append(employee.toString()).append("\n"));
+        service.getDeliveryPerson().forEach(deliveryPerson -> output.append(deliveryPerson.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public void viewAllDeliveries(){
+    /**
+     * Displays all registered Delivery Persons in a formatted manner.
+     */
+    public void viewAllDeliveryPersons() {
+        StringBuilder output = new StringBuilder("All Delivery Persons:\n");
+        service.getDeliveryPerson().forEach(deliveryPerson -> output.append(deliveryPerson.toString()).append("\n"));
+        System.out.println(output);
+    }
+
+    /**
+     * Displays all deliveries in a formatted manner.
+     */
+    public void viewAllDeliveries() {
         StringBuilder output = new StringBuilder("All Deliveries:\n");
         service.getDelivery().forEach(delivery -> output.append(delivery.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public void createPackage(int cost, double weight, String dimensions){
-        Integer packageId = service.getNewPackageId();
-        service.createPackage(packageId, cost, weight, dimensions);
+    /**
+     * Creates a new package with specified attributes.
+     *
+     * @param cost       cost associated with this package
+     * @param weight     weight of this package
+     * @param dimensions dimensions description for this package
+     */
+    public void createPackage(int cost, double weight, String dimensions) {
+        Integer packageID = service.getNewPackageId();
+        service.createPackage(packageID, cost, weight, dimensions);
     }
 
-    public List<Delivery> getUnassignedDeliveries(){
+    /**
+     * Retrieves unassigned deliveries from all deliveries available in system.
+     *
+     * @return list containing unassigned deliveries
+     */
+    public List<Delivery> getUnassignedDeliveries() {
         List<Delivery> deliveries = service.getDelivery();
         List<Delivery> unassignedDeliveries = new ArrayList<>();
 
-        for (Delivery delivery: deliveries){
-            if (delivery.getEmployeeID() == null){
+        for (Delivery delivery : deliveries) {
+            if (delivery.getEmployeeID() == null) {
                 unassignedDeliveries.add(delivery);
             }
         }
+
         return unassignedDeliveries;
     }
 
-
-    public void viewUnassignedDeliveries(List<Delivery> deliveries){
+    /**
+     * Displays unassigned deliveries in a formatted manner.
+     *
+     * @param deliveries list containing unassigned deliveries
+     */
+    public void viewUnassignedDeliveries(List<Delivery> deliveries) {
         StringBuilder output = new StringBuilder("Unassigned Deliveries:\n");
+
         deliveries.forEach(delivery -> output.append(delivery.toString()).append("\n"));
+
         System.out.println(output);
     }
 
-    public boolean validateSelectedDelivery(Integer deliveryId){
-        List<Delivery> deliveries = service.getDelivery();
-
-        for (Delivery delivery: deliveries){
-            if (Objects.equals(delivery.getDeliveryID(), deliveryId)){
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Validates whether a selected Delivery exists based on its unique identifier.
+     *
+     * @param deliveryID unique identifier for Delivery object
+     * @return true if it exists; false otherwise
+     */
+    public boolean validateSelectedDelivery(Integer deliveryID) {
+        return service.getDelivery().stream().anyMatch(delivery -> Objects.equals(delivery.getDeliveryID(),deliveryID));
     }
 
-    public void assignEmployeeToUnassignedDelivery(Integer employeeId, Integer deliveryId){
-        service.pickDelivery(employeeId, deliveryId);
+    /**
+     * Retrieves all deliveries assigned to given Employee.
+     *
+     * @param employeeID unique identifier for Employee object
+     * @return list containing all deliveries assigned to Employee
+     */
+    public List<Delivery> getDeliveriesForEmployee(Integer employeeID){
+        return service.getDeliveriesForEmployee(employeeID);
     }
 
-    public void assignDeliveryPersonToUnassignedDelivery(Integer employeeId, Integer deliveryId){
-        service.pickDelivery(employeeId, deliveryId);
+    /**
+     * Drops an assigned Delivery from Employee.
+     *
+     *  @param employeeID unique identifier for Employee object
+     *  @param deliveryID unique identifier for Delivery object
+     */
+    public void dropDelivery(Integer employeeID,Integer deliveryID){
+        service.dropDelivery(employeeID,deliveryID);
+        System.out.println("Dropped Delivery with id "+deliveryID+" by Employee with id "+employeeID+" successfully");
     }
 
-    public Integer getLastLoggedInEmployeeId(){
+    /**
+     * Assigns an Employee to an unassigned Delivery.
+     *
+     *  @param employeeID unique identifier for Employee object
+     *  @param deliveryID unique identifier for Delivery object
+     */
+    public void assignEmployeeToUnassignedDelivery(Integer employeeID,Integer deliveryID){
+        service.pickDelivery(employeeID,deliveryID);
+        System.out.println("Picked Delivery with id "+deliveryID+" by Employee with id "+employeeID+" successfully");
+    }
+
+    /**
+     * Assigns Delivery Person to an unassigned Delivery.
+     *
+     *  @param employeeID unique identifier for Employee object
+     *  @param deliveryID unique identifier for Delivery object
+     */
+
+    public void assignDeliveryPersonToUnassignedDelivery(Integer employeeID,Integer deliveryID){
+        service.pickDelivery(employeeID,deliveryID);
+    }
+
+    /**
+     * Retrieves last logged-in Employee's unique identifier.
+     *
+     *  @return last logged-in Employee's unique identifier.
+     */
+
+    public Integer getLastLoggedInEmployeeID(){
         return service.getLastLoggedInEmployeeId();
     }
 
-    public Integer getLastLoggedInDeliveryPersonId(){
+    /**
+     * Retrieves last logged-in Delivery Person's unique identifier.
+     *
+     *  @return last logged-in Delivery Person's unique identifier.
+     */
+
+    public Integer getLastLoggedInDeliveryPersonID(){
         return service.getLastLoggedInDeliveryPersonId();
     }
 
-    public List<Personal_Vehicle> getAllAvailablePersonalVehicles(){
-        List<Personal_Vehicle> allVehicles = service.getPersonalVehicle();
-        List<Personal_Vehicle> availableVehicles = new ArrayList<>();
+    /**
+     * Retrieves all available Personal Vehicles that can be assigned.
+     *
+     *  @return list containing all available Personal Vehicles.
+     */
 
-        for (Personal_Vehicle personalVehicle: allVehicles){
-            if (personalVehicle.getDeliveryPersonID() == null){
+    public List<Personal_Vehicle> getAllAvailablePersonalVehicles(){
+        List<Personal_Vehicle> allVehicles=service.getPersonalVehicle();
+        List<Personal_Vehicle> availableVehicles=new ArrayList<>();
+        for(Personal_Vehicle personalVehicle:allVehicles){
+            if(personalVehicle.getDeliveryPersonID()==null){
                 availableVehicles.add(personalVehicle);
             }
         }
         return availableVehicles;
     }
 
+    /**
+     * Schedules Delivery date/time for given Order.
+     *
+     *  @param orderID unique identifier for Order object
+     *  @param deliveryDateTime date/time when Delivery should occur.
+     */
+
+    public void scheduleDeliveryDate(Integer orderID,LocalDateTime deliveryDateTime){
+        service.scheduleDelivery(orderID,deliveryDateTime);
+        System.out.println("Scheduled Delivery date for Order with id "+orderID+" successfully");
+    }
+
+    /**
+     * Displays available Personal Vehicles in formatted manner.
+     *
+     *  @param personalVehicles list containing Personal Vehicles objects.
+     */
+
     public void viewAvailablePersonalVehicles(List<Personal_Vehicle> personalVehicles){
-        StringBuilder output = new StringBuilder("Available Personal Vehicles:\n");
-        personalVehicles.forEach(personalVehicle -> output.append(personalVehicle.toString()).append("\n"));
+        StringBuilder output=new StringBuilder("Available Personal Vehicles:\n");
+        personalVehicles.forEach(personalVehicle->output.append(personalVehicle.toString()).append("\n"));
         System.out.println(output);
     }
 
-    public boolean validateSelectedPersonalVehicle(Integer Id){
-        List<Personal_Vehicle> personalVehicles = service.getPersonalVehicle();
+    /**
+     * Validates whether selected Personal Vehicle exists based on its unique identifier.
+     *
+     *  @param id unique identifier for Personal Vehicle object.
+     *  @return true if it exists; false otherwise.
+     */
 
-        for (Personal_Vehicle personalVehicle: personalVehicles){
-            if (Objects.equals(personalVehicle.getId(), Id)){
-                return true;
-            }
-        }
-        return false;
+    public boolean validateSelectedPersonalVehicle(Integer id){
+        return service.getPersonalVehicle().stream().anyMatch(personalVehicle->Objects.equals(personalVehicle.getId(),id));
     }
 
-    public void assignPersonalVehicle(Integer deliveryPersonId, Integer personalVehicleId){
-        service.assignPersonalVehicle(deliveryPersonId, personalVehicleId);
+    /**
+     * Assigns given Personal Vehicle to specified Delivery Person.
+     *
+     *  *@ param deliverer_id unique identifier for Deliverer object.
+     *@ param vehicle_id unique identifier for Vehicle object.
+     */
+
+    public void assignPersonalVehicle(Integer deliverer_id,Integer vehicle_id){
+        service.assignPersonalVehicle(deliverer_id ,vehicle_id);
     }
+
+    /**
+     Retrieves all Transportation Types available in system.
+
+     @return list containing Transportation Types as Strings.
+
+     */
 
     public List<String> getAllTransportationTypes(){
         return service.getTransportationTypes();
     }
 
+    /**
+     Displays Transportation Types in formatted manner.
+
+     @param transportationTypes list containing Transportation Types as Strings.
+
+     */
+
     public void viewAllTransportationTypes(List<String> transportationTypes){
-        StringBuilder output = new StringBuilder("TransportationTypes:\n");
-        transportationTypes.forEach(transportationType -> output.append(transportationType).append("\n"));
+        StringBuilder output=new StringBuilder("Transportation Types:\n");
+        transportationTypes.forEach(transportationType->output.append(transportationType).append("\n"));
         System.out.println(output);
     }
 
-    public boolean verifySelectedTransportationType(String transportationType){
-        List<String> transportationTypes = service.getTransportationTypes();
+    /**
+     Validates whether selected Transportation Type exists.
 
-        for (String transportationType1: transportationTypes){
-            if (transportationType1.equals(transportationType)){
-                return true;
-            }
-        }
-        return false;
+     @param transportationType Transportation Type string value.
+
+     @return true if it exists; false otherwise.
+
+     */
+
+    public boolean verifySelectedTransportationType(String transportationType){
+        return service.getTransportationTypes().contains(transportationType);
     }
 
-    public Delivery_Person getLastLoggedInDeliveryPerson() {
+    /**
+     Retrieves last logged-in Delivery Person's details.
+
+     @return Last logged-in Delivery Person object.
+
+     */
+
+    public Delivery_Person getLastLoggedInDeliveryPerson(){
         return service.getLastLoggedInDeliveryPerson();
     }
 
-    public Personal_Vehicle getPersonalVehicle(Integer Id){
-        return service.getPersonalVehicle(Id);
+    /**
+     Retrieves Personal Vehicle details based on given vehicle Id.
+
+     @param id Unique Identifier for Vehicle.
+
+     @return Personal Vehicle Object corresponding provided Id.
+
+     */
+
+    public Personal_Vehicle getPersonalVehicle(Integer id){
+        return service.getPersonalVehicle(id);
     }
 
+    /**
+     Displays Order details based on given Order Id.
+
+     @param Order_ID Unique Identifier corresponding Order Object.
+
+     */
+
+    public void viewOrder(Integer Order_ID){
+        Order Order=getSelectedOrder(Order_ID);
+        if(Order!=null){
+            System.out.println(Order.toString());
+        }else{
+            System.out.println("Order with ID "+Order_ID+" not found.");
+        }
+    }
+
+    /**
+     Retrieves Packages associated with given Order.
+
+     @param Order Object corresponding which Packages need retrieval.
+
+     @return List containing Packages associated provided Order Object.
+
+     */
+
+    public List<Packages> getPackagesFromOrder(Order Order){
+        return service.getPackagesFromOrder(Order);
+    }
 }
