@@ -9,11 +9,9 @@ import java.util.List;
  * including their department affiliation and assigned deliveries.
  * It has a composition relationship with Department and an aggregation relationship with Delivery.
  */
-public class Employee implements HasID {
+public class Employee extends Person {
     private Integer employeeID;
     private int departmentID;
-    private String name;
-    private String phone;
     private String license;
     private List<Delivery> deliveries;
 
@@ -23,8 +21,8 @@ public class Employee implements HasID {
      * - Department-Employee: Composition relationship (department initialized in constructor)
      * - Employee-Delivery: Aggregation relationship (deliveries list initialized but empty)
      *
-     * @param employeeID    The unique identifier for the employee
-     * @param departmentID  The ID of the department the employee belongs to
+     * @param employeeID   The unique identifier for the employee
+     * @param departmentID The ID of the department the employee belongs to
      * @param name         The name of the employee
      * @param phone        The phone number of the employee
      * @param license      The license information of the employee
@@ -83,42 +81,6 @@ public class Employee implements HasID {
      */
     public void setDepartmentID(int departmentID) {
         this.departmentID = departmentID;
-    }
-
-    /**
-     * Returns the name of the employee.
-     *
-     * @return The employee's name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets a new name for the employee.
-     *
-     * @param name The new employee name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns the phone number of the employee.
-     *
-     * @return The employee's phone number
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * Sets a new phone number for the employee.
-     *
-     * @param phone The new phone number
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     /**
