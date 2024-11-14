@@ -701,13 +701,13 @@ public class Controller {
     /**
      Retrieves Packages associated with given Order.
 
-     @param Order Object corresponding which Packages need retrieval.
+     @param orderId Object corresponding which Packages need retrieval.
 
      @return List containing Packages associated provided Order Object.
 
      */
 
-    public List<Packages> getPackagesFromOrder(Order Order){
-        return service.getPackagesFromOrder(Order);
+    public List<Packages> getPackagesFromOrder(Integer orderId){
+        return service.getPackagesFromOrder(orderId);
     }
 }

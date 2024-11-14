@@ -2,9 +2,9 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 /**
@@ -285,7 +285,7 @@ public class APP3{
                     scanner.nextLine(); // Consume newline
                     Order order = controller.getSelectedOrder(orderCostId);
                     if (order != null) {
-                        List<Packages> packages = controller.getPackagesFromOrder(order);
+                        List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
                         double totalCost = controller.calculateOrderCost(packages);
                         System.out.println("Total Order Cost: " + totalCost);
                     } else {

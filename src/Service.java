@@ -66,10 +66,11 @@ public class Service {
     /**
      * Retrieves all packages associated with a specific order
      *
-     * @param order The order to get packages for
+     * @param orderId The order to get packages for
      * @return List of packages in the order
      */
-    public List<Packages> getPackagesFromOrder(Order order) {
+    public List<Packages> getPackagesFromOrder(Integer orderId) {
+        Order order = orderIRepository.get(orderId);
         return order.getPackages();
     }
 
@@ -272,6 +273,10 @@ public class Service {
         }
     }
 
+    /** metoda complexa
+     *
+     * @param deliveryId
+     */
     public void removeDelivery(Integer deliveryId) {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Employee employee = employeeIRepository.get(delivery.getEmployeeID());
@@ -474,10 +479,10 @@ public class Service {
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
         Personal_Vehicle personalVehicle = personalVehicleIRepository.get(personalVehicleId);
 
-        deliveryPerson.setPersonalVehicleId(personalVehicleId);
+        //deliveryPerson.setPersonalVehicleId(personalVehicleId);
         personalVehicle.setDeliveryPersonID(deliveryPersonId);
 
-        deliveryPersonIRepository.update(deliveryPerson);
+        //deliveryPersonIRepository.update(deliveryPerson);
         personalVehicleIRepository.update(personalVehicle);
     }
 
@@ -513,7 +518,7 @@ public class Service {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         if (employee != null && delivery != null) {
             employee.removeDeliv(deliveryId);
-            delivery.setEmployeeID(null);
+            delivery.setEmployeeID(0);
             employeeIRepository.update(employee);
             deliveryIRepository.update(delivery);
         } else {
