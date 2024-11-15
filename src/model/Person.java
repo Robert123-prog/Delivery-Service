@@ -3,6 +3,7 @@ package model;
 public abstract class Person implements HasID {
     protected String name;
     protected String phone;
+    protected Integer id;
 
     /**
      * Returns the name of the employee.
