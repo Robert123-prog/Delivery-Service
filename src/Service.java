@@ -1,6 +1,8 @@
 import model.*;
 
 import repository.IRepository;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,6 +16,7 @@ public class Service {
     /**
      * Maximum limit for deposits
      */
+    private List<Person> persons = new ArrayList<>();
     protected static final int depozitLimit = 1000;
 
     /**
@@ -181,10 +184,11 @@ public class Service {
      */
     public void enrollAsDriver(Integer deliveryPersonId, String name, String phone, String license) {
     // Create a new DeliveryPerson instance
-    Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId,name,phone,license);
+    Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonId,name,phone);
     // Add the DeliveryPerson instance to both repositories if needed
+    deliveryPerson.setVerified(true);
     deliveryPersonIRepository.create(deliveryPerson);
-    employeeIRepository.create(deliveryPerson);
+    //employeeIRepository.create(deliveryPerson);
     }
     /**
      * Registers a new store in the system
@@ -266,14 +270,14 @@ public class Service {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliverPersonId);
         if (delivery != null && deliveryPerson != null) {
-            deliveryPerson.addDelivery(delivery);
+            //deliveryPerson.addDelivery(delivery);
             deliveryPersonIRepository.update(deliveryPerson);
             delivery.setDeliveryPeronID(deliverPersonId);
             deliveryIRepository.update(delivery);
         }
     }
 
-    /** metoda complexa
+    /**
      *
      * @param deliveryId
      */
@@ -296,13 +300,14 @@ public class Service {
      *
      * @param orderId ID of the order to calculate cost for
      */
-    public void calculateAndUpdateOrderCost(Integer orderId) {
+    public double calculateAndUpdateOrderCost(Integer orderId) {
         Order order = orderIRepository.get(orderId);
         double totalCost = order.getPackages().stream()
                 .mapToDouble(Packages::getCost)
                 .sum();
         order.setCost(totalCost);
         orderIRepository.update(order);
+        return totalCost;
     }
     /**
      * Calculates the total cost of a list of packages
@@ -326,7 +331,6 @@ public class Service {
      * @return true if license is valid, false otherwise
      */
     public boolean verifyDeliveryPersonLicense(Integer deliveryPersonId,String license) {
-        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
         if (isLicenseCategoryValid(license)) {
             System.out.println("License for delivery person " + deliveryPersonId + " is valid.");
             return true;
@@ -334,6 +338,47 @@ public class Service {
             System.out.println("License for delivery person " + deliveryPersonId + " is not valid.");
             return false;
         }
+    }
+    //TODO first filtering method
+    /** filtering Delivberies that have the order status as to be shipped, because a DeliveryPerson can only pick up one of these
+     *
+     * @return a list of these orders
+     */
+
+    public List<Delivery> getDeliveriesWithToBeShippedOrders() {
+        // Fetch all deliveries
+        List<Delivery> allDeliveries = deliveryIRepository.readAll();
+
+        // Filter deliveries with orders in the "to be shipped" status
+        return allDeliveries.stream()
+                .filter(delivery -> delivery.getOrders().stream()
+                        .anyMatch(order -> "to be shipped".equalsIgnoreCase(order.getStatus())))
+                .collect(Collectors.toList());
+    }
+
+     //TODO second filtering method
+    /** filtering Deliveries based on Location
+     * @return a list of these Deliveries
+     * */
+
+     public List<Delivery> filterDeliveriesByLocation(String location) {
+         return deliveryIRepository.readAll().stream()
+                 .filter(delivery -> delivery.getLocation().equalsIgnoreCase(location))
+                 .collect(Collectors.toList());
+     }
+     //TODO first sorting method
+    /**
+     * sorting the Deliveries by their DeliveryDate
+     */
+    public List<Delivery> getSortedDeliveriesByOrderDateTime(List<Delivery> deliveries) {
+        return deliveries.stream()
+                .sorted(Comparator.comparing(delivery ->
+                        delivery.getOrders().stream()
+                                .map(Order::getDeliveryDateTime)
+                                .min(Comparator.naturalOrder()) // Get the earliest deliveryDateTime
+                                .orElse(LocalDateTime.MAX) // In case there are no orders, use the maximum value
+                ))
+                .collect(Collectors.toList()); // Collect the sorted deliveries into a new list
     }
     /**
      * Helper method to validate license categories
@@ -356,7 +401,7 @@ public class Service {
 
     }
     public void unenrollDeliveryPerson(Integer deliveryPersonId) {
-        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
+        //Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
         deliveryIRepository.delete(deliveryPersonId);
     }
     /**
@@ -481,7 +526,7 @@ public class Service {
 
         //deliveryPerson.setPersonalVehicleId(personalVehicleId);
         personalVehicle.setDeliveryPersonID(deliveryPersonId);
-
+        deliveryPerson.setPersonalVehicleId(personalVehicleId);
         //deliveryPersonIRepository.update(deliveryPerson);
         personalVehicleIRepository.update(personalVehicle);
     }
@@ -524,5 +569,18 @@ public class Service {
         } else {
             throw new IllegalArgumentException("Employee or Delivery not found.");
         }
+    }
+    public List<Employee> getAllEmployees() {
+        return persons.stream()
+                .filter(p -> p instanceof Employee && !(p instanceof Delivery_Person)) // Exclude DeliveryPerson
+                .map(p -> (Employee) p)
+                .collect(Collectors.toList());
+    }
+
+    public List<Delivery_Person> getAllDeliveryPersons() {
+        return persons.stream()
+                .filter(p -> p instanceof Delivery_Person)
+                .map(p -> (Delivery_Person) p)
+                .collect(Collectors.toList());
     }
 }

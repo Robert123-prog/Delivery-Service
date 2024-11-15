@@ -285,8 +285,8 @@ public class APP3{
                     scanner.nextLine(); // Consume newline
                     Order order = controller.getSelectedOrder(orderCostId);
                     if (order != null) {
-                        List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
-                        double totalCost = controller.calculateOrderCost(packages);
+                        //List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
+                        double totalCost = controller.calculateOrderCost(orderCostId);
                         System.out.println("Total Order Cost: " + totalCost);
                     } else {
                         System.out.println("Order not found.");
@@ -494,9 +494,9 @@ public class APP3{
 
     private static IRepository<Delivery_Person> createInMemoryDeliveryPersonRepository() {
         IRepository<Delivery_Person> deliveryPersonIRepository = new InMemoryRepo<>();
-        deliveryPersonIRepository.create(new Delivery_Person(1, "0742092989", "Eminovici", "part time"));
-        deliveryPersonIRepository.create(new Delivery_Person(2, "071998491", "Stefan", "full time"));
-        deliveryPersonIRepository.create(new Delivery_Person(3, "077636274", "David", "full time"));
+        deliveryPersonIRepository.create(new Delivery_Person(1, "0742092989", "Eminovici"));
+        deliveryPersonIRepository.create(new Delivery_Person(2, "071998491", "Stefan"));
+        deliveryPersonIRepository.create(new Delivery_Person(3, "077636274", "David"));
         return deliveryPersonIRepository;
     }
 

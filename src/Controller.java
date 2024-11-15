@@ -342,11 +342,11 @@ public class Controller {
     /**
      * Calculates total cost based on provided packages.
      *
-     * @param packages list of packages to calculate cost for
+     * /@param packages list of packages to calculate cost for
      * @return total cost calculated from packages
      */
-    public double calculateOrderCost(List<Packages> packages) {
-        return service.calculateOrderCostOnPackages(packages);
+    public double calculateOrderCost(Integer orderId) {
+        return service.calculateAndUpdateOrderCost(orderId);
     }
 
     /**

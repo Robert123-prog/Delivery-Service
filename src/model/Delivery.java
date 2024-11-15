@@ -24,7 +24,7 @@ public class Delivery implements HasID {
     private int employeeID;
 
     /** ID of the order being delivered */
-    private int orderID;
+    private Integer orderID;
 
     /** ID of the transportation method used */
     private int transportationID;
@@ -34,6 +34,9 @@ public class Delivery implements HasID {
 
     /** Type of transportation used for this delivery */
     private Transportation transportation_type;
+
+    /** String of the location where the order will be shipped*/
+    private String location;
 
     /** List of orders associated with this delivery */
     private List<Order> orders;
@@ -49,6 +52,10 @@ public class Delivery implements HasID {
         this.deliveryID = deliveryID;
         this.orderID = orderID;
         this.time = time;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     /**
@@ -150,6 +157,10 @@ public class Delivery implements HasID {
         this.transportation_type = transportation_type;
     }
 
+
+    public List<Order> getOrders() {
+        return orders;
+    }
     /**
      * Adds an order to the list of orders for this delivery.
      *

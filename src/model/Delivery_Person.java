@@ -7,13 +7,15 @@ public class Delivery_Person extends Person {
     private Integer deliveryPersonID;
     private boolean verified;
     private String license;
-    //private List<Delivery> deliveries;
+    private List<Delivery> deliveries;
     private Integer personalVehicleId;
 
 
-    public Delivery_Person(int deliveryPersonID, String phone, String name, String license) {
-        this.license = license;
+    public Delivery_Person(int deliveryPersonID, String phone, String name) {
+        this.name=name;
+        this.phone=phone;
         this.deliveryPersonID = deliveryPersonID;
+        this.deliveries = new ArrayList<>();
     }
 
     public String getLicense() {
@@ -41,6 +43,9 @@ public class Delivery_Person extends Person {
         return removed;
     }
 */
+    public List<Delivery> getDeliveries() {
+    return deliveries;
+}
     public void setPersonalVehicleId(Integer personalVehicleId) {
         this.personalVehicleId = personalVehicleId;
     }
@@ -52,7 +57,6 @@ public class Delivery_Person extends Person {
                 ", verified=" + verified +
                 ", phone='" + phone + '\'' +
                 ", name='" + name + '\'' +
-                ", license='" + license + '\'' +
                 ", personalVehicleId=" + personalVehicleId +
                 '}';
     }
