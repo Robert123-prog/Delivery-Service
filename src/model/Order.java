@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class Order implements HasID {
     private final Integer orderID;
-    private int customerID;
+    private Integer customerID;
     private Date orderDate;
     protected LocalDateTime deliveryDateTime;
-    private double cost;
+    private double totalCost;
     private String status;
     private List<Packages> packages;
 
@@ -30,15 +30,15 @@ public class Order implements HasID {
      * @param orderID         the unique identifier for this order
      * @param orderDate       the date when the order was placed
      * @param deliveryDateTime the date and time when the order is to be delivered
-     * @param cost            the total cost of the order
-     * @param status          the current status of the order
+     * @param /totalCost            the total cost of the order
+     * @param /status          the current status of the order
      */
-    public Order(Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
+    public Order(Integer orderID, Date orderDate, LocalDateTime deliveryDateTime) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.deliveryDateTime = deliveryDateTime;
-        this.cost = cost;
-        this.status = status;
+        //this.totalCost = totalCost;
+        //this.status = status;
         this.packages = new ArrayList<>();
     }
 
@@ -47,7 +47,7 @@ public class Order implements HasID {
      *
      * @return the order ID
      */
-    public int getOrderID() {
+    public Integer getOrderID() {
         return orderID;
     }
 
@@ -56,7 +56,7 @@ public class Order implements HasID {
      *
      * @return the customer ID
      */
-    public int getCustomerID() {
+    public Integer getCustomerID() {
         return customerID;
     }
 
@@ -111,7 +111,7 @@ public class Order implements HasID {
      * @return the cost of the order
      */
     public double getCost() {
-        return cost;
+        return totalCost;
     }
 
     /**
@@ -120,7 +120,7 @@ public class Order implements HasID {
      * @param cost the new total cost of the order
      */
     public void setCost(double cost) {
-        this.cost = cost;
+        this.totalCost = totalCost;
     }
 
     /**
@@ -172,7 +172,7 @@ public class Order implements HasID {
                 ", customerID=" + customerID +
                 ", orderDate=" + orderDate +
                 ", deliveryDate=" + deliveryDateTime +
-                ", cost=" + cost +
+                ", cost=" + totalCost +
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
                 '}';

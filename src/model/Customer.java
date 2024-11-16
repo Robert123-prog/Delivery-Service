@@ -173,4 +173,8 @@ public class Customer implements HasID {
     public Integer getId() {
         return customerID;
     }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

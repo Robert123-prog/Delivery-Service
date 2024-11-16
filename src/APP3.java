@@ -2,9 +2,12 @@ import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
+import javax.xml.transform.Source;
 import java.sql.Date;
+import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 /**
@@ -251,14 +254,20 @@ public class APP3{
                         System.out.print("Enter delivery time (HH:mm): ");
                         String deliveryTimeString = scanner.nextLine();
                         LocalDateTime deliveryDateTime = LocalDateTime.parse(deliveryDateString + "T" + deliveryTimeString);
-
-                        System.out.print("Enter cost: ");
-                        double cost = Double.parseDouble(scanner.nextLine());
-
+                        /*
                         System.out.print("Enter status: ");
                         String status = scanner.nextLine();
-
-                        controller.makeAnOrder(customerId, orderDate, deliveryDateTime, cost, status);
+                        */
+                        List<Integer> packageIds = new ArrayList<>();
+                        System.out.println("How many Packages do you want to add to the order ?");
+                        int numberPackages = scanner.nextInt();
+                        for (int i = 0; i < numberPackages; i++) {
+                            controller.viewAllPackages();
+                            System.out.println("The package you want to add");
+                            int packageId = scanner.nextInt();
+                            packageIds.add(packageId);
+                        }
+                        controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
                     } catch (Exception e) {
                         System.out.println("Invalid input. Please try again.");
                     }
@@ -276,21 +285,19 @@ public class APP3{
                     System.out.print("Enter Customer ID: ");
                     int personalCustomerId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
-                    List<Order> personalOrders = controller.getPersonalOrders(personalCustomerId);
-                    controller.viewPersonalOrders(personalOrders);
+                    controller.viewPersonalOrders(personalCustomerId);
                     break;
                 case 6:
-                    System.out.print("Enter Order ID: ");
-                    int orderCostId = scanner.nextInt();
+                    System.out.print("Enter Customer ID: ");
+                    int customerId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
-                    Order order = controller.getSelectedOrder(orderCostId);
-                    if (order != null) {
-                        //List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
-                        double totalCost = controller.calculateOrderCost(orderCostId);
-                        System.out.println("Total Order Cost: " + totalCost);
-                    } else {
-                        System.out.println("Order not found.");
-                    }
+                    controller.viewPersonalOrders(customerId);
+                    System.out.println("Pick an order");
+                    int orderCostId = scanner.nextInt();
+                    //List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
+                    double totalCost = controller.calculateOrderCost(orderCostId);
+                    System.out.println("Total Order Cost: " + totalCost);
+
                     break;
                 case 7:
                     try {
@@ -518,9 +525,9 @@ public class APP3{
     //LocalDateTime
     private static IRepository<Order> createInMemoryOrderRepository() {
         IRepository<Order> orderIRepository = new InMemoryRepo<>();
-        orderIRepository.create(new Order(1, java.sql.Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0), 150.75, "Processing"));
-        orderIRepository.create(new Order(2, java.sql.Date.valueOf("2024-06-07"), LocalDateTime.of(2024, 6, 12, 14, 30), 200.50, "Shipped"));
-        orderIRepository.create(new Order(3, Date.valueOf("2024-06-08"), LocalDateTime.of(2024, 6, 15, 9, 0), 100.25, "Delivered"));
+        orderIRepository.create(new Order(1, java.sql.Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0)));//, 150.75, "Processing"));
+        orderIRepository.create(new Order(2, java.sql.Date.valueOf("2024-06-07"), LocalDateTime.of(2024, 6, 12, 14, 30)));//, 200.50, "Shipped"));
+        orderIRepository.create(new Order(3, Date.valueOf("2024-06-08"), LocalDateTime.of(2024, 6, 15, 9, 0)));//, 100.25, "Delivered"));
         return orderIRepository;
     }
 
