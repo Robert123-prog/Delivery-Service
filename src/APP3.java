@@ -1,5 +1,6 @@
 import model.*;
 import repository.IRepository;
+import repository.InFileRepository;
 import repository.InMemoryRepo;
 
 import javax.xml.transform.Source;
@@ -554,6 +555,7 @@ public class APP3{
         storeIRepository.create(new Store(3, "Kaufland", "Calea Manastur", "Mihai"));
         return storeIRepository;
     }
+
     /**
      * Main entry point of the application.
      * Initializes all necessary repositories, creates service and controller instances,
@@ -573,7 +575,58 @@ public class APP3{
         IRepository<Order> orderIRepository = createInMemoryOrderRepository();
         IRepository<Store> storeIRepository = createInMemoryStoreRepository();
         IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
-        Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+        IRepository<Customer> customerRepository = new InFileRepository<>(
+                "src/data/customers.txt",
+                Customer::toCsv,   // Serialize method of Customer
+                Customer::fromCsv      // Deserialize method of Customer
+        );
+        IRepository<Store> storeRepository = new InFileRepository<>(
+                "src/data/stores.txt",
+                Store::toCsv,
+                Store::fromCsv
+        );
+        IRepository<Deposit>depositRepository = new InFileRepository<>(
+                "src/data/deposits.txt",
+                Deposit::toCsv,
+                Deposit::fromCsv
+        );
+        IRepository<Order> orderRepository = new InFileRepository<>(
+                "src/data/orders.txt",
+                Order::toCsv,
+                Order::fromCsv
+        );
+        IRepository<Packages> packagesRepository = new InFileRepository<>(
+                "src/data/package.txt",
+                Packages::toCsv,
+                Packages::fromCsv
+        );
+        IRepository<Employee> employeeRepository = new InFileRepository<>(
+                "src/data/employees.txt",
+                Employee::toCsv,
+                Employee::fromCsv
+        );
+        IRepository<Delivery> deliveryRepository = new InFileRepository<>(
+                "src/data/delivery.txt",
+                Delivery::toCsv,
+                Delivery::fromCsv
+        );
+        IRepository<Personal_Vehicle> personalVehiclerIRepository = new InFileRepository<>(
+                "src/data/personalVehicles.txt",
+                Personal_Vehicle::toCsv,
+                Personal_Vehicle::fromCsv
+        );
+        IRepository<Delivery_Person> deliveryPersonRepository = new InFileRepository<>(
+                "src/data/deliveryPerson.txt",
+                Delivery_Person::toCsv,
+                Delivery_Person::fromCsv
+        );
+        IRepository<Department> departmentRepository = new InFileRepository<>(
+                "src/data/departments.txt",
+                Department::toCsv,
+                Department::fromCsv
+        );
+        //Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+        Service service = new Service(storeRepository,packagesRepository,orderRepository,customerRepository,departmentRepository,employeeRepository,deliveryRepository,depositRepository,deliveryPersonRepository,personalVehicleIRepository);
         Controller controller = new Controller(service);
         new APP3(controller);
     }

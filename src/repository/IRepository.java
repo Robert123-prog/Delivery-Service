@@ -16,7 +16,7 @@ public interface IRepository<T extends HasID> {
      *
      * @param obj The object to create.
      */
-    void create(T obj) throws IOException;
+    void create(T obj);
     /**
      * Retrieves all objects from the repository.
      *

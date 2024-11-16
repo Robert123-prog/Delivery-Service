@@ -204,7 +204,7 @@ public class Order implements HasID {
                 customerID + "," +
                 orderDate.getTime() + "," + // Serialize date as timestamp
                 deliveryDateTime.format(DATE_TIME_FORMATTER) + "," +
-                cost + "," +
+                totalCost + "," +
                 status + "," +
                 serializedPackages.toString();
     }
@@ -219,7 +219,7 @@ public class Order implements HasID {
         double cost = Double.parseDouble(parts[4]);
         String status = parts[5];
 
-        Order order = new Order(orderID, orderDate, deliveryDateTime, cost, status);
+        Order order = new Order(orderID, orderDate, deliveryDateTime);
 
         // Deserialize packages if any
         if (parts.length > 6) {
