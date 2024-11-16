@@ -83,7 +83,7 @@ public class Delivery_Person extends Person {
                 personalVehicleId + "," + serializedDeliveries.toString();
     }
 
-    public Delivery_Person fromCsv(String csvLine){
+    public static Delivery_Person fromCsv(String csvLine){
         String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
 
         Integer deliveryPersonID = Integer.parseInt(parts[0]);

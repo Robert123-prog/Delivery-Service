@@ -189,7 +189,7 @@ public class Customer implements HasID {
                 orders;
     }
 
-    public Customer fromCsv(String csvLine){
+    public static Customer fromCsv(String csvLine){
         String[] parts = csvLine.split(",");
         Integer customerId = Integer.parseInt(parts[0]);
         String name = parts[1];
@@ -198,7 +198,5 @@ public class Customer implements HasID {
         String email = parts[4];
         return new Customer(customerId, name, address, phone, email);
     }
-
-
 
 }
