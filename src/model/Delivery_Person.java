@@ -37,6 +37,10 @@ public class Delivery_Person extends Person {
     public Integer getPersonalVehicleId() {
         return personalVehicleId;
     }
+
+    public void addDelivery(Delivery delivery){
+        deliveries.add(delivery);
+    }
 /*
     public boolean removeDelivery(Delivery delivery) {
         boolean removed = deliveries.remove(delivery);
@@ -64,6 +68,46 @@ public class Delivery_Person extends Person {
     @Override
     public Integer getId() {
         return deliveryPersonID;
+    }
+
+    public String toCsv(){
+        StringBuilder serializedDeliveries = new StringBuilder();
+
+        for (Delivery delivery: deliveries){
+            serializedDeliveries.append(delivery.toCsv()).append(";");
+        }
+
+        return deliveryPersonID + "," +
+                verified + "," +
+                license + "," +
+                personalVehicleId + "," + serializedDeliveries.toString();
+    }
+
+    public Delivery_Person fromCsv(String csvLine){
+        String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
+
+        Integer deliveryPersonID = Integer.parseInt(parts[0]);
+        boolean verified = Boolean.parseBoolean(parts[1]);
+        String license = parts[2];
+        String deliveriesString = parts[3]; // Serialized deliveries
+        Integer personalVehicleId = Integer.parseInt(parts[4]);
+
+        // Create a new Delivery_Person object
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonID, "", ""); // Phone and name left empty
+        deliveryPerson.setVerified(verified);
+        deliveryPerson.license = license;
+        deliveryPerson.setPersonalVehicleId(personalVehicleId);
+
+        // Parse deliveries from the deliveriesString
+        if (!deliveriesString.isEmpty()) {
+            String[] deliveryParts = deliveriesString.split(";");
+            for (String deliveryString : deliveryParts) {
+                Delivery delivery = Delivery.fromCsv(deliveryString);
+                deliveryPerson.addDelivery(delivery);
+            }
+        }
+
+        return deliveryPerson;
     }
 }
 

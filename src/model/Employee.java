@@ -164,4 +164,45 @@ public class Employee extends Person {
     public Integer getId() {
         return employeeID;
     }
+
+    public String toCsv(){
+        StringBuilder serializedDeliveries = new StringBuilder();
+
+        for (Delivery delivery: deliveries){
+            serializedDeliveries.append(delivery.toCsv()).append(";");
+        }
+
+        return employeeID + "," +
+                departmentID + "," +
+                name + "," +
+                phone + "," +
+                license + "," +
+                serializedDeliveries.toString();
+    }
+
+    public static Employee fromCsv(String csvLine){
+        String[] parts = csvLine.split(",", 6);
+
+        // Parse basic attributes
+        Integer employeeID = Integer.parseInt(parts[0]);
+        Integer departmentID = Integer.parseInt(parts[1]);
+        String name = parts[2];
+        String phone = parts[3];
+        String license = parts[4];
+        String deliveriesString = parts[5]; // Serialized deliveries
+
+        // Create a new Employee object with parsed data
+        Employee employee = new Employee(employeeID, departmentID, name, phone, license);
+
+        // Parse deliveries if they exist
+        if (!deliveriesString.isEmpty()) {
+            String[] deliveryParts = deliveriesString.split(";");
+            for (String deliveryString : deliveryParts) {
+                Delivery delivery = Delivery.fromCsv(deliveryString); // Use Delivery's fromString method
+                employee.addDelivery(delivery);
+            }
+        }
+
+        return employee;
+    }
 }

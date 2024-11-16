@@ -152,4 +152,59 @@ public class Store implements HasID {
     public Integer getId() {
         return storeID;
     }
+
+    /**
+     * Serializes the Store object into a CSV string.
+     *
+     * @return A CSV string representing the state of the Store object
+     */
+    public String toCsv() {
+        StringBuilder serializedDeposits = new StringBuilder();
+
+        // Serialize deposits list
+        for (Deposit deposit : deposits) {
+            serializedDeposits.append(deposit.toCsv()).append(";");
+        }
+
+        // Remove trailing semicolon if there are any deposits
+        if (serializedDeposits.length() > 0) {
+            serializedDeposits.deleteCharAt(serializedDeposits.length() - 1);
+        }
+
+        // Return the serialized store data
+        return storeID + "," +
+                name + "," +
+                address + "," +
+                contact + "," +
+                serializedDeposits.toString();
+    }
+
+    /**
+     * Deserializes a CSV string into a Store object.
+     *
+     * @param csvLine A CSV string containing the serialized data of the Store
+     * @return A new Store object created from the CSV string
+     */
+    public static Store fromCsv(String csvLine) {
+        String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, name, address, contact, deposits
+
+        Integer storeID = Integer.parseInt(parts[0]);
+        String name = parts[1];
+        String address = parts[2];
+        String contact = parts[3];
+        String depositsString = parts[4]; // Serialized deposits
+
+        // Create a new Store object
+        Store store = new Store(storeID, name, address, contact);
+
+        // Parse deposits from the depositsString
+        if (!depositsString.isEmpty()) {
+            String[] depositParts = depositsString.split(";");
+            for (String depositString : depositParts) {
+                Deposit deposit = Deposit.fromCsv(depositString);
+                store.addDeposit(deposit);
+            }
+        }
+        return store;
+    }
 }
