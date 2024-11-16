@@ -104,4 +104,35 @@ public class Personal_Vehicle extends Transportation {
     public Integer getId() {
         return personalVehicleID;
     }
+
+    /**
+     * Serializes the Personal_Vehicle object into a CSV string.
+     *
+     * @return A CSV string representing the state of the Personal_Vehicle object
+     */
+    public String toCsv() {
+        return "Personal_Vehicle," +
+                personalVehicleID + "," +
+                extraFee + "," +
+                deliveryPersonID + "," +
+                capacity + "," +
+                transportation_type;
+    }
+
+    /**
+     * Deserializes a CSV string into a Personal_Vehicle object.
+     *
+     * @param csvLine A CSV string containing the serialized data of the Personal_Vehicle
+     * @return A new Personal_Vehicle object created from the CSV string
+     */
+    public static Personal_Vehicle fromCsv(String csvLine) {
+        String[] parts = csvLine.split(",");
+        Integer personalVehicleID = Integer.parseInt(parts[1]);
+        Integer extraFee = Integer.parseInt(parts[2]);
+        Integer deliveryPersonID = parts[3].equals("null") ? null : Integer.parseInt(parts[3]);
+        int capacity = Integer.parseInt(parts[4]);
+        Transportation_Type transportationType = Transportation_Type.valueOf(parts[5]);
+
+        return new Personal_Vehicle(personalVehicleID, extraFee, capacity, transportationType);
+    }
 }

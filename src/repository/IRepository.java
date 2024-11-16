@@ -2,6 +2,7 @@ package repository;
 
 import model.HasID;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 /**
@@ -15,7 +16,7 @@ public interface IRepository<T extends HasID> {
      *
      * @param obj The object to create.
      */
-    void create(T obj);
+    void create(T obj) throws IOException;
     /**
      * Retrieves all objects from the repository.
      *

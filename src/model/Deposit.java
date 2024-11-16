@@ -142,4 +142,60 @@ public class Deposit implements HasID {
     public Integer getId() {
         return depositID;
     }
+
+    /**
+     * Serializes the Deposit object into a CSV string.
+     *
+     * @return A CSV string representing the state of the Deposit object
+     */
+    public String toCsv() {
+        StringBuilder serializedPackages = new StringBuilder();
+
+        // Serialize packages list
+        for (Packages packag : packages) {
+            serializedPackages.append(packag.toCsv()).append(";");
+        }
+
+        // Remove trailing semicolon if there are any packages
+        if (serializedPackages.length() > 0) {
+            serializedPackages.deleteCharAt(serializedPackages.length() - 1);
+        }
+
+        // Return the serialized deposit data
+        return depositID + "," +
+                storeID + "," +
+                address + "," +
+                status + "," +
+                serializedPackages.toString();
+    }
+
+    /**
+     * Deserializes a CSV string into a Deposit object.
+     *
+     * @param csvLine A CSV string containing the serialized data of the Deposit
+     * @return A new Deposit object created from the CSV string
+     */
+    public static Deposit fromCsv(String csvLine) {
+        String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, storeID, address, status, packages
+
+        Integer depositID = Integer.parseInt(parts[0]);
+        Integer storeID = Integer.parseInt(parts[1]);
+        String address = parts[2];
+        String status = parts[3];
+        String packagesString = parts[4]; // Serialized packages
+
+        // Create a new Deposit object
+        Deposit deposit = new Deposit(depositID, address, status, storeID);
+
+        // Parse packages from the packagesString
+        if (!packagesString.isEmpty()) {
+            String[] packageParts = packagesString.split(";");
+            for (String packageString : packageParts) {
+                Packages packag = Packages.fromCsv(packageString);
+                deposit.addPackage(packag);
+            }
+        }
+
+        return deposit;
+    }
 }

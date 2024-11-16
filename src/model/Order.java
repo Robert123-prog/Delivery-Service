@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The Order class represents a customer's order in the system.
@@ -11,6 +12,8 @@ import java.util.List;
  * delivery date and time, cost, status, and associated packages.
  */
 public class Order implements HasID {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private final Integer orderID;
     private int customerID;
     private Date orderDate;
@@ -186,5 +189,47 @@ public class Order implements HasID {
     @Override
     public Integer getId() {
         return orderID;
+    }
+
+    public String toCsv() {
+        StringBuilder serializedPackages = new StringBuilder();
+
+        // Serialize the packages
+        for (Packages pack : packages) {
+            serializedPackages.append(pack.toCsv()).append(";");
+        }
+
+        return "Order" +
+                orderID + "," +
+                customerID + "," +
+                orderDate.getTime() + "," + // Serialize date as timestamp
+                deliveryDateTime.format(DATE_TIME_FORMATTER) + "," +
+                cost + "," +
+                status + "," +
+                serializedPackages.toString();
+    }
+
+    public static Order fromCsv(String csvLine) {
+        String[] parts = csvLine.split(",");
+
+        Integer orderID = Integer.parseInt(parts[0]);
+        int customerID = Integer.parseInt(parts[1]);
+        Date orderDate = new Date(Long.parseLong(parts[2])); // Deserialize timestamp into Date
+        LocalDateTime deliveryDateTime = LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER);
+        double cost = Double.parseDouble(parts[4]);
+        String status = parts[5];
+
+        Order order = new Order(orderID, orderDate, deliveryDateTime, cost, status);
+
+        // Deserialize packages if any
+        if (parts.length > 6) {
+            String[] packagesData = parts[6].split(";");
+            for (String packageData : packagesData) {
+                if (!packageData.isEmpty()) {
+                    order.addPackage(Packages.fromCsv(packageData));
+                }
+            }
+        }
+        return order;
     }
 }

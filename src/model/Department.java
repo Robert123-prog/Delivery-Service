@@ -127,4 +127,44 @@ public class Department implements HasID {
     public Integer getId() {
         return departmentID;
     }
+
+    public String toCsv(){
+        StringBuilder serilizedEmployees = new StringBuilder();
+
+        for (Employee employee: employees){
+            serilizedEmployees.append(employee.toCsv()).append(";");
+        }
+
+        return "Department" +
+                departmentID + ","+
+                name + "," +
+                task + serilizedEmployees.toString();
+    }
+
+    public static Department fromCsv(String csvLine) {
+        // Split the input string into parts
+        String[] parts = csvLine.split(",", 4);
+
+        // Parse basic department information
+        Integer departmentID = Integer.parseInt(parts[0].replace("Department", "").trim());
+        String name = parts[1];
+        String task = parts[2];
+        String employeesString = parts[3]; // Serialized employees string
+
+        // Create a new Department object
+        Department department = new Department(departmentID, name, task);
+
+        // Parse and add employees if they exist
+        if (!employeesString.isEmpty()) {
+            String[] employeeParts = employeesString.split(";");
+            for (String employeeString : employeeParts) {
+                if (!employeeString.trim().isEmpty()) {
+                    Employee employee = Employee.fromCsv(employeeString); // Call Employee's deserialize method
+                    department.addEmployee(employee);
+                }
+            }
+        }
+
+        return department;
+    }
 }
