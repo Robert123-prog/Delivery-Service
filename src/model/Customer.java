@@ -174,7 +174,31 @@ public class Customer implements HasID {
         return customerID;
     }
 
+
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    public String toCsv(){
+        return "Customer" +
+                + customerID + "," +
+                name + "," +
+                address + "," +
+                phone + "," +
+                email + "," +
+                orders;
+    }
+
+    public Customer fromCsv(String csvLine){
+        String[] parts = csvLine.split(",");
+        Integer customerId = Integer.parseInt(parts[0]);
+        String name = parts[1];
+        String address = parts[2];
+        String phone = parts[3];
+        String email = parts[4];
+        return new Customer(customerId, name, address, phone, email);
+    }
+
+
+
 }

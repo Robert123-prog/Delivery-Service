@@ -128,4 +128,34 @@ public class Packages implements HasID {
     public Integer getId() {
         return packageID;
     }
+
+    public String toCsv() {
+        return packageID + "," +
+                (orderID != null ? orderID : "null") + "," + // Handle null orderID
+                weight + "," +
+                dimensions + "," +
+                cost;
+    }
+
+    public static Packages fromCsv(String csvLine) {
+        // Split the input string into parts
+        String[] parts = csvLine.split(",");
+
+        // Parse fields
+        Integer packageID = Integer.parseInt(parts[0]);
+        Integer orderID = parts[1].equals("null") ? null : Integer.parseInt(parts[1]); // Handle null for orderID
+        double weight = Double.parseDouble(parts[2]);
+        String dimensions = parts[3];
+        int cost = Integer.parseInt(parts[4]);
+
+        // Create a new Packages object
+        Packages packages = new Packages(packageID, weight, dimensions, cost);
+
+        // Set the orderID if it exists
+        if (orderID != null) {
+            packages.setOrderID(orderID);
+        }
+
+        return packages;
+    }
 }
