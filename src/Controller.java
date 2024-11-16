@@ -266,12 +266,12 @@ public class Controller {
      * @param customerId        the ID of the customer placing the order
      * @param orderDate         the date when the order was placed
      * @param deliveryDateTime  when the order should be delivered
-     * @param cost              total cost of the order
-     * @param status            current status of the order
+     * @param /cost              total cost of the order
+     * @param /status            current status of the order
      */
-    public void makeAnOrder(Integer customerId, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
+    public void makeAnOrder(Integer customerId, Date orderDate, LocalDateTime deliveryDateTime, List<Integer> packageIds) {
         Integer orderId = service.getNewOrderId();
-        service.placeOrder(customerId, orderId, orderDate, deliveryDateTime, cost, status);
+        service.placeOrder(customerId, orderId, orderDate, deliveryDateTime, packageIds);
         System.out.println("Order with id " + orderId + " by customer with id " + customerId + " successfully");
     }
 
@@ -355,25 +355,19 @@ public class Controller {
      * @param customerId ID of customer whose orders are retrieved
      * @return list of personal orders for that customer
      */
+    /*
     public List<Order> getPersonalOrders(Integer customerId) {
-        List<Order> orders = service.getOrders();
-        List<Order> personalOrders = new ArrayList<>();
-
-        for (Order order : orders) {
-            if (order.getCustomerID() == customerId) {
-                personalOrders.add(order);
-            }
-        }
-
-        return personalOrders;
+        List<Order> orders = service.getOrdersFromCustomers(customerId);
+        return orders;
     }
-
+*/
     /**
      * Displays personal orders in a formatted manner.
      *
-     * @param orders list of orders to display
+     * @param /orders list of orders to display
      */
-    public void viewPersonalOrders(List<Order> orders) {
+    public void viewPersonalOrders(Integer customerId) {
+        List<Order> orders = service.getOrdersFromCustomers(customerId);
         StringBuilder output = new StringBuilder("Available Orders:\n");
 
         orders.forEach(order -> output.append(order.toString()).append("\n"));
@@ -452,6 +446,12 @@ public class Controller {
     public void createPackage(int cost, double weight, String dimensions) {
         Integer packageID = service.getNewPackageId();
         service.createPackage(packageID, cost, weight, dimensions);
+    }
+    
+    public void viewAllPackages() {
+        StringBuilder output = new StringBuilder("All Packages:\n");
+        service.getPackages().forEach(packages -> output.append(packages.toString()).append("\n"));
+        System.out.println(output);
     }
 
     /**
@@ -710,4 +710,5 @@ public class Controller {
     public List<Packages> getPackagesFromOrder(Integer orderId){
         return service.getPackagesFromOrder(orderId);
     }
+
 }

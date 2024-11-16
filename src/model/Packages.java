@@ -7,7 +7,7 @@ package model;
  */
 public class Packages implements HasID {
     private final Integer packageID;
-    private final int cost;
+    private double cost;
     private Integer orderID;
     private double weight;
     private String dimensions;
@@ -36,7 +36,7 @@ public class Packages implements HasID {
      *
      * @return the cost of the package
      */
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
@@ -113,9 +113,9 @@ public class Packages implements HasID {
     public String toString() {
         return "Package{" +
                 "packageID=" + packageID +
-                ", orderID=" + orderID +
                 ", weight=" + weight +
                 ", dimensions='" + dimensions + '\'' +
+                ", cost=" + cost +
                 '}';
     }
 

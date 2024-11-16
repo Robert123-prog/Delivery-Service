@@ -174,6 +174,11 @@ public class Customer implements HasID {
         return customerID;
     }
 
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public String toCsv(){
         return "Customer" +
                 + customerID + "," +
@@ -193,6 +198,7 @@ public class Customer implements HasID {
         String email = parts[4];
         return new Customer(customerId, name, address, phone, email);
     }
+
 
 
 }

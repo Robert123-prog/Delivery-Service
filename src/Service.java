@@ -76,6 +76,10 @@ public class Service {
         Order order = orderIRepository.get(orderId);
         return order.getPackages();
     }
+    public List<Order> getOrdersFromCustomers(Integer customerId) {
+        Customer customer = customerIRepository.get(customerId);
+        return customer.getOrders();
+    }
 
     public List<Order> getOrders() {
         return orderIRepository.readAll();
@@ -120,6 +124,7 @@ public class Service {
 
         return enumNames;
     }
+    //TODO the complex method that combines three tables Customers, Package and Order
     /**
      * Places a new order in the system
      *
@@ -127,26 +132,35 @@ public class Service {
      * @param orderID Order's unique identifier
      * @param orderDate Date when the order was placed
      * @param deliveryDateTime Scheduled delivery date and time
-     * @param cost Total cost of the order
-     * @param status Current status of the order
+     * @param /cost Total cost of the order
+     * @param /status Current status of the order
      */
-    public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, double cost, String status) {
+    public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime,List<Integer> packageIds) {
         Customer customer = customerIRepository.get(CustomerId);
-        Order order = new Order(orderID,orderDate,deliveryDateTime,cost,status);
-        if (customer != null) {
-            customer.getOrders().add(order);
+        Order order = new Order(orderID, orderDate, deliveryDateTime);
+        for (Integer packageId : packageIds) {
+            Packages packages = packageIRepository.get(packageId);
+            if (packages != null) {
+                order.addPackage(packages);
+            }
         }
-        orderIRepository.update(order);
-        customerIRepository.update(customer);
-    }
+            if (customer != null) {
+                customer.getOrders().add(order);
+                order.setCustomerID(CustomerId);
+            }
+            orderIRepository.create(order);
+            customerIRepository.update(customer);
+        }
 
-    public void removeOrder(Integer CustomerId, Integer orderID) {
-        Customer customer = customerIRepository.get(CustomerId);
-        if (customer != null) {
+
+    public void removeOrder(Integer customerId, Integer orderID) {
+        Customer customer = customerIRepository.get(customerId);
+        if (customer != null && customer.getOrders() != null) {
             Order order = orderIRepository.get(orderID);
-            if (order != null && customer.getOrders().contains(order)) {
-                customer.getOrders().remove(order);
-                orderIRepository.delete(orderID);
+
+            if (order != null && customer.getOrders().remove(order)) {
+                // Successfully removed order from customer's orders list
+                orderIRepository.delete(orderID); // Delete the order from repository
                 customerIRepository.update(customer);
             }
         }
@@ -233,7 +247,7 @@ public class Service {
     public void removeDeposit(Integer storeId, Integer depositId) {
         //Deposit deposit = depositIRepository.get(depositId);
         Store store = storeIRepository.get(storeId);
-        store.getDeposits().removeIf(deposit -> deposit.getDepositID() == depositId);
+        store.getDeposits().removeIf(deposit -> Objects.equals(deposit.getDepositID(), depositId));
             depositIRepository.delete(depositId);
             storeIRepository.update(store);
     }
@@ -288,6 +302,7 @@ public class Service {
         employeeIRepository.update(employee);
         deliveryIRepository.delete(deliveryId);
     }
+
     public void removeDeliveryToPerson(Integer deliveryId) {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(delivery.getDeliveryPeronID());
@@ -308,20 +323,6 @@ public class Service {
         order.setCost(totalCost);
         orderIRepository.update(order);
         return totalCost;
-    }
-    /**
-     * Calculates the total cost of a list of packages
-     *
-     * @param packages List of packages to calculate total cost for
-     * @return Total cost of all packages
-     */
-    public double calculateOrderCostOnPackages(List<Packages> packages){
-        double total = 0.0;
-
-        for (Packages packages1: packages){
-            total += packages1.getCost();
-        }
-        return total;
     }
     /**
      * Verifies if a delivery person's license is valid
@@ -380,6 +381,20 @@ public class Service {
                 ))
                 .collect(Collectors.toList()); // Collect the sorted deliveries into a new list
     }
+    //TODO second sorting method
+    /**
+     * Returns the orders sorted in descending order by their price.
+     *
+     * @param orders The list of orders to sort
+     * @return A new list of orders sorted in descending order by price
+     */
+    public List<Order> getOrdersSortedByPriceDescending(List<Order> orders) {
+        return orders.stream()
+                .sorted(Comparator.comparingDouble(Order::getCost).reversed()) // Sort by price in descending order
+                .collect(Collectors.toList()); // Collect into a new list
+    }
+
+
     /**
      * Helper method to validate license categories
      *
