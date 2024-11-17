@@ -59,7 +59,7 @@ public class Deposit implements HasID {
      *
      * @param storeID The new store ID
      */
-    public void setStoreID(int storeID) {
+    public void setStoreID(Integer storeID) {
         this.storeID = storeID;
     }
 
