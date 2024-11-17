@@ -1,0 +1,3 @@
+1,Str. Ploiesti,Full,1
+2,Str. Constanta,Empty,2
+3,Str. Fabricii,Not full,3

@@ -131,7 +131,7 @@ public class Packages implements HasID {
 
     public String toCsv() {
         return packageID + "," +
-                (orderID != null ? orderID : "null") + "," + // Handle null orderID
+                //(orderID != null ? orderID : "null") + "," + // Handle null orderID
                 weight + "," +
                 dimensions + "," +
                 cost;
@@ -143,18 +143,18 @@ public class Packages implements HasID {
 
         // Parse fields
         Integer packageID = Integer.parseInt(parts[0]);
-        Integer orderID = parts[1].equals("null") ? null : Integer.parseInt(parts[1]); // Handle null for orderID
-        double weight = Double.parseDouble(parts[2]);
-        String dimensions = parts[3];
-        int cost = Integer.parseInt(parts[4]);
+        //Integer orderID = parts[1].equals("null") ? null : Integer.parseInt(parts[1]); // Handle null for orderID
+        double weight = Double.parseDouble(parts[1]);
+        String dimensions = parts[2];
+        int cost = Integer.parseInt(parts[3]);
 
         // Create a new Packages object
         Packages packages = new Packages(packageID, weight, dimensions, cost);
 
         // Set the orderID if it exists
-        if (orderID != null) {
-            packages.setOrderID(orderID);
-        }
+//        if (orderID != null) {
+//            packages.setOrderID(orderID);
+//        }
 
         return packages;
     }
