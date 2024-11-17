@@ -199,8 +199,7 @@ public class Order implements HasID {
             serializedPackages.append(pack.toCsv()).append(";");
         }
 
-        return "Order" +
-                orderID + "," +
+        return  orderID + "," +
                 customerID + "," +
                 orderDate.getTime() + "," + // Serialize date as timestamp
                 deliveryDateTime.format(DATE_TIME_FORMATTER) + "," +

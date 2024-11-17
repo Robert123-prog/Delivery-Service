@@ -381,7 +381,7 @@ public class APP3{
                     }
                     break;
                 case 5:
-                    List<Personal_Vehicle> availableVehicles = controller.getAllAvailablePersonalVehicles();
+                    List<Personal_Vehicle> availableVehicles = controller. getAllAvailablePersonalVehicles();
                     controller.viewAvailablePersonalVehicles(availableVehicles);
                     break;
                 case 6:
@@ -445,9 +445,11 @@ public class APP3{
                     System.out.print("Enter Delivery Person ID: ");
                     int deliveryPersonId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
+                    controller.viewDeliveriesForDeliveryPerson();
                     System.out.print("Enter Delivery ID: ");
                     int deliveryId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
+
                     if (controller.validateSelectedDelivery(deliveryId)) {
                         controller.pickDeliveryByPerson(deliveryPersonId, deliveryId);
                     } else {
@@ -577,8 +579,8 @@ public class APP3{
         IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
         IRepository<Customer> customerRepository = new InFileRepository<>(
                 "src/data/customers.txt",
-                Customer::toCsv,   // Serialize method of Customer
-                Customer::fromCsv      // Deserialize method of Customer
+                Customer::toCsv,
+                Customer::fromCsv
         );
         IRepository<Store> storeRepository = new InFileRepository<>(
                 "src/data/stores.txt",
@@ -610,7 +612,7 @@ public class APP3{
                 Delivery::toCsv,
                 Delivery::fromCsv
         );
-        IRepository<Personal_Vehicle> personalVehiclerIRepository = new InFileRepository<>(
+        IRepository<Personal_Vehicle> personalVehicleRepository = new InFileRepository<>(
                 "src/data/personalVehicles.txt",
                 Personal_Vehicle::toCsv,
                 Personal_Vehicle::fromCsv
@@ -625,9 +627,9 @@ public class APP3{
                 Department::toCsv,
                 Department::fromCsv
         );
-        //Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
-        Service service = new Service(storeRepository,packagesRepository,orderRepository,customerRepository,departmentRepository,employeeRepository,deliveryRepository,depositRepository,deliveryPersonRepository,personalVehicleIRepository);
-        Controller controller = new Controller(service);
+        Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+        Service service1 = new Service(storeRepository,packagesRepository,orderRepository,customerRepository,departmentRepository,employeeRepository,deliveryRepository,depositRepository,deliveryPersonRepository,personalVehicleRepository);
+        Controller controller = new Controller(service1);
         new APP3(controller);
     }
 }
