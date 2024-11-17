@@ -135,8 +135,7 @@ public class Department implements HasID {
             serilizedEmployees.append(employee.toCsv()).append(";");
         }
 
-        return "Department" +
-                departmentID + ","+
+        return departmentID + ","+
                 name + "," +
                 task + serilizedEmployees.toString();
     }

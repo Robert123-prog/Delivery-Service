@@ -130,7 +130,7 @@ public class Controller {
     }
 
     /**
-     * Displays all available customers.
+     * Displays all available customers
      */
     public void viewAllCustomers() {
         StringBuilder output = new StringBuilder("Available Customers:\n");

@@ -152,13 +152,10 @@ public class Packages implements HasID {
         Packages packages = new Packages(packageID, weight, dimensions, cost);
 
         // Set the orderID if it exists
-        /*
-        if (orderID != null) {
-            packages.setOrderID(orderID);
-        }
-        */
+//        if (orderID != null) {
+//            packages.setOrderID(orderID);
+//        }
 
         return packages;
     }
-
 }
