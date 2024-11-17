@@ -235,14 +235,23 @@ public class Service {
         if (store != null) {
             store.addDeposit(newDeposit);
         } else {
-            throw new IllegalArgumentException("Depozit with ID " + storeId + " not found.");
+            throw new IllegalArgumentException("Deposit with ID " + storeId + " not found.");
         }
     }
 
     public void removeStore(Integer storeId) {
         Store store = storeIRepository.get(storeId);
+        List<Deposit> deposits = store.getDeposits();
         if (store != null) {
             storeIRepository.delete(storeId);
+        }
+
+        //ai sters un store care avea 2 depozite
+        //un deposit poate avea un singur store
+        //daca ai sters un store si un depozit era legat de store-ul ala, trebuie facut null storeId-ul pe depozit
+        //TODO make it work
+        for (Deposit deposit: deposits){
+            deposit.setStoreID(null);
         }
     }
 
@@ -507,9 +516,16 @@ public class Service {
         return maxId + 1;
     }
 
-    public void createPackage(Integer packageId, int cost, double weight, String dimensions){
+    public void createPackage(Integer packageId, double cost, double weight, String dimensions){
         Packages packages = new Packages(packageId, weight, dimensions, cost);
         packageIRepository.create(packages);
+    }
+
+    public void removePackage(Integer packageId){
+        Packages packages = packageIRepository.get(packageId);
+        if (packages != null) {
+            customerIRepository.delete(packageId);
+        }
     }
 
     public Integer getLastLoggedInEmployeeId() {

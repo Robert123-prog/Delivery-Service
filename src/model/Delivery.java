@@ -215,19 +215,19 @@ public class Delivery implements HasID {
         String[] parts = csvLine.split(",");
 
         Integer deliveryId = Integer.parseInt(parts[0]);
-        Integer deliveryPersonId = Integer.parseInt(parts[1]);
-        Integer employeeId = Integer.parseInt(parts[2]);
-        Integer orderId = Integer.parseInt(parts[3]);
-        Integer transportationId = Integer.parseInt(parts[4]);
+//        Integer deliveryPersonId = Integer.parseInt(parts[1]);
+//        Integer employeeId = Integer.parseInt(parts[2]);
+        Integer orderId = Integer.parseInt(parts[1]);
+//        Integer transportationId = Integer.parseInt(parts[4]);
 
         // Parse the Timestamp
-        Timestamp time = Timestamp.valueOf(parts[5]);
+        Timestamp time = Timestamp.valueOf(parts[2]);
 
         // Parse the Transportation_Type (assumes an enum with a valueOf method)
-        Transportation_Type transportationType = Transportation_Type.valueOf(parts[6]);
+//        Transportation_Type transportationType = Transportation_Type.valueOf(parts[6]);
 
         // The location field
-        String location = parts[7];
+//        String location = parts[7];
 
         return new Delivery(deliveryId, orderId, time);
     }

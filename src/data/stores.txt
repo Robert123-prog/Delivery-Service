@@ -1,3 +1,2 @@
-1,Auchan,Str. Posada,Alexandru
-2,Dedeman,Str. Livezii,Stefan
-3,Kaufland,Calea Manastur,Mihai
+3,Kaufland,Calea Manastur,Mihai,
+4,Lidl,Str. Posada,Mircea,
