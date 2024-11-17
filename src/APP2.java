@@ -1,10 +1,11 @@
-/*
+
 import model.*;
 import repository.IRepository;
 import repository.InMemoryRepo;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDateTime;
@@ -46,15 +47,17 @@ public class APP2 {
 
     private static IRepository<Delivery_Person> createInMemoryDeliveryPersonRepository() {
         IRepository<Delivery_Person> deliveryPersonIRepository = new InMemoryRepo<>();
-        deliveryPersonIRepository.create(new Delivery_Person(1, "0742092989", "Eminovici", "part time"));
-        deliveryPersonIRepository.create(new Delivery_Person(2, "071998491", "Stefan", "full time"));
-        deliveryPersonIRepository.create(new Delivery_Person(3, "077636274", "David", "full time"));
+        deliveryPersonIRepository.create(new Delivery_Person(1, "0742092989", "Eminovici"));
+        deliveryPersonIRepository.create(new Delivery_Person(2, "071998491", "Stefan"));
+        deliveryPersonIRepository.create(new Delivery_Person(3, "077636274", "David"));
         return deliveryPersonIRepository;
     }
 
     private static IRepository<Department> createInMemoryDepartmentRepository() {
         IRepository<Department> departmentIRepository = new InMemoryRepo<>();
         departmentIRepository.create(new Department(1, "Business Intelligence", "Develop Business"));
+        departmentIRepository.create(new Department(2, "Data Science", "Develop AI"));
+        departmentIRepository.create(new Department(3, "Web Development", "Develop Web Applications"));
         return departmentIRepository;
     }
 
@@ -70,9 +73,9 @@ public class APP2 {
     //LocalDateTime
     private static IRepository<Order> createInMemoryOrderRepository() {
         IRepository<Order> orderIRepository = new InMemoryRepo<>();
-        orderIRepository.create(new Order(1, java.sql.Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0), 150.75, "Processing"));
-        orderIRepository.create(new Order(2, java.sql.Date.valueOf("2024-06-07"), LocalDateTime.of(2024, 6, 12, 14, 30), 200.50, "Shipped"));
-        orderIRepository.create(new Order(3, Date.valueOf("2024-06-08"), LocalDateTime.of(2024, 6, 15, 9, 0), 100.25, "Delivered"));
+        orderIRepository.create(new Order(1, 1, java.sql.Date.valueOf("2024-06-06"), LocalDateTime.of(2024, 6, 10, 12, 0)));
+        orderIRepository.create(new Order(2,  2, java.sql.Date.valueOf("2024-06-07"), LocalDateTime.of(2024, 6, 12, 14, 30)));
+        orderIRepository.create(new Order(3, 3, Date.valueOf("2024-06-08"), LocalDateTime.of(2024, 6, 15, 9, 0)));
         return orderIRepository;
     }
 
@@ -158,7 +161,8 @@ public class APP2 {
         System.out.println("20. View All Packages");
         System.out.println("21. Assign Personal Vehicle");
         System.out.println("22. View All Transportation Types");
-        System.out.println("23. Exit");
+        System.out.println("23. View Order");
+        System.out.println("24. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -265,13 +269,27 @@ public class APP2 {
             String deliveryTimeString = scanner.nextLine();
             LocalDateTime deliveryDateTime = LocalDateTime.parse(deliveryDateString + "T" + deliveryTimeString);
 
-            System.out.print("Enter cost: ");
-            double cost = Double.parseDouble(scanner.nextLine());
+            System.out.println("Here are all the packages that you can add on your order: ");
+            controller.viewAllPackages();
+            System.out.println("Enter how many packages you would like to add: ");
+            int numberOfPackages = scanner.nextInt();
+            List<Integer> packageIds = new ArrayList<>();
 
-            System.out.print("Enter status: ");
-            String status = scanner.nextLine();
+            while (numberOfPackages > 0){
+                controller.viewAllPackages();
+                System.out.println("Package ID: ");
+                Integer packageId = scanner.nextInt();
+                packageIds.add(packageId);
+                numberOfPackages--;
+            }
 
-            controller.makeAnOrder(customerId, orderDate, deliveryDateTime, cost, status);
+            boolean packagesExist = controller.validatePackages(packageIds);
+
+            if (!packagesExist) throw new RuntimeException("One or more packages dont exist");
+
+            controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
+            createUI();
+
         } catch (Exception e) {
             System.out.println("Invalid input. Please try again.");
         }
@@ -303,6 +321,7 @@ public class APP2 {
 
     private void viewAllDeliveries() {
         controller.viewAllDeliveries();
+        createUI();
     }
 
     private void createPackage() {
@@ -361,4 +380,3 @@ public class APP2 {
         new APP2(controller);
     }
 }
-*/

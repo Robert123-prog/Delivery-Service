@@ -111,8 +111,7 @@ public class Personal_Vehicle extends Transportation {
      * @return A CSV string representing the state of the Personal_Vehicle object
      */
     public String toCsv() {
-        return "Personal_Vehicle," +
-                personalVehicleID + "," +
+        return personalVehicleID + "," +
                 extraFee + "," +
                 deliveryPersonID + "," +
                 capacity + "," +

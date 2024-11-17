@@ -21,6 +21,7 @@ public class Order implements HasID {
     private double totalCost;
     private String status;
     private List<Packages> packages;
+    private Integer customerId;
 
     /*
     Order - Package: Aggregation => packages not initialized in the constructor
@@ -30,19 +31,24 @@ public class Order implements HasID {
     /**
      * Constructs an Order with the specified details.
      *
-     * @param orderID         the unique identifier for this order
-     * @param orderDate       the date when the order was placed
+     * @param orderID          the unique identifier for this order
+     * @param orderDate        the date when the order was placed
      * @param deliveryDateTime the date and time when the order is to be delivered
-     * @param /totalCost            the total cost of the order
+     * @param /totalCost       the total cost of the order
      * @param /status          the current status of the order
      */
-    public Order(Integer orderID, Date orderDate, LocalDateTime deliveryDateTime) {
+    public Order(Integer orderID, Integer customerID, Date orderDate, LocalDateTime deliveryDateTime) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.deliveryDateTime = deliveryDateTime;
         //this.totalCost = totalCost;
         //this.status = status;
         this.packages = new ArrayList<>();
+        this.customerID = customerID;
+    }
+
+    public void setCustomerID(Integer customerID) {
+        this.customerID = customerID;
     }
 
     /**
@@ -199,10 +205,9 @@ public class Order implements HasID {
             serializedPackages.append(pack.toCsv()).append(";");
         }
 
-        return "Order" +
-                orderID + "," +
+        return orderID + "," +
                 customerID + "," +
-                orderDate.getTime() + "," + // Serialize date as timestamp
+                orderDate.getTime() + "," + // Serialize orderDate as a timestamp
                 deliveryDateTime.format(DATE_TIME_FORMATTER) + "," +
                 totalCost + "," +
                 status + "," +
@@ -212,14 +217,18 @@ public class Order implements HasID {
     public static Order fromCsv(String csvLine) {
         String[] parts = csvLine.split(",");
 
+        // Parse order attributes
         Integer orderID = Integer.parseInt(parts[0]);
-        int customerID = Integer.parseInt(parts[1]);
+        Integer customerID = Integer.parseInt(parts[1]);
         Date orderDate = new Date(Long.parseLong(parts[2])); // Deserialize timestamp into Date
         LocalDateTime deliveryDateTime = LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER);
-        double cost = Double.parseDouble(parts[4]);
+        double totalCost = Double.parseDouble(parts[4]);
         String status = parts[5];
 
-        Order order = new Order(orderID, orderDate, deliveryDateTime);
+        // Create the order object
+        Order order = new Order(orderID, customerID, orderDate, deliveryDateTime);
+        order.setCost(totalCost);
+        order.setStatus(status);
 
         // Deserialize packages if any
         if (parts.length > 6) {

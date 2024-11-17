@@ -133,8 +133,7 @@ public class Store implements HasID {
      */
     @Override
     public String toString() {
-        return "Store{" +
-                "storeID=" + storeID +
+        return "storeID=" + storeID +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", contact='" + contact + '\'' +

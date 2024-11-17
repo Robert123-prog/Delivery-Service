@@ -137,7 +137,7 @@ public class Service {
      */
     public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime,List<Integer> packageIds) {
         Customer customer = customerIRepository.get(CustomerId);
-        Order order = new Order(orderID, orderDate, deliveryDateTime);
+        Order order = new Order(orderID, CustomerId, orderDate, deliveryDateTime);
         for (Integer packageId : packageIds) {
             Packages packages = packageIRepository.get(packageId);
             if (packages != null) {
@@ -150,6 +150,8 @@ public class Service {
             }
             orderIRepository.create(order);
             customerIRepository.update(customer);
+            double totalCost = calculateAndUpdateOrderCost(orderID);
+            order.setCost(totalCost);
         }
 
 
