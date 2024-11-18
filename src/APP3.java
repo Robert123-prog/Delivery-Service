@@ -344,7 +344,8 @@ public class APP3{
             System.out.println("7. View All Departments");
             System.out.println("8. Pick Delivery");
             System.out.println("9. View All Delivery People");
-            System.out.println("10. Back to Main Menu");
+            System.out.println("10. Assign Delivery to Delivery Person");
+            System.out.println("11. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -415,6 +416,14 @@ public class APP3{
                     controller.viewAllDeliveryPersons();
                     break;
                 case 10:
+                    controller.viewAllDeliveryPersons();
+                    System.out.println("Enter Delivery Person ID: ");
+                    Integer deliveryPersonId1 = scanner.nextInt();
+                    System.out.println("Enter Delivery ID: ");
+                    Integer deliveryId = scanner.nextInt();
+                    controller.pickDeliveryByPerson(deliveryPersonId1, deliveryId);
+                    break;
+                case 11:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");

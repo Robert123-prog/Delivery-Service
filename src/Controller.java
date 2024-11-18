@@ -532,12 +532,12 @@ public class Controller {
     /**
      * Assigns Delivery Person to an unassigned Delivery.
      *
-     * @param employeeID unique identifier for Employee object
+     * @param //employeeID unique identifier for Employee object
      * @param deliveryID unique identifier for Delivery object
      */
 
-    public void assignDeliveryPersonToUnassignedDelivery(Integer employeeID, Integer deliveryID) {
-        service.pickDelivery(employeeID, deliveryID);
+    public void assignDeliveryPersonToUnassignedDelivery(Integer deliveryPersonId, Integer deliveryID) {
+        service.pickDelivery(deliveryPersonId, deliveryID);
     }
 
     /**

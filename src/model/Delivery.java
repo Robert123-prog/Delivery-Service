@@ -202,8 +202,7 @@ public class Delivery implements HasID {
     public String toCsv(){
         return  deliveryID + "," +
                 orderID + "," +
-                time + "," +
-                orders;
+                time + ",";
     }
 
     public static Delivery fromCsv(String csvLine){

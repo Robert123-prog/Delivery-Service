@@ -78,9 +78,9 @@ public class Delivery_Person extends Person {
         }
 
         return deliveryPersonID + "," +
-                //verified + "," +
-                license;
-                //personalVehicleId + "," + serializedDeliveries.toString();
+               phone + "," +
+               name + "," +
+               deliveries;
     }
 
     public static Delivery_Person fromCsv(String csvLine){
