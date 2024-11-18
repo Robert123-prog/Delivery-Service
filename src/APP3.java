@@ -345,7 +345,8 @@ public class APP3{
             System.out.println("6. Assign Personal Vehicle");
             System.out.println("7. View All Departments");
             System.out.println("8. Pick Delivery");
-            System.out.println("9. Back to Main Menu");
+            System.out.println("9. View All Delivery People");
+            System.out.println("10. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -413,6 +414,9 @@ public class APP3{
                     controller.assignEmployeeToUnassignedDelivery(empIdForDelivery, deliveryIdForEmployee);
                     break;
                 case 9:
+                    controller.viewAllDeliveryPersons();
+                    break;
+                case 10:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");

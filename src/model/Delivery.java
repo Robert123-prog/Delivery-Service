@@ -201,13 +201,8 @@ public class Delivery implements HasID {
 
     public String toCsv(){
         return  deliveryID + "," +
-                deliveryPeronID + "," +
-                employeeID + "," +
                 orderID + "," +
-                transportationID + "," +
                 time + "," +
-                transportation_type + "," +
-                location + "," +
                 orders;
     }
 

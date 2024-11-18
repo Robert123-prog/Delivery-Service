@@ -239,20 +239,24 @@ public class Service {
         }
     }
 
+    //TODO still not working
     public void removeStore(Integer storeId) {
         Store store = storeIRepository.get(storeId);
-        List<Deposit> deposits = store.getDeposits();
-        if (store != null) {
-            storeIRepository.delete(storeId);
+
+        if (store == null) {
+            throw new IllegalArgumentException("Store with ID " + storeId + " does not exist.");
         }
 
-        //ai sters un store care avea 2 depozite
-        //un deposit poate avea un singur store
-        //daca ai sters un store si un depozit era legat de store-ul ala, trebuie facut null storeId-ul pe depozit
-        //TODO make it work
-        for (Deposit deposit: deposits){
+        // get the deposits associated
+        List<Deposit> deposits = store.getDeposits();
+
+
+        for (Deposit deposit : deposits) {
             deposit.setStoreID(null);
         }
+
+        // Delete the store from the repository
+        storeIRepository.delete(storeId);
     }
 
     public void removeDeposit(Integer storeId, Integer depositId) {
