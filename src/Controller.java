@@ -414,7 +414,6 @@ public class Controller {
     public void viewAllEmployees() {
         StringBuilder output = new StringBuilder("All Employees:\n");
         service.getEmployees().forEach(employee -> output.append(employee.toString()).append("\n"));
-        service.getDeliveryPerson().forEach(deliveryPerson -> output.append(deliveryPerson.toString()).append("\n"));
         System.out.println(output);
     }
 

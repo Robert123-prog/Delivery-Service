@@ -1,2 +1,1 @@
-3,Kaufland,Calea Manastur,Mihai,
 4,Lidl,Str. Posada,Mircea,
