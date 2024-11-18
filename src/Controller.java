@@ -746,4 +746,8 @@ public class Controller {
     public List<Order> getOrdersSortedByPriceDescending(List<Order> orders) {
         return service.getOrdersSortedByPriceDescending(orders);
     }
+
+    public void removePackage(Integer packageId){
+        service.removePackage(packageId);
+    }
 }
