@@ -78,25 +78,25 @@ public class Delivery_Person extends Person {
         }
 
         return deliveryPersonID + "," +
-                verified + "," +
-                license + "," +
-                personalVehicleId + "," + serializedDeliveries.toString();
+                //verified + "," +
+                license;
+                //personalVehicleId + "," + serializedDeliveries.toString();
     }
 
     public static Delivery_Person fromCsv(String csvLine){
         String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
 
         Integer deliveryPersonID = Integer.parseInt(parts[0]);
-        boolean verified = Boolean.parseBoolean(parts[1]);
-        String license = parts[2];
+        String deliveryPersonPhone = parts[1];
+        String deliveryPersonName = parts[2];
+
+//        boolean verified = Boolean.parseBoolean(parts[1]);
+//        String license = parts[2];
         String deliveriesString = parts[3]; // Serialized deliveries
-        Integer personalVehicleId = Integer.parseInt(parts[4]);
+//        Integer personalVehicleId = Integer.parseInt(parts[4]);
 
         // Create a new Delivery_Person object
-        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonID, "", ""); // Phone and name left empty
-        deliveryPerson.setVerified(verified);
-        deliveryPerson.license = license;
-        deliveryPerson.setPersonalVehicleId(personalVehicleId);
+        Delivery_Person deliveryPerson = new Delivery_Person(deliveryPersonID, deliveryPersonPhone, deliveryPersonName); // Phone and name left empty
 
         // Parse deliveries from the deliveriesString
         if (!deliveriesString.isEmpty()) {
@@ -106,7 +106,6 @@ public class Delivery_Person extends Person {
                 deliveryPerson.addDelivery(delivery);
             }
         }
-
         return deliveryPerson;
     }
 }

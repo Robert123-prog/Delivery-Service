@@ -443,7 +443,7 @@ public class Controller {
      * @param weight     weight of this package
      * @param dimensions dimensions description for this package
      */
-    public void createPackage(int cost, double weight, String dimensions) {
+    public void createPackage(double cost, double weight, String dimensions) {
         Integer packageID = service.getNewPackageId();
         service.createPackage(packageID, cost, weight, dimensions);
     }
@@ -711,6 +711,7 @@ public class Controller {
         return service.getPackagesFromOrder(orderId);
     }
 
+
     /**
      *
      * @return a list of the Deliveries
@@ -757,3 +758,10 @@ public class Controller {
         return service.getOrdersSortedByPriceDescending(orders);
     }
 }
+
+    public void removePackage(Integer packageId){
+        service.removePackage(packageId);
+    }
+
+}
+

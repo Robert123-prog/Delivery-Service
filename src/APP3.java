@@ -136,7 +136,8 @@ public class APP3{
             System.out.println("6. Delete Deposit");
             System.out.println("7. Create Package");
             System.out.println("8. Remove Package");
-            System.out.println("9. Back to Main Menu");
+            System.out.println("9. View all Packages");
+            System.out.println("10. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -184,7 +185,7 @@ public class APP3{
                     break;
                 case 7:
                     System.out.print("Enter Package Cost: ");
-                    int cost = scanner.nextInt();
+                    double cost = scanner.nextDouble();
                     scanner.nextLine(); // Consume newline
                     System.out.print("Enter Package Weight: ");
                     double weight = scanner.nextDouble();
@@ -194,13 +195,19 @@ public class APP3{
                     controller.createPackage(cost, weight, dimensions);
                     break;
                 case 8:
+                    controller.viewAllPackages();
                     System.out.print("Enter Package ID: ");
-                    int packageId = scanner.nextInt();
+                    Integer packageId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
                     // Assuming there's a method to remove a package
-                    //controller.removePackage(packageId);
+                    //TODO crapa in InFileRepository, nu il gaseste sa l stearga
+                    //
+                    controller.removePackage(packageId);
                     break;
                 case 9:
+                    controller.viewAllPackages();
+                    break;
+                case 10:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
