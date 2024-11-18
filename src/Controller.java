@@ -711,8 +711,57 @@ public class Controller {
         return service.getPackagesFromOrder(orderId);
     }
 
+
+    /**
+     *
+     * @return a list of the Deliveries
+     */
+
+    public void viewDeliveriesForDeliveryPerson() {
+        List<Delivery> deliveries = service.getDeliveriesWithToBeShippedOrders();
+        StringBuilder output = new StringBuilder("Deliveries suitable for Delivery Person to pick up:\n");
+        if (deliveries.isEmpty()) {
+            output.append("No deliveries available for 'to be shipped' orders.\n");
+        } else {
+            deliveries.forEach(delivery -> output.append(delivery.toString()).append("\n"));
+        }
+
+        System.out.println(output);
+    }
+
+    /**
+     *
+     * @param location
+     * @return
+     */
+
+    public List<Delivery> filterDeliveriesByLocation(String location){
+        return service.filterDeliveriesByLocation(location);
+    }
+
+    /**
+     *
+     * @param deliveries
+     * @return
+     */
+
+    public List<Delivery> getdeliveriesSortedByOrderDateTime(List<Delivery> deliveries){
+        return service.getSortedDeliveriesByOrderDateTime(deliveries);
+    }
+
+    /**
+     *
+     * @param orders
+     * @return
+     */
+    public List<Order> getOrdersSortedByPriceDescending(List<Order> orders){
+        return service.getOrdersSortedByPriceDescending(orders);
+    }
+}
+
     public void removePackage(Integer packageId){
         service.removePackage(packageId);
     }
 
 }
+
