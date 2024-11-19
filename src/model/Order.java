@@ -126,9 +126,9 @@ public class Order implements HasID {
     /**
      * Sets a new total cost for this order.
      *
-     * @param cost the new total cost of the order
+     * @param totalCost the new total cost of the order
      */
-    public void setCost(double cost) {
+    public void setCost(double totalCost) {
         this.totalCost = totalCost;
     }
 
