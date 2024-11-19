@@ -22,6 +22,7 @@ public class Order implements HasID {
     private String status;
     private List<Packages> packages;
     private Integer customerId;
+    private String location;
 
     /*
     Order - Package: Aggregation => packages not initialized in the constructor
@@ -45,6 +46,14 @@ public class Order implements HasID {
         //this.status = status;
         this.packages = new ArrayList<>();
         this.customerID = customerID;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setCustomerID(Integer customerID) {
@@ -184,6 +193,7 @@ public class Order implements HasID {
                 ", cost=" + totalCost +
                 ", status='" + status + '\'' +
                 ", packages=" + packages +
+                //", location='" + location + '\'' +
                 '}';
     }
 

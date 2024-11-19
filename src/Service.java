@@ -128,31 +128,39 @@ public class Service {
     /**
      * Places a new order in the system
      *
-     * @param CustomerId Customer's unique identifier
+     * @param customerId Customer's unique identifier
      * @param orderID Order's unique identifier
      * @param orderDate Date when the order was placed
      * @param deliveryDateTime Scheduled delivery date and time
      * @param /cost Total cost of the order
      * @param /status Current status of the order
      */
-    public void placeOrder(Integer CustomerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime,List<Integer> packageIds) {
-        Customer customer = customerIRepository.get(CustomerId);
-        Order order = new Order(orderID, CustomerId, orderDate, deliveryDateTime);
+    public void placeOrder(Integer customerId, Integer orderID, Date orderDate, LocalDateTime deliveryDateTime, List<Integer> packageIds) {
+        Customer customer = customerIRepository.get(customerId);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found for ID: " + customerId);
+        }
+
+        String location = customer.getAddress();
+        Order order = new Order(orderID, customerId, orderDate, deliveryDateTime);
+        order.setLocation(location);
+
         for (Integer packageId : packageIds) {
             Packages packages = packageIRepository.get(packageId);
             if (packages != null) {
                 order.addPackage(packages);
             }
         }
-            if (customer != null) {
-                customer.getOrders().add(order);
-                order.setCustomerID(CustomerId);
-            }
-            orderIRepository.create(order);
-            customerIRepository.update(customer);
-            double totalCost = calculateAndUpdateOrderCost(orderID);
-            order.setCost(totalCost);
-        }
+
+        customer.getOrders().add(order);
+        order.setCustomerID(customerId);
+
+        orderIRepository.create(order);
+        customerIRepository.update(customer);
+
+        double totalCost = calculateAndUpdateOrderCost(orderID);
+        order.setCost(totalCost);
+    }
 
 
     public void removeOrder(Integer customerId, Integer orderID) {
@@ -299,7 +307,7 @@ public class Service {
         Delivery delivery = deliveryIRepository.get(deliveryId);
         Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliverPersonId);
         if (delivery != null && deliveryPerson != null) {
-            //deliveryPerson.addDelivery(delivery);
+            deliveryPerson.addDelivery(delivery);
             deliveryPersonIRepository.update(deliveryPerson);
             delivery.setDeliveryPeronID(deliverPersonId);
             deliveryIRepository.update(delivery);
@@ -377,11 +385,16 @@ public class Service {
      * @return a list of these Deliveries
      * */
 
-     public List<Delivery> filterDeliveriesByLocation(String location) {
-         return deliveryIRepository.readAll().stream()
-                 .filter(delivery -> delivery.getLocation().equalsIgnoreCase(location))
-                 .collect(Collectors.toList());
-     }
+    public List<Order> filterDeliveriesByLocation(String location) {
+        List<Order> allOrders = orderIRepository.readAll();
+        List<Order> filteredOrders = new ArrayList<>();
+        for (Order order : allOrders) {
+            if (location != null && location.equalsIgnoreCase(order.getLocation())) {
+                filteredOrders.add(order);
+            }
+        }
+        return filteredOrders;
+    }
      //TODO first sorting method
     /**
      * sorting the Deliveries by their DeliveryDate
@@ -409,6 +422,20 @@ public class Service {
                 .collect(Collectors.toList()); // Collect into a new list
     }
 
+    /**
+     *
+     * @param deliveryid
+     * @param orders
+     */
+    public void createDelivery(Integer deliveryid,List<Order> orders, String location)
+    {
+        Delivery delivery = new Delivery(deliveryid);
+        delivery.setLocation(location);
+        for (Order order : orders) {
+            delivery.addOrder(order);
+        }
+        deliveryIRepository.create(delivery);
+    }
 
     /**
      * Helper method to validate license categories
@@ -442,6 +469,15 @@ public class Service {
     public Integer getNewCustomerId() {
         int maxId = 0;
         for (Integer Id : customerIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+    public Integer getNewDeliveryId() {
+        int maxId = 0;
+        for (Integer Id : deliveryIRepository.getKeys()) {
             if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
