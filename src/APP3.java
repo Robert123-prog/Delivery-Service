@@ -269,17 +269,20 @@ public class APP3{
                         */
                         List<Integer> packageIds = new ArrayList<>();
                         System.out.println("How many Packages do you want to add to the order ?");
-                        int numberPackages = scanner.nextInt();
+                        int numberPackages = Integer.parseInt(scanner.nextLine());
 
                         for (int i = 0; i < numberPackages; i++) {
                             controller.viewAllPackages();
 
-                            System.out.println("The package you want to add");
-                            System.out.println("Here");
-                            int packageId = scanner.nextInt();
-                            System.out.println("Here1");
-
-                            packageIds.add(packageId);
+                            System.out.println("The package you want to add:");
+                            String packageIdInput = scanner.nextLine(); // Read package ID as string
+                            try {
+                                int packageId = Integer.parseInt(packageIdInput); // Validate it as an integer
+                                packageIds.add(packageId);
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid package ID. Please enter a valid integer.");
+                                i--; // Retry current iteration
+                            }
 
                         }
 
