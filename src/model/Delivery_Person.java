@@ -85,7 +85,7 @@ public class Delivery_Person extends Person {
     }
 
     public static Delivery_Person fromCsv(String csvLine){
-        String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
+        String[] parts = csvLine.split(",", 4); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
 
         Integer deliveryPersonID = Integer.parseInt(parts[0]);
         String deliveryPersonPhone = parts[1];

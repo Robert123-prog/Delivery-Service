@@ -437,7 +437,7 @@ public class Service {
     }
     public void unenrollDeliveryPerson(Integer deliveryPersonId) {
         //Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
-        deliveryIRepository.delete(deliveryPersonId);
+        deliveryPersonIRepository.delete(deliveryPersonId);
     }
     /**
      * Generates a new unique customer ID
@@ -487,7 +487,7 @@ public class Service {
 
     public Integer getNewDeliveryPersonId() {
         int maxId = 0;
-        for (Integer Id : deliveryIRepository.getKeys()) {
+        for (Integer Id : deliveryPersonIRepository.getKeys()) {
             if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
