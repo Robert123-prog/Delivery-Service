@@ -247,7 +247,7 @@ public class Order implements HasID {
             String[] packagesData = packagesString.split(";"); // Split by semicolon for individual packages
             for (String packageData : packagesData) {
                 if (!packageData.isEmpty()) {
-                    order.addPackage(Packages.fromCsv(packageData.trim()));
+                    order.addPackage(Packages.fromCsv(packageData));
                 }
             }
         }

@@ -352,6 +352,8 @@ public class Controller {
         return service.calculateAndUpdateOrderCost(orderId);
     }
 
+
+
     /**
      * Retrieves personal orders for a specific customer.
      *
@@ -718,8 +720,8 @@ public class Controller {
      */
 
     public void viewDeliveriesForDeliveryPerson() {
-        //List<Delivery> deliveries = service.getDeliveriesWithToBeShippedOrders();
-        List<Delivery> deliveries = service.getDelivery();
+        List<Delivery> deliveries = service.getDeliveriesWithToBeShippedOrders();
+//        List<Delivery> deliveries = service.getDelivery();
         StringBuilder output = new StringBuilder("Deliveries suitable for Delivery Person to pick up:\n");
         if (deliveries.isEmpty()) {
             output.append("No deliveries available for 'to be shipped' orders.\n");
@@ -749,6 +751,8 @@ public class Controller {
         service.createDelivery(deliveryId, orders, location);
 
     }
+
+
 
     /**
      * @param

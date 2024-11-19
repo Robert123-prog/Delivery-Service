@@ -180,23 +180,52 @@ public class Customer implements HasID {
     }
 
     public String toCsv(){
+        StringBuilder serilizedOrders = new StringBuilder();
 
+        for (Order order: orders){
+            serilizedOrders.append(order.toCsv()).append(";");
+        }
         return customerID + "," +
                 name + "," +
                 address + "," +
                 phone + "," +
                 email + "," +
-                orders;
+                serilizedOrders.toString();
     }
 
     public static Customer fromCsv(String csvLine){
-        String[] parts = csvLine.split(",");
+        String[] parts = csvLine.split(",", 6);
+
         Integer customerId = Integer.parseInt(parts[0]);
         String name = parts[1];
         String address = parts[2];
         String phone = parts[3];
         String email = parts[4];
         return new Customer(customerId, name, address, phone, email);
+
+        /*
+        String[] parts = csvLine.split(",", 6);
+
+
+        Integer customerId = Integer.parseInt(parts[0]);
+        String name = parts[1];
+        String address = parts[2];
+        String phone = parts[3];
+        String email = parts[4];
+
+        Customer customer = new Customer(customerId, name, address, phone, email);
+
+        if (parts.length > 5){
+            String ordersString = parts[5];
+            String[] ordersData = ordersString.split(";");
+            for (String orderData: ordersData){
+                if (!orderData.isEmpty()){
+                    customer.addDOrder(Order.fromCsv(orderData.trim()));
+                }
+            }
+        }
+        return customer;
+         */
     }
 
 }

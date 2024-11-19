@@ -153,7 +153,7 @@ public class Service {
             }
         }
 
-        customer.getOrders().add(order);
+        customer.addDOrder(order);
         order.setCustomerID(customerId);
 
         orderIRepository.create(order);
@@ -436,11 +436,12 @@ public class Service {
     public void createDelivery(Integer deliveryid,List<Order> orders, String location)
     {
         Delivery delivery = new Delivery(deliveryid);
+        deliveryIRepository.create(delivery);
         delivery.setLocation(location);
         for (Order order : orders) {
             delivery.addOrder(order);
         }
-        deliveryIRepository.create(delivery);
+
     }
 
     /**
