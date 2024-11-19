@@ -267,11 +267,15 @@ public class APP3{
                         List<Integer> packageIds = new ArrayList<>();
                         System.out.println("How many Packages do you want to add to the order ?");
                         int numberPackages = scanner.nextInt();
+
                         for (int i = 0; i < numberPackages; i++) {
                             controller.viewAllPackages();
+
                             System.out.println("The package you want to add");
                             int packageId = scanner.nextInt();
+
                             packageIds.add(packageId);
+
                         }
                         controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
                     } catch (Exception e) {
@@ -344,7 +348,8 @@ public class APP3{
             System.out.println("7. View All Departments");
             System.out.println("8. Pick Delivery");
             System.out.println("9. View All Delivery People");
-            System.out.println("10. Back to Main Menu");
+            System.out.println("10. Assign Delivery to Delivery Person");
+            System.out.println("11. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -387,8 +392,14 @@ public class APP3{
                     }
                     break;
                 case 5:
-                    List<Personal_Vehicle> availableVehicles = controller. getAllAvailablePersonalVehicles();
+                    List<Personal_Vehicle> availableVehicles = controller.getAllAvailablePersonalVehicles();
+                    for (Personal_Vehicle personalVehicle: availableVehicles){
+                        System.out.println(personalVehicle);
+                    }
+
+                    /* needs refactoring
                     controller.viewAvailablePersonalVehicles(availableVehicles);
+                    */
                     break;
                 case 6:
                     System.out.print("Enter Delivery Person ID: ");
@@ -415,6 +426,14 @@ public class APP3{
                     controller.viewAllDeliveryPersons();
                     break;
                 case 10:
+                    controller.viewAllDeliveryPersons();
+                    System.out.println("Enter Delivery Person ID: ");
+                    Integer deliveryPersonId1 = scanner.nextInt();
+                    System.out.println("Enter Delivery ID: ");
+                    Integer deliveryId = scanner.nextInt();
+                    controller.pickDeliveryByPerson(deliveryPersonId1, deliveryId);
+                    break;
+                case 11:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");

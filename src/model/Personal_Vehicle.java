@@ -91,6 +91,8 @@ public class Personal_Vehicle extends Transportation {
         return "Personal_Vehicle{" +
                 "personalVehicleID=" + personalVehicleID +
                 ", extraFee=" + extraFee +
+                ", capacity=" + capacity +
+                ", transportation_type=" + transportation_type +
                 ", deliveryPersonID=" + deliveryPersonID +
                 '}';
     }
@@ -111,11 +113,11 @@ public class Personal_Vehicle extends Transportation {
      * @return A CSV string representing the state of the Personal_Vehicle object
      */
     public String toCsv() {
+
         return personalVehicleID + "," +
                 extraFee + "," +
-                deliveryPersonID + "," +
                 capacity + "," +
-                transportation_type;
+                (transportation_type != null ? transportation_type.name() : "null");
     }
 
     /**
@@ -125,13 +127,19 @@ public class Personal_Vehicle extends Transportation {
      * @return A new Personal_Vehicle object created from the CSV string
      */
     public static Personal_Vehicle fromCsv(String csvLine) {
-        String[] parts = csvLine.split(",");
-        Integer personalVehicleID = Integer.parseInt(parts[1]);
-        Integer extraFee = Integer.parseInt(parts[2]);
-        Integer deliveryPersonID = parts[3].equals("null") ? null : Integer.parseInt(parts[3]);
-        int capacity = Integer.parseInt(parts[4]);
-        Transportation_Type transportationType = Transportation_Type.valueOf(parts[5]);
+        try {
+            String[] parts = csvLine.split(",");
 
-        return new Personal_Vehicle(personalVehicleID, extraFee, capacity, transportationType);
+            Integer personalVehicleID = Integer.parseInt(parts[0]);
+            Integer extraFee = Integer.parseInt(parts[1]);
+            int capacity = Integer.parseInt(parts[2]);
+
+            String transportationTypeString = parts[3].trim();
+            Transportation_Type transportationType = Transportation_Type.valueOf(transportationTypeString);
+
+            return new Personal_Vehicle(personalVehicleID, extraFee, capacity, transportationType);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid CSV format: " + csvLine, e);
+        }
     }
 }
