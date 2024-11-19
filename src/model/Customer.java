@@ -180,6 +180,7 @@ public class Customer implements HasID {
     }
 
     public String toCsv(){
+
         return customerID + "," +
                 name + "," +
                 address + "," +

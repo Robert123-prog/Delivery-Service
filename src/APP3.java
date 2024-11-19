@@ -267,11 +267,15 @@ public class APP3{
                         List<Integer> packageIds = new ArrayList<>();
                         System.out.println("How many Packages do you want to add to the order ?");
                         int numberPackages = scanner.nextInt();
+
                         for (int i = 0; i < numberPackages; i++) {
                             controller.viewAllPackages();
+
                             System.out.println("The package you want to add");
                             int packageId = scanner.nextInt();
+
                             packageIds.add(packageId);
+
                         }
                         controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
                     } catch (Exception e) {
@@ -388,8 +392,14 @@ public class APP3{
                     }
                     break;
                 case 5:
-                    List<Personal_Vehicle> availableVehicles = controller. getAllAvailablePersonalVehicles();
+                    List<Personal_Vehicle> availableVehicles = controller.getAllAvailablePersonalVehicles();
+                    for (Personal_Vehicle personalVehicle: availableVehicles){
+                        System.out.println(personalVehicle);
+                    }
+
+                    /* needs refactoring
                     controller.viewAvailablePersonalVehicles(availableVehicles);
+                    */
                     break;
                 case 6:
                     System.out.print("Enter Delivery Person ID: ");
