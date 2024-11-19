@@ -736,10 +736,13 @@ public class Controller {
 
     public void createDelivery(String location) {
         List<Order> orders = service.filterDeliveriesByLocation(location);
-        String[] statuses = {"processing", "to be shipped", "in hub", "in transit"};
-        Random random = new Random();
-        String status = statuses[random.nextInt(statuses.length)];
+        //String[] statuses = {"processing", "to be shipped", "in hub", "in transit"};
+        //Random random = new Random();
+        //String status = statuses[random.nextInt(statuses.length)];
         for (Order order : orders) {
+            String[] statuses = {"processing", "to be shipped", "in hub", "in transit"};
+            Random random = new Random();
+            String status = statuses[random.nextInt(statuses.length)];
             order.setStatus(status);
         }
         Integer deliveryId = service.getNewDeliveryId();
