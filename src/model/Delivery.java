@@ -10,6 +10,7 @@
  */
 package model;
 
+import javax.swing.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -208,28 +209,47 @@ public class Delivery implements HasID {
 
 
     public String toCsv(){
+        StringBuilder serializedOrders = new StringBuilder();
+
+        for (Order order: orders){
+            serializedOrders.append(order.toCsv()).append(";");
+        }
+
         return  deliveryID + ",";
                 //orderID + "," +
                 //time + ",";
+
     }
 
     public static Delivery fromCsv(String csvLine){
-        String[] parts = csvLine.split(",");
+        String[] parts = csvLine.split(",", 2);
 
         Integer deliveryId = Integer.parseInt(parts[0]);
 //        Integer deliveryPersonId = Integer.parseInt(parts[1]);
 //        Integer employeeId = Integer.parseInt(parts[2]);
-        Integer orderId = Integer.parseInt(parts[1]);
+//        Integer orderId = Integer.parseInt(parts[1]);
 //        Integer transportationId = Integer.parseInt(parts[4]);
 
         // Parse the Timestamp
-        Timestamp time = Timestamp.valueOf(parts[2]);
+//        Timestamp time = Timestamp.valueOf(parts[2]);
 
         // Parse the Transportation_Type (assumes an enum with a valueOf method)
 //        Transportation_Type transportationType = Transportation_Type.valueOf(parts[6]);
 
         // The location field
 //        String location = parts[7];
+
+        Delivery delivery = new Delivery(deliveryId);
+
+        if (parts.length > 1){
+            String ordersString = parts[1];
+            String[] ordersData = ordersString.split(";");
+            for (String orderData: ordersData){
+                if (!orderData.isEmpty()){
+                    delivery.addOrder(Order.fromCsv(orderData));
+                }
+            }
+        }
 
         return new Delivery(deliveryId);//, time);
     }
