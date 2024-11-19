@@ -18,6 +18,7 @@ public class Delivery_Person extends Person {
         this.deliveries = new ArrayList<>();
     }
 
+
     public String getLicense() {
         return license;
     }
@@ -80,7 +81,7 @@ public class Delivery_Person extends Person {
         return deliveryPersonID + "," +
                phone + "," +
                name + "," +
-               deliveries;
+               serializedDeliveries.toString();
     }
 
     public static Delivery_Person fromCsv(String csvLine){

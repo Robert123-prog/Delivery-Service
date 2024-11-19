@@ -1,1 +1,2 @@
-4,Lidl,Str. Posada,Mircea,
+1,Kaufland,dbf,ewrf,1,1,eadkjadkj,Full,
+2,Lidl,dfhsjk,tyhfjdk,
