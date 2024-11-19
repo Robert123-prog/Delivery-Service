@@ -283,7 +283,7 @@ public class APP3{
                             System.out.println("The package you want to add:");
                             String packageIdInput = scanner.nextLine(); // Read package ID as string
                             try {
-                                int packageId = Integer.parseInt(packageIdInput); // Validate it as an integer
+                                Integer packageId = Integer.parseInt(packageIdInput); // Validate it as an integer
                                 packageIds.add(packageId);
                             } catch (NumberFormatException e) {
                                 System.out.println("Invalid package ID. Please enter a valid integer.");
@@ -363,10 +363,10 @@ public class APP3{
             System.out.println("2. Create Employee");
             System.out.println("3. View My Deliveries");
             System.out.println("4. Drop Delivery");
-            System.out.println("5. View All Deliveries Sorted by DeliveryDate");
-            System.out.println("6. Assign Personal Vehicle");
+            System.out.println("5. Pick Delivery");
+            System.out.println("6. View All Deliveries Sorted by DeliveryDate");
             System.out.println("7. View All Departments");
-            System.out.println("8. Pick Delivery");
+            System.out.println("8. View All Deliveries");
             System.out.println("9. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
@@ -410,21 +410,6 @@ public class APP3{
                     }
                     break;
                 case 5:
-                    controller.getdeliveriesSortedByOrderDateTime();
-                    break;
-                case 6:
-                    System.out.print("Enter Delivery Person ID: ");
-                    int deliveryPersonId = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-                    System.out.print("Enter Personal Vehicle ID: ");
-                    int personalVehicleId = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-                    controller.assignPersonalVehicle(deliveryPersonId, personalVehicleId);
-                    break;
-                case 7:
-                    controller.viewAllDepartments();
-                    break;
-                case 8:
                     System.out.print("Enter Employee ID: ");
                     int empIdForDelivery = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
@@ -432,6 +417,15 @@ public class APP3{
                     int deliveryIdForEmployee = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
                     controller.assignEmployeeToUnassignedDelivery(empIdForDelivery, deliveryIdForEmployee);
+                    break;
+                case 6:
+                    controller.getdeliveriesSortedByOrderDateTime();
+                    break;
+                case 7:
+                    controller.viewAllDepartments();
+                    break;
+                case 8:
+                    controller.viewAllDeliveries();
                     break;
                 case 9:
                     return;
@@ -672,7 +666,7 @@ public class APP3{
         );
         Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
         Service service1 = new Service(storeRepository,packagesRepository,orderRepository,customerRepository,departmentRepository,employeeRepository,deliveryRepository,depositRepository,deliveryPersonRepository,personalVehicleRepository);
-        Controller controller = new Controller(service);
+        Controller controller = new Controller(service1);
         new APP3(controller);
     }
 }
