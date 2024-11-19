@@ -107,10 +107,13 @@ public class APP3{
                     break;
                 case 4:
                     controller.viewAllDeliveryPersons();
+
                     System.out.print("Enter Delivery Person ID: ");
                     int deliveryPersonId = scanner.nextInt();
                     scanner.nextLine();
+
                     controller.deleteDeliveryPerson(deliveryPersonId);
+
                     break;
                 case 5:
                     return;
@@ -272,11 +275,14 @@ public class APP3{
                             controller.viewAllPackages();
 
                             System.out.println("The package you want to add");
+                            System.out.println("Here");
                             int packageId = scanner.nextInt();
+                            System.out.println("Here1");
 
                             packageIds.add(packageId);
 
                         }
+
                         controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
                     } catch (Exception e) {
                         System.out.println("Invalid input. Please try again.");
