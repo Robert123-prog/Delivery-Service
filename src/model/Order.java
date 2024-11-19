@@ -205,13 +205,24 @@ public class Order implements HasID {
             serializedPackages.append(pack.toCsv()).append(";");
         }
 
+        /*
+        this.orderID = orderID;
+        this.orderDate = orderDate;
+        this.deliveryDateTime = deliveryDateTime;
+        //this.totalCost = totalCost;
+        //this.status = status;
+        this.packages = new ArrayList<>();
+        this.customerID = customerID;
+
+         */
+
+
         return orderID + "," +
                 customerID + "," +
-                orderDate.getTime() + "," + // Serialize orderDate as a timestamp
+                orderDate + "," +
                 deliveryDateTime.format(DATE_TIME_FORMATTER) + "," +
-                totalCost + "," +
-                status + "," +
                 serializedPackages.toString();
+
     }
 
     public static Order fromCsv(String csvLine) {
@@ -222,17 +233,13 @@ public class Order implements HasID {
         Integer customerID = Integer.parseInt(parts[1]);
         Date orderDate = new Date(Long.parseLong(parts[2])); // Deserialize timestamp into Date
         LocalDateTime deliveryDateTime = LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER);
-        double totalCost = Double.parseDouble(parts[4]);
-        String status = parts[5];
 
         // Create the order object
         Order order = new Order(orderID, customerID, orderDate, deliveryDateTime);
-        order.setCost(totalCost);
-        order.setStatus(status);
 
         // Deserialize packages if any
-        if (parts.length > 6) {
-            String[] packagesData = parts[6].split(";");
+        if (parts.length > 4) {
+            String[] packagesData = parts[4].split(";");
             for (String packageData : packagesData) {
                 if (!packageData.isEmpty()) {
                     order.addPackage(Packages.fromCsv(packageData));
