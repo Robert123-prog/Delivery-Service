@@ -1,3 +1,2 @@
 1,Robert,Piezisa,77663322,tfyughj,[]
-2,Alex,Gheorgheni,63472083,iehfd,
-3,Stefan,Pantelimon,71717171,yyyeyeyey,
+2,Alex,Gheorgheni,63472083,iehfd,[]

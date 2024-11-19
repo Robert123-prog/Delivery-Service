@@ -1,6 +1,1 @@
-1,1,Str. Ploiesti,Full,
-2,2,Str. Constanta,Empty,
-3,3,Str. Fabricii,Not full,
-4,1,Str. Livezii,Full,
-5,5,drfghj,drtfghv,
-6,5,Posada,Full,
+1,1,eadkjadkj,Full,

@@ -347,9 +347,7 @@ public class APP3{
             System.out.println("6. Assign Personal Vehicle");
             System.out.println("7. View All Departments");
             System.out.println("8. Pick Delivery");
-            System.out.println("9. View All Delivery People");
-            System.out.println("10. Assign Delivery to Delivery Person");
-            System.out.println("11. Back to Main Menu");
+            System.out.println("9. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -423,17 +421,6 @@ public class APP3{
                     controller.assignEmployeeToUnassignedDelivery(empIdForDelivery, deliveryIdForEmployee);
                     break;
                 case 9:
-                    controller.viewAllDeliveryPersons();
-                    break;
-                case 10:
-                    controller.viewAllDeliveryPersons();
-                    System.out.println("Enter Delivery Person ID: ");
-                    Integer deliveryPersonId1 = scanner.nextInt();
-                    System.out.println("Enter Delivery ID: ");
-                    Integer deliveryId = scanner.nextInt();
-                    controller.pickDeliveryByPerson(deliveryPersonId1, deliveryId);
-                    break;
-                case 11:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -451,7 +438,9 @@ public class APP3{
             System.out.println("2. Create Delivery Person");
             System.out.println("3. Pick Delivery by Person");
             System.out.println("4. Assign Personal Vehicle");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. View my deliveries");
+            System.out.println("6. View All Delivery People ");
+            System.out.println("7. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -494,6 +483,15 @@ public class APP3{
                     controller.assignPersonalVehicle(dpId, pvId);
                     break;
                 case 5:
+                    System.out.print("Enter Delivery Person ID: ");
+                    Integer deliveryPersonID = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    controller.getDeliveriesForDeliveryPerson(deliveryPersonID);
+                    break;
+                case 6:
+                    controller.viewAllDeliveryPersons();
+                    break;
+                case 7:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
