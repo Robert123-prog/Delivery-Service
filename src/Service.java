@@ -164,6 +164,7 @@ public class Service {
     }
 
 
+
     public void removeOrder(Integer customerId, Integer orderID) {
         Customer customer = customerIRepository.get(customerId);
         if (customer != null && customer.getOrders() != null) {
@@ -571,6 +572,10 @@ public class Service {
         if (packages != null) {
             customerIRepository.delete(packageId);
         }
+    }
+
+    public Packages getPackageById(Integer packageId){
+        return packageIRepository.get(packageId);
     }
 
     public Integer getLastLoggedInEmployeeId() {

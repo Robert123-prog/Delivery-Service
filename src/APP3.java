@@ -256,46 +256,46 @@ public class APP3{
                     controller.createLoggedInCustomer(name, address, phone, email);
                     break;
                 case 3:
-                    try {
-                        System.out.print("Enter customer ID: ");
-                        Integer customerId = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Enter customer ID: ");
+                    Integer customerId = scanner.nextInt();
+                    scanner.nextLine();
 
-                        System.out.print("Enter order date (yyyy-mm-dd): ");
-                        String orderDateString = scanner.nextLine();
-                        Date orderDate = Date.valueOf(orderDateString);
+                    System.out.print("Enter order date (yyyy-mm-dd): ");
+                    String orderDateString = scanner.nextLine();
+                    Date orderDate = Date.valueOf(orderDateString);
 
-                        System.out.print("Enter delivery date (yyyy-mm-dd): ");
-                        String deliveryDateString = scanner.nextLine();
-                        System.out.print("Enter delivery time (HH:mm): ");
-                        String deliveryTimeString = scanner.nextLine();
-                        LocalDateTime deliveryDateTime = LocalDateTime.parse(deliveryDateString + "T" + deliveryTimeString);
-                        /*
-                        System.out.print("Enter status: ");
-                        String status = scanner.nextLine();
-                        */
-                        List<Integer> packageIds = new ArrayList<>();
-                        System.out.println("How many Packages do you want to add to the order ?");
-                        int numberPackages = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Delivery Date and Time: ");
+                    System.out.println("=======================================================");
+                    System.out.println("Please enter the date and time in the following format: yyyy-MM-ddThh:mm,");
+                    System.out.println("Where:");
+                    System.out.println("y = year");
+                    System.out.println("M = month");
+                    System.out.println("d = day");
+                    System.out.println("h = hour");
+                    System.out.println("m = minutes");
+                    System.out.println("=======================================================");
+                    System.out.println("!!!IF YOU DONT WANT THE SPECIFIC MINUTES, ENTER: hh:00");
+                    System.out.println("=======================================================");
+                    System.out.println("DISCLAIMER: The order might not arrive in the exact specified minute");
+                    System.out.println("=======================================================");
 
-                        for (int i = 0; i < numberPackages; i++) {
-                            controller.viewAllPackages();
+                    LocalDateTime dateTime = LocalDateTime.parse(scanner.nextLine());
 
-                            System.out.println("The package you want to add:");
-                            String packageIdInput = scanner.nextLine(); // Read package ID as string
-                            try {
-                                int packageId = Integer.parseInt(packageIdInput); // Validate it as an integer
-                                packageIds.add(packageId);
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid package ID. Please enter a valid integer.");
-                                i--; // Retry current iteration
-                            }
+                    List<Integer> packageIds = new ArrayList<>();
+                    System.out.println("How many Packages do you want to add to the order ?");
+                    int numberPackages = scanner.nextInt();
+                    scanner.nextLine();
 
-                        }
+                    for (int i = 0; i < numberPackages; i++) {
+                        controller.viewAllPackages();
 
-                        controller.makeAnOrder(customerId, orderDate, deliveryDateTime, packageIds);
-                    } catch (Exception e) {
-                        System.out.println("Invalid input. Please try again.");
+                        System.out.println("The package you want to add:");
+                        Integer packageId = scanner.nextInt();
+                        scanner.nextLine();
+                        packageIds.add(packageId);
                     }
+
+                    controller.makeAnOrder(customerId, orderDate, dateTime, packageIds);
                     break;
                 case 4:
                     System.out.print("Enter Customer ID: ");
@@ -314,9 +314,9 @@ public class APP3{
                     break;
                 case 6:
                     System.out.print("Enter Customer ID: ");
-                    int customerId = scanner.nextInt();
+                    int customerId1 = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
-                    controller.viewPersonalOrders(customerId);
+                    controller.viewPersonalOrders(customerId1);
                     System.out.println("Pick an order");
                     int orderCostId = scanner.nextInt();
                     //List<Packages> packages = controller.getPackagesFromOrder(orderCostId);
