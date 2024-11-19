@@ -138,7 +138,8 @@ public class APP3{
             System.out.println("7. Create Package");
             System.out.println("8. Remove Package");
             System.out.println("9. View all Packages");
-            System.out.println("10. Back to Main Menu");
+            System.out.println("10.Create a Delivery");
+            System.out.println("11. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -209,6 +210,10 @@ public class APP3{
                     controller.viewAllPackages();
                     break;
                 case 10:
+                    System.out.println("Enter a location for a Delivery to be created:");
+                    String location = scanner.nextLine();
+                    controller.createDelivery(location);
+                case 11:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -229,7 +234,8 @@ public class APP3{
             System.out.println("5. View Personal Orders");
             System.out.println("6. Calculate Order Cost");
             System.out.println("7. Schedule Delivery Date");
-            System.out.println("8. Back to Main Menu");
+            System.out.println("8. View Orders sorted by price");
+            System.out.println("9. Back to Main Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -335,6 +341,11 @@ public class APP3{
                     }
                     break;
                 case 8:
+                    System.out.println("Enter Customer ID: ");
+                    Integer customerSortId = scanner.nextInt();
+                    controller.getOrdersSortedByPriceDescending(customerSortId);
+                    break;
+                case 9:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -352,7 +363,7 @@ public class APP3{
             System.out.println("2. Create Employee");
             System.out.println("3. View My Deliveries");
             System.out.println("4. Drop Delivery");
-            System.out.println("5. View Available Personal Vehicles");
+            System.out.println("5. View All Deliveries Sorted by DeliveryDate");
             System.out.println("6. Assign Personal Vehicle");
             System.out.println("7. View All Departments");
             System.out.println("8. Pick Delivery");
@@ -399,14 +410,7 @@ public class APP3{
                     }
                     break;
                 case 5:
-                    List<Personal_Vehicle> availableVehicles = controller.getAllAvailablePersonalVehicles();
-                    for (Personal_Vehicle personalVehicle: availableVehicles){
-                        System.out.println(personalVehicle);
-                    }
-
-                    /* needs refactoring
-                    controller.viewAvailablePersonalVehicles(availableVehicles);
-                    */
+                    controller.getdeliveriesSortedByOrderDateTime();
                     break;
                 case 6:
                     System.out.print("Enter Delivery Person ID: ");
@@ -475,7 +479,11 @@ public class APP3{
                     System.out.print("Enter Delivery ID: ");
                     int deliveryId = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
-
+                    /*
+                    System.out.println("Enter the location to deliver");
+                    String location = scanner.nextLine();
+                    controller.filterDeliveriesByLocation(location);
+                     */
                     if (controller.validateSelectedDelivery(deliveryId)) {
                         controller.pickDeliveryByPerson(deliveryPersonId, deliveryId);
                     } else {
@@ -515,7 +523,7 @@ public class APP3{
     private static IRepository<Customer> createInMemoryCustomerRepository() {
         IRepository<Customer> customerIRepository = new InMemoryRepo<>();
         customerIRepository.create(new Customer(1, "Dorel", "Cluj-Napoca", "0774596204", "dorel@gmail.com"));
-        customerIRepository.create(new Customer(2, "Balintescu", "Mioveni", "0734682134", "balintescu@gmail.com"));
+        customerIRepository.create(new Customer(2, "Balintescu", "Cluj-Napoca", "0734682134", "balintescu@gmail.com"));
         customerIRepository.create(new Customer(3, "Andrei", "Zalau", "0797794239", "andrei@gmail.com"));
         return customerIRepository;
     }
@@ -531,9 +539,9 @@ public class APP3{
 
     private static IRepository<Delivery> createInMemoryDeliveryRepository() {
         IRepository<Delivery> deliveryIRepository = new InMemoryRepo<>();
-        deliveryIRepository.create(new Delivery(1, 1, Timestamp.valueOf(LocalDateTime.of(2024, 6, 6, 10, 0))));
-        deliveryIRepository.create(new Delivery(2, 2, Timestamp.valueOf(LocalDateTime.of(2024, 7, 8, 15, 30))));
-        deliveryIRepository.create(new Delivery(3, 2, Timestamp.valueOf(LocalDateTime.of(2024, 7, 9, 15, 30))));
+        deliveryIRepository.create(new Delivery(1));//, Timestamp.valueOf(LocalDateTime.of(2024, 6, 6, 10, 0))));
+        deliveryIRepository.create(new Delivery(2));//, Timestamp.valueOf(LocalDateTime.of(2024, 7, 8, 15, 30))));
+        deliveryIRepository.create(new Delivery(3));//, Timestamp.valueOf(LocalDateTime.of(2024, 7, 9, 15, 30))));
         return deliveryIRepository;
     }
 
@@ -664,7 +672,7 @@ public class APP3{
         );
         Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
         Service service1 = new Service(storeRepository,packagesRepository,orderRepository,customerRepository,departmentRepository,employeeRepository,deliveryRepository,depositRepository,deliveryPersonRepository,personalVehicleRepository);
-        Controller controller = new Controller(service1);
+        Controller controller = new Controller(service);
         new APP3(controller);
     }
 }

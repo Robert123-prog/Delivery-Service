@@ -318,6 +318,7 @@ public class Controller {
         return ids.stream().allMatch(packageIds::contains);
     }
 
+
     /**
      * Retrieves validated packages based on provided IDs.
      *
@@ -727,28 +728,49 @@ public class Controller {
 
     /**
      * @param location
-     * @return
      */
 
-    public List<Delivery> filterDeliveriesByLocation(String location) {
-        return service.filterDeliveriesByLocation(location);
+    public void createDelivery(String location) {
+        List<Order> orders = service.filterDeliveriesByLocation(location);
+        String[] statuses = {"processing", "to be shipped", "in hub", "in transit"};
+        Random random = new Random();
+        String status = statuses[random.nextInt(statuses.length)];
+        for (Order order : orders) {
+            order.setStatus(status);
+        }
+        Integer deliveryId = service.getNewDeliveryId();
+        service.createDelivery(deliveryId, orders, location);
+
     }
 
     /**
-     * @param deliveries
+     * @param
      * @return
      */
 
-    public List<Delivery> getdeliveriesSortedByOrderDateTime(List<Delivery> deliveries) {
-        return service.getSortedDeliveriesByOrderDateTime(deliveries);
+    public void getdeliveriesSortedByOrderDateTime() {
+        List<Delivery> deliveries = service.getDelivery();
+        List<Delivery> deliveryList = service.getSortedDeliveriesByOrderDateTime(deliveries);
+        StringBuilder output = new StringBuilder("Deliveries suitable for Delivery Person to pick up:\n");
+        if (deliveryList.isEmpty()) {
+            output.append("No deliveries available for 'to be shipped' orders.\n");
+        } else {
+            deliveryList.forEach(delivery -> output.append(delivery.toString()).append("\n"));
+        }
+
+        System.out.println(output);
     }
 
     /**
-     * @param orders
+     * @param customerId
      * @return
      */
-    public List<Order> getOrdersSortedByPriceDescending(List<Order> orders) {
-        return service.getOrdersSortedByPriceDescending(orders);
+    public void getOrdersSortedByPriceDescending(Integer customerId) {
+        List<Order>orders = service.getOrdersFromCustomers(customerId);
+        List<Order>sortedOrders = service.getOrdersSortedByPriceDescending(orders);
+        StringBuilder output = new StringBuilder("Available Orders:\n");
+        sortedOrders.forEach(order -> output.append(order.toString()).append("\n"));
+        System.out.println(output);
     }
 
     public void removePackage(Integer packageId){

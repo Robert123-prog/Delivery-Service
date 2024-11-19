@@ -11,6 +11,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Delivery implements HasID {
@@ -24,13 +25,13 @@ public class Delivery implements HasID {
     private int employeeID;
 
     /** ID of the order being delivered */
-    private Integer orderID;
+    //private Integer orderID;
 
     /** ID of the transportation method used */
     private int transportationID;
 
     /** Timestamp of when the delivery is scheduled */
-    private Timestamp time;
+    //private Timestamp time;
 
     /** Type of transportation used for this delivery */
     private Transportation transportation_type;
@@ -45,13 +46,12 @@ public class Delivery implements HasID {
      * Constructs a new Delivery with the specified details.
      *
      * @param deliveryID Unique identifier for the delivery
-     * @param orderID ID of the order being delivered
-     * @param time Timestamp when the delivery is scheduled
      */
-    public Delivery(Integer deliveryID, int orderID, Timestamp time) {
+    public Delivery(Integer deliveryID) {
         this.deliveryID = deliveryID;
-        this.orderID = orderID;
-        this.time = time;
+        this.orders = new ArrayList<Order>();
+        //this.orderID = orderID;
+        //this.time = time;
     }
 
     public String getLocation() {
@@ -99,19 +99,21 @@ public class Delivery implements HasID {
      *
      * @return The order's ID
      */
+    /*
     public Integer getOrderID() {
         return orderID;
     }
-
+*/
     /**
      * Sets the ID of the order for this delivery.
      *
      * @param orderID ID of the order to be delivered
      */
+    /*
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
-
+*/
     /**
      * Returns the ID of the transportation method used.
      *
@@ -180,11 +182,17 @@ public class Delivery implements HasID {
     public String toString() {
         return "Delivery{" +
                 "deliveryID=" + deliveryID +
-                ", employeeID=" + employeeID +
-                ", orderID=" + orderID +
-                ", transportationID=" + transportationID +
-                ", transportation_type=" + transportation_type +
+                //", employeeID=" + employeeID +
+                //", orderID=" + orderID +
+                //", transportationID=" + transportationID +
+                //", transportation_type=" + transportation_type +
+                ", location='" + location +
+                ", orders=" + orders +
                 '}';
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     /**
@@ -200,9 +208,9 @@ public class Delivery implements HasID {
 
 
     public String toCsv(){
-        return  deliveryID + "," +
-                orderID + "," +
-                time + ",";
+        return  deliveryID + ",";
+                //orderID + "," +
+                //time + ",";
     }
 
     public static Delivery fromCsv(String csvLine){
@@ -223,6 +231,6 @@ public class Delivery implements HasID {
         // The location field
 //        String location = parts[7];
 
-        return new Delivery(deliveryId, orderId, time);
+        return new Delivery(deliveryId);//, time);
     }
 }
