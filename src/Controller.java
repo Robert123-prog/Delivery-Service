@@ -508,6 +508,10 @@ public class Controller {
         return service.getDeliveriesForEmployee(employeeID);
     }
 
+    public List<Delivery> getDeliveriesForDeliveryPerson(Integer deliveryPersonId) {
+        return service.getDeliveriesForDeliveryPerson(deliveryPersonId);
+    }
+
     /**
      * Drops an assigned Delivery from Employee.
      *
@@ -705,13 +709,13 @@ public class Controller {
         return service.getPackagesFromOrder(orderId);
     }
 
-
     /**
      * @return a list of the Deliveries
      */
 
     public void viewDeliveriesForDeliveryPerson() {
-        List<Delivery> deliveries = service.getDeliveriesWithToBeShippedOrders();
+        //List<Delivery> deliveries = service.getDeliveriesWithToBeShippedOrders();
+        List<Delivery> deliveries = service.getDelivery();
         StringBuilder output = new StringBuilder("Deliveries suitable for Delivery Person to pick up:\n");
         if (deliveries.isEmpty()) {
             output.append("No deliveries available for 'to be shipped' orders.\n");

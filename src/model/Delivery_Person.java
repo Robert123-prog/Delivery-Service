@@ -18,6 +18,7 @@ public class Delivery_Person extends Person {
         this.deliveries = new ArrayList<>();
     }
 
+
     public String getLicense() {
         return license;
     }
@@ -80,11 +81,11 @@ public class Delivery_Person extends Person {
         return deliveryPersonID + "," +
                phone + "," +
                name + "," +
-               deliveries;
+               serializedDeliveries.toString();
     }
 
     public static Delivery_Person fromCsv(String csvLine){
-        String[] parts = csvLine.split(",", 5); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
+        String[] parts = csvLine.split(",", 4); // Split into 5 parts: ID, verified, license, deliveries, vehicle ID
 
         Integer deliveryPersonID = Integer.parseInt(parts[0]);
         String deliveryPersonPhone = parts[1];

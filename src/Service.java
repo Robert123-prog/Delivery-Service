@@ -5,6 +5,7 @@ import repository.IRepository;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.Delayed;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 /**
@@ -242,6 +243,7 @@ public class Service {
         Store store = storeIRepository.get(storeId);
         if (store != null) {
             store.addDeposit(newDeposit);
+            storeIRepository.update(store);
         } else {
             throw new IllegalArgumentException("Deposit with ID " + storeId + " not found.");
         }
@@ -260,11 +262,14 @@ public class Service {
 
 
         for (Deposit deposit : deposits) {
-            deposit.setStoreID(null);
+            //null not supported by the fromCsv method
+            deposit.setStoreID(0);
+            depositIRepository.update(deposit);
         }
 
         // Delete the store from the repository
         storeIRepository.delete(storeId);
+
     }
 
     public void removeDeposit(Integer storeId, Integer depositId) {
@@ -459,7 +464,7 @@ public class Service {
     }
     public void unenrollDeliveryPerson(Integer deliveryPersonId) {
         //Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
-        deliveryIRepository.delete(deliveryPersonId);
+        deliveryPersonIRepository.delete(deliveryPersonId);
     }
     /**
      * Generates a new unique customer ID
@@ -518,7 +523,7 @@ public class Service {
 
     public Integer getNewDeliveryPersonId() {
         int maxId = 0;
-        for (Integer Id : deliveryIRepository.getKeys()) {
+        for (Integer Id : deliveryPersonIRepository.getKeys()) {
             if (Id.compareTo(maxId) > 0) {
                 maxId = Id;
             }
@@ -624,6 +629,12 @@ public class Service {
         Employee employee = employeeIRepository.get(employeeId);
         return employee.getDeliveries();
     }
+
+    public List<Delivery> getDeliveriesForDeliveryPerson(Integer deliveryPersonId) {
+        Delivery_Person deliveryPerson = deliveryPersonIRepository.get(deliveryPersonId);
+        return deliveryPerson.getDeliveries();
+    }
+
     /**
      * Removes a delivery assignment from an employee
      *
