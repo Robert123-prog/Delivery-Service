@@ -474,6 +474,10 @@ public class Controller {
         return unassignedDeliveries;
     }
 
+    public Packages getPackageById(Integer packageId){
+        return service.getPackageById(packageId);
+    }
+
     /**
      * Displays unassigned deliveries in a formatted manner.
      *

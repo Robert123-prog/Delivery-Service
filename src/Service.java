@@ -145,14 +145,14 @@ public class Service {
                 order.addPackage(packages);
             }
         }
-            if (customer != null) {
-                customer.getOrders().add(order);
-                order.setCustomerID(CustomerId);
-            }
-            orderIRepository.create(order);
-            customerIRepository.update(customer);
-            double totalCost = calculateAndUpdateOrderCost(orderID);
-            order.setCost(totalCost);
+
+        customer.getOrders().add(order);
+        order.setCustomerID(CustomerId);
+
+        orderIRepository.create(order);
+        customerIRepository.update(customer);
+        double totalCost = calculateAndUpdateOrderCost(orderID);
+        order.setCost(totalCost);
         }
 
 
@@ -535,6 +535,10 @@ public class Service {
         if (packages != null) {
             customerIRepository.delete(packageId);
         }
+    }
+
+    public Packages getPackageById(Integer packageId){
+        return packageIRepository.get(packageId);
     }
 
     public Integer getLastLoggedInEmployeeId() {

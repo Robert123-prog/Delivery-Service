@@ -205,18 +205,6 @@ public class Order implements HasID {
             serializedPackages.append(pack.toCsv()).append(";");
         }
 
-        /*
-        this.orderID = orderID;
-        this.orderDate = orderDate;
-        this.deliveryDateTime = deliveryDateTime;
-        //this.totalCost = totalCost;
-        //this.status = status;
-        this.packages = new ArrayList<>();
-        this.customerID = customerID;
-
-         */
-
-
         return orderID + "," +
                 customerID + "," +
                 orderDate + "," +
@@ -226,12 +214,18 @@ public class Order implements HasID {
     }
 
     public static Order fromCsv(String csvLine) {
-        String[] parts = csvLine.split(",");
+        // Split the CSV line into parts
+        String[] parts = csvLine.split(",", 5); // Limit split to 5 parts to keep packages as one string
 
         // Parse order attributes
         Integer orderID = Integer.parseInt(parts[0]);
         Integer customerID = Integer.parseInt(parts[1]);
-        Date orderDate = new Date(Long.parseLong(parts[2])); // Deserialize timestamp into Date
+        String orderDateStr = parts[2];
+
+        // Parse orderDate
+        Date orderDate = java.sql.Date.valueOf(orderDateStr);
+
+        // Parse deliveryDateTime
         LocalDateTime deliveryDateTime = LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER);
 
         // Create the order object
@@ -239,10 +233,11 @@ public class Order implements HasID {
 
         // Deserialize packages if any
         if (parts.length > 4) {
-            String[] packagesData = parts[4].split(";");
+            String packagesString = parts[4]; // The packages part as a single string
+            String[] packagesData = packagesString.split(";"); // Split by semicolon for individual packages
             for (String packageData : packagesData) {
                 if (!packageData.isEmpty()) {
-                    order.addPackage(Packages.fromCsv(packageData));
+                    order.addPackage(Packages.fromCsv(packageData.trim()));
                 }
             }
         }
