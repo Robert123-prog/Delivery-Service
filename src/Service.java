@@ -375,22 +375,27 @@ public class Service {
      * @return a list of these orders
      */
 
+    /**
+     * Retrieves a list of deliveries that contain at least one order with the status "to be shipped".
+     *
+     * @return a list of deliveries where at least one order is marked with the status "to be shipped".
+     */
     public List<Delivery> getDeliveriesWithToBeShippedOrders() {
-        // Fetch all deliveries
         List<Delivery> allDeliveries = deliveryIRepository.readAll();
 
-        // Filter deliveries with orders in the "to be shipped" status
         return allDeliveries.stream()
                 .filter(delivery -> delivery.getOrders().stream()
                         .anyMatch(order -> "to be shipped".equalsIgnoreCase(order.getStatus())))
                 .collect(Collectors.toList());
     }
 
-     //TODO second filtering method
-    /** filtering Deliveries based on Location
-     * @return a list of these Deliveries
-     * */
-
+    /**
+     * Filters orders based on their delivery location.
+     *
+     * @param location the location to filter orders by (case-insensitive).
+     *                 If {@code null}, no orders will be returned.
+     * @return a list of orders that match the specified location.
+     */
     public List<Order> filterDeliveriesByLocation(String location) {
         List<Order> allOrders = orderIRepository.readAll();
         List<Order> filteredOrders = new ArrayList<>();
@@ -401,47 +406,53 @@ public class Service {
         }
         return filteredOrders;
     }
-     //TODO first sorting method
+
     /**
-     * sorting the Deliveries by their DeliveryDate
+     * Sorts a list of deliveries based on the earliest delivery date and time of their orders.
+     *
+     * @param deliveries the list of deliveries to sort.
+     * @return a new list of deliveries sorted in ascending order by their earliest order's delivery date and time.
+     *         Deliveries without any orders will appear last.
      */
     public List<Delivery> getSortedDeliveriesByOrderDateTime(List<Delivery> deliveries) {
         return deliveries.stream()
                 .sorted(Comparator.comparing(delivery ->
                         delivery.getOrders().stream()
                                 .map(Order::getDeliveryDateTime)
-                                .min(Comparator.naturalOrder()) // Get the earliest deliveryDateTime
-                                .orElse(LocalDateTime.MAX) // In case there are no orders, use the maximum value
-                ))
-                .collect(Collectors.toList()); // Collect the sorted deliveries into a new list
+                                .min(Comparator.naturalOrder())
+                                .orElse(LocalDateTime.MAX)))
+                .collect(Collectors.toList());
     }
-    //TODO second sorting method
+
     /**
-     * Returns the orders sorted in descending order by their price.
+     * Sorts a list of orders in descending order by their cost.
      *
-     * @param orders The list of orders to sort
-     * @return A new list of orders sorted in descending order by price
+     * @param orders the list of orders to sort.
+     * @return a new list of orders sorted in descending order by price.
      */
     public List<Order> getOrdersSortedByPriceDescending(List<Order> orders) {
         return orders.stream()
-                .sorted(Comparator.comparingDouble(Order::getCost).reversed()) // Sort by price in descending order
-                .collect(Collectors.toList()); // Collect into a new list
+                .sorted(Comparator.comparingDouble(Order::getCost).reversed())
+                .collect(Collectors.toList());
     }
 
-    /**
-     *
-     * @param deliveryid
-     * @param orders
-     */
-    public void createDelivery(Integer deliveryid,List<Order> orders, String location)
-    {
+    /** Creates a new delivery with the specified delivery ID, orders, and location,
+            * and adds it to the repository.
+            *
+            * @param deliveryid the unique identifier for the new delivery. Must not be {@code null}.
+            * @param orders     the list of orders to associate with the delivery.
+            *                   If {@code null} or empty, no orders will be added.
+            * @param location   the location for the delivery. Can be {@code null}.
+            */
+    public void createDelivery(Integer deliveryid, List<Order> orders, String location) {
         Delivery delivery = new Delivery(deliveryid);
         deliveryIRepository.create(delivery);
         delivery.setLocation(location);
-        for (Order order : orders) {
-            delivery.addOrder(order);
+        if (orders != null) {
+            for (Order order : orders) {
+                delivery.addOrder(order);
+            }
         }
-
     }
 
     /**
