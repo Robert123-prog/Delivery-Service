@@ -178,6 +178,7 @@ public class SellerService {
                 delivery.addOrder(order);
             }
         }
+
     }
 
 
