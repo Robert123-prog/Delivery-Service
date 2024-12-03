@@ -7,8 +7,10 @@ import model.Packages;
 import repository.IRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerService {
     private final IRepository<Customer> customerIRepository;
@@ -134,6 +136,45 @@ public class CustomerService {
         }
     }
 
+    /**
+     * Sorts a list of orders in descending order by their cost.
+     *
+     * @param orders the list of orders to sort.
+     * @return a new list of orders sorted in descending order by price.
+     */
+    public List<Order> getOrdersSortedByPriceDescending(List<Order> orders) {
+        return orders.stream()
+                .sorted(Comparator.comparingDouble(Order::getCost).reversed())
+                .collect(Collectors.toList());
+    }
 
+    /**
+     * Generates a new unique customer ID
+     *
+     * @return Next available customer ID
+     */
+    public Integer getNewCustomerId() {
+        int maxId = 0;
+        for (Integer Id : customerIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
 
+    public void createCustomer(Integer Id, String name, String address, String phone, String email) {
+        Customer customer = new Customer(Id, name, address, phone, email);
+        customerIRepository.create(customer);
+    }
+
+    public Integer getNewOrderId() {
+        int maxId = 0;
+        for (Integer Id : orderIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
 }
