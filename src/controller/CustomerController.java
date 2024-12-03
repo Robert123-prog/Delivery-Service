@@ -97,6 +97,12 @@ public class CustomerController {
         System.out.println("Scheduled Delivery date for Order with id " + orderID + " successfully");
     }
 
+    public void viewAllPackages() {
+        StringBuilder output = new StringBuilder("All Packages:\n");
+        customerService.getPackages().forEach(packages -> output.append(packages.toString()).append("\n"));
+        System.out.println(output);
+    }
+
     /**
      * @param customerId
      * @return
