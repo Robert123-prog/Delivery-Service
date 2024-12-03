@@ -58,6 +58,16 @@ public class EmployeeService {
         return employee.getDeliveries();
     }
 
+    public Integer getNewEmployeeId() {
+        int maxId = 0;
+        for (Integer Id : employeeIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
 
     public List<Delivery> getDelivery() {
         return deliveryIRepository.readAll();

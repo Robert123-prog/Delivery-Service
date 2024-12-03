@@ -6,6 +6,7 @@ import model.Personal_Vehicle;
 import repository.IRepository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DeliveryPersonService {
@@ -100,6 +101,34 @@ public class DeliveryPersonService {
 
     public List<Delivery_Person> getDeliveryPerson() {
         return deliveryPersonIRepository.readAll();
+    }
+
+    /**
+     * Verifies if a delivery person's license is valid
+     *
+     * @param deliveryPersonId ID of the delivery person
+     * @param license License to verify
+     * @return true if license is valid, false otherwise
+     */
+    public boolean verifyDeliveryPersonLicense(Integer deliveryPersonId,String license) {
+        if (isLicenseCategoryValid(license)) {
+            System.out.println("License for delivery person " + deliveryPersonId + " is valid.");
+            return true;
+        } else {
+            System.out.println("License for delivery person " + deliveryPersonId + " is not valid.");
+            return false;
+        }
+    }
+
+    /**
+     * Helper method to validate license categories
+     *
+     * @param licenseCategory Category of license to validate
+     * @return true if license category is valid, false otherwise
+     */
+    private boolean isLicenseCategoryValid(String licenseCategory) {
+        Set<String> validCategories = Set.of("B", "BE", "C", "CE");
+        return validCategories.contains(licenseCategory);
     }
 
 }

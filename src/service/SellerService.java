@@ -181,6 +181,16 @@ public class SellerService {
 
     }
 
+    public Integer getNewDeliveryId() {
+        int maxId = 0;
+        for (Integer Id : deliveryIRepository.getKeys()) {
+            if (Id.compareTo(maxId) > 0) {
+                maxId = Id;
+            }
+        }
+        return maxId + 1;
+    }
+
 
 
 }
