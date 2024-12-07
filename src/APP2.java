@@ -11,10 +11,10 @@
 //import java.time.LocalDateTime;
 //
 //public class APP2 {
-//    private final Controller controller;
+//    private final org.example.Controller controller;
 //    static Scanner scanner;
 //
-//    public APP2(Controller controller) {
+//    public APP2(org.example.Controller controller) {
 //        this.controller = controller;
 //        this.scanner = new Scanner(System.in);
 //        createUI();
@@ -375,8 +375,8 @@
 //        IRepository<Order> orderIRepository = createInMemoryOrderRepository();
 //        IRepository<Store> storeIRepository = createInMemoryStoreRepository();
 //        IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
-//        Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
-//        Controller controller = new Controller(service);
+//        org.example.Service service = new org.example.Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+//        org.example.Controller controller = new org.example.Controller(service);
 //        new APP2(controller);
 //    }
 //}

@@ -18,5 +18,5 @@ Drivers can make deliveries during their free time, providing them with an addit
 
 By implementing these features, the application aims to enhance delivery service efficiency, improve customer satisfaction, and create an inclusive system that benefits both customers and the workforce.
 
-![Delivery-Service drawio (1)](https://github.com/user-attachments/assets/f5f3c025-8f99-427f-8392-a4dcc3f70f09)
+![Delivery-org.example.Service drawio (1)](https://github.com/user-attachments/assets/f5f3c025-8f99-427f-8392-a4dcc3f70f09)
 

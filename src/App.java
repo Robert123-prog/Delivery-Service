@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class App {
 
-    private final Controller controller;
-    public App(Controller controller){
+    private final org.example.Controller controller;
+    public App(org.example.Controller controller){
         this.controller = controller;
     }
 
@@ -103,7 +103,7 @@ public class App {
     }
 
     public void mainMenu(){
-        System.out.println("======Welcome to the Delivery-Service Application======");
+        System.out.println("======Welcome to the Delivery-org.example.Service Application======");
         System.out.println("=======================================================");
         System.out.println("Please choose one of the following actions:");
         System.out.println("=======================================================");
@@ -575,8 +575,8 @@ public class App {
             IRepository<Order> orderIRepository = createInMemoryOrderRepository();
             IRepository<Store> storeIRepository = createInMemoryStoreRepository();
             IRepository<Packages> packagesIRepository = createInMemoryPackageRepository();
-            Service service = new Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
-            Controller controller = new Controller(service);
+            org.example.Service service = new org.example.Service(storeIRepository,packagesIRepository,orderIRepository,customerIRepository,departmentIRepository,employeeIRepository,deliveryIRepository,depositIRepository,deliveryPersonIRepository,personalVehicleIRepository);
+            org.example.Controller controller = new org.example.Controller(service);
             App app = new App(controller);
             app.mainMenu();
     }
