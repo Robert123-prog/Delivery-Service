@@ -8,6 +8,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Customer implements HasID {
     /** Unique identifier for the customer */
     private final Integer customerID;
